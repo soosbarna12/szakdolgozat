@@ -1,0 +1,14 @@
+{
+	"workbench.colorTheme": "Default Dark+",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"prettier.configPath": "weather-warehouse/.prettierrc",
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true
+	},
+	"editor.formatOnSave": true,
+	"javascript.updateImportsOnFileMove.enabled": "always"
+}

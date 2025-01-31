@@ -1,16 +1,18 @@
-import React from "react";
+import { Toolbar } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import { LocationButton } from "./location-selector/location-button/LocationButton";
-import { TimeTabBar } from "./time-tab-bar/TimeTabBar";
-import { ProfileButton } from "./profile-settings/profile-button/ProfileButton";
+import React from 'react';
+import { LocationButton } from './LocationSelector/LocationButton/LocationButton';
+import { ProfileButton } from './ProfileSettings/ProfileButton/ProfileButton';
+import { TimeTabBar } from './TimeTabBar/TimeTabBar';
 
 export function NavBar() {
-  return (
-    <AppBar>
-        <LocationButton />
-        <TimeTabBar />
-        <ProfileButton />
-    </AppBar>
-    
-  );
+	return (
+		<AppBar position="static" color="transparent" elevation={0}>
+			<Toolbar>
+				<LocationButton />
+				<TimeTabBar />
+				<ProfileButton />
+			</Toolbar>
+		</AppBar>
+	);
 }

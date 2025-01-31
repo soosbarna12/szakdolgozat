@@ -1,12 +1,19 @@
 import React from "react";
-import { NavBar } from "./components/navbar/NavBar";
+import { NavBar } from "./components/NavBar/NavBar";
+import { createTheme, ThemeProvider } from "@mui/material";
+
+const colorTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#4caf50",
+    },
+  },
+});
 
 export function HomePage() {
   return (
-    <div>
-      <NavBar/>
-      <h1>Welcome to the Weather Warehouse</h1>
-      <p>Here you can find all the weather data you need</p>
-    </div>
+    <ThemeProvider theme={colorTheme}>
+      <NavBar />
+    </ThemeProvider>
   );
 }
