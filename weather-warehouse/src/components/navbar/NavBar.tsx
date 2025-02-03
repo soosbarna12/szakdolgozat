@@ -7,7 +7,12 @@ import { TimeTabBar } from './TimeTabBar/TimeTabBar';
 
 export function NavBar() {
 	return (
-		<AppBar position="static" color="transparent" elevation={0}>
+		<AppBar
+			position="static"
+			color="transparent"
+			elevation={0}
+		//sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+		>
 			<Toolbar>
 				<LocationButton />
 				<TimeTabBar />
