@@ -22,7 +22,7 @@ export function ProfileButton() {
       <Tooltip title="Open settings">
         <IconButton
           onClick={handleOpenUserMenu}
-          sx={{ p: 0, width: "70px", height: "70px", borderRadius: "50%" }}>
+          sx={{ p: 0, width: "64px", height: "64px", borderRadius: "50%" }}>
           <AccountCircleIcon sx={{ width: "40px", height: "40px" }} />
         </IconButton>
       </Tooltip>
