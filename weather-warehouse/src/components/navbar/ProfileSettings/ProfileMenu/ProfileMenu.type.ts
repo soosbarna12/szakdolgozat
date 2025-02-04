@@ -1,4 +1,5 @@
 export interface ProfileMenuProps {
-  handleCloseUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
-  anchorElUser: null | HTMLElement;
+	anchorElUser: null | HTMLElement;
+	handleSetTheme: (newTheme: boolean) => void;
+	handleCloseUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
 }

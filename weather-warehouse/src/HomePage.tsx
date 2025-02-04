@@ -1,20 +1,20 @@
-import { createTheme, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import React from "react";
 import { NavBar } from "./components/NavBar/NavBar";
+import { darkTheme, lightTheme } from "./theme.style";
 
-const colorTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#4caf50"
-    }
-  }
-
-});
 
 export function HomePage() {
+  const [theme, setTheme] = React.useState(true);
+
+  function handleSetTheme(newTheme: boolean
+  ) {
+    setTheme(newTheme);
+  }
+
   return (
-    <ThemeProvider theme={colorTheme}>
-      <NavBar />
+    <ThemeProvider theme={theme ? lightTheme : darkTheme}>
+      <NavBar handleSetTheme={handleSetTheme} />
     </ThemeProvider>
   );
 }

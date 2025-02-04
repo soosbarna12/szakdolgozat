@@ -1,18 +1,25 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { Divider, Menu, MenuItem, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import React from "react";
+import { StyledMenu, StyledMenuItem, StyledToggleButton, StyledToggleButtonGroup } from './ProfileMenu.style';
 import { ProfileMenuProps } from "./ProfileMenu.type";
 
-const settings = ["Profile", "Logout"];
-
+const ProfileMenuItems = ["Profile", "Logout"];
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
-  const { handleCloseUserMenu, anchorElUser } = props;
+  const { anchorElUser, handleCloseUserMenu, handleSetTheme } = props;
+
+  function handleLightModeIconClick() {
+    handleSetTheme(true);
+  }
+
+  function handleDarkModeIconClick() {
+    handleSetTheme(false);
+  }
 
   return (
-
-    <Menu
+    <StyledMenu
       sx={{ mt: "45px", padding: "0", borderRadius: "20px" }}
       id="menu-appbar"
       anchorEl={anchorElUser}
@@ -22,31 +29,32 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
       open={Boolean(anchorElUser)}
       onClose={handleCloseUserMenu}
     >
-      {settings.map((setting) => (
-        <MenuItem key={setting} onClick={handleCloseUserMenu}>
-          <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
-        </MenuItem>
+      {ProfileMenuItems.map((ProfileMenuItems) => (
+        <StyledMenuItem key={ProfileMenuItems} onClick={handleCloseUserMenu}>
+          <Typography sx={{ textAlign: "center" }}>{ProfileMenuItems}</Typography>
+        </StyledMenuItem>
       ))}
 
       <Divider />
 
-      <MenuItem key="language" onClick={handleCloseUserMenu}>
-        <ToggleButtonGroup color="primary" sx={{ padding: 0, height: "30px" }}>
-          <ToggleButton value="english" sx={{ width: "50px", paddingLeft: 2, paddingRight: 2, borderRadius: "10px" }}>EN</ToggleButton>
-          <ToggleButton value="hungarian" sx={{ width: "50px", paddingLeft: 2, paddingRight: 2, borderRadius: "10px" }}>HU</ToggleButton>
-        </ToggleButtonGroup>
-      </MenuItem>
+      <StyledMenuItem key="language" onClick={handleCloseUserMenu}>
+        <StyledToggleButtonGroup color="primary">
+          <StyledToggleButton value="english">EN</StyledToggleButton>
+          <StyledToggleButton value="hungarian">HU</StyledToggleButton>
+        </StyledToggleButtonGroup>
+      </StyledMenuItem>
 
-      <MenuItem key="dark-mode" onClick={handleCloseUserMenu}>
-        <ToggleButtonGroup color="secondary" sx={{ padding: 0, height: "30px" }}>
-          <ToggleButton value="light-mode" sx={{ width: "50px", paddingLeft: 2, paddingRight: 2, borderRadius: "10px" }}>
+
+      <StyledMenuItem key="theme-toggle" onClick={handleCloseUserMenu}>
+        <StyledToggleButtonGroup color="secondary" >
+          <StyledToggleButton value="light" onClick={handleLightModeIconClick}>
             <LightModeIcon sx={{ height: "16px" }} />
-          </ToggleButton>
-          <ToggleButton value="dark-mode" sx={{ width: "50px", paddingLeft: 2, paddingRight: 2, borderRadius: "10px" }}>
+          </StyledToggleButton>
+          <StyledToggleButton value="dark" onClick={handleDarkModeIconClick}>
             <DarkModeIcon sx={{ height: "16px" }} />
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </MenuItem>
-    </Menu >
+          </StyledToggleButton>
+        </StyledToggleButtonGroup>
+      </StyledMenuItem>
+    </StyledMenu >
   );
 }

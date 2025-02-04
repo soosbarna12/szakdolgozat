@@ -2,10 +2,13 @@ import { CssBaseline, Toolbar } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import React from 'react';
 import { LocationButton } from './LocationSelector/LocationButton/LocationButton';
+import { NavBarProps } from './NavBar.type';
 import { ProfileButton } from './ProfileSettings/ProfileButton/ProfileButton';
 import { TimeTabBar } from './TimeTabBar/TimeTabBar';
 
-export function NavBar() {
+export function NavBar(props: Readonly<NavBarProps>) {
+	const { handleSetTheme } = props;
+
 	return (
 		<>
 			<CssBaseline />
@@ -18,7 +21,7 @@ export function NavBar() {
 				<Toolbar>
 					<LocationButton />
 					<TimeTabBar />
-					<ProfileButton />
+					<ProfileButton handleSetTheme={handleSetTheme} />
 				</Toolbar>
 			</AppBar>
 		</>

@@ -14,7 +14,7 @@ export function TimeTabBar(_: Readonly<TimeTabBarProps>) {
 				onClick={noop}
 				variant="outlined"
 				color="primary"
-				sx={{ boxShadow: 4, margin: 1, borderRadius: 50, width: 150, height: 40 }}
+				sx={{ boxShadow: 4, margin: 1, borderRadius: 50, width: 150, height: 40, fontWeight: 600 }}
 			>
 				{page}
 			</Button>
@@ -22,7 +22,6 @@ export function TimeTabBar(_: Readonly<TimeTabBarProps>) {
 	}
 
 	return (
-		// this sx works
 		<Container sx={{ display: 'flex', justifyContent: 'center' }}>
 			<Toolbar disableGutters>
 				<Box>{renderMenu()}</Box>
