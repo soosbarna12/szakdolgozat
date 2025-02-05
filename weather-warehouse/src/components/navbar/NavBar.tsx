@@ -15,7 +15,7 @@ export function NavBar(props: Readonly<NavBarProps>) {
 			<AppBar
 				position="static"
 				color="transparent"
-				elevation={1}
+				elevation={0}
 				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1000, paddingTop: "8px", paddingBottom: "8px" }}
 			>
 				<Toolbar>

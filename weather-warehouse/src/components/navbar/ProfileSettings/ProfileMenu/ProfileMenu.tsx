@@ -1,20 +1,28 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import React from "react";
-import { StyledMenu, StyledMenuItem, StyledToggleButton, StyledToggleButtonGroup } from './ProfileMenu.style';
+import { StyledMenu, StyledMenuItem, StyledToggleButton, StyledToggleButtonGroup } from '../../../../common.style';
 import { ProfileMenuProps } from "./ProfileMenu.type";
 
 const ProfileMenuItems = ["Profile", "Logout"];
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
-  const { anchorElUser, handleCloseUserMenu, handleSetTheme } = props;
+  const { anchorElUser, handleCloseMenu, handleSetTheme } = props;
 
   function handleLightModeIconClick() {
     handleSetTheme(true);
   }
 
   function handleDarkModeIconClick() {
+    handleSetTheme(false);
+  }
+
+  function handleCelsiusScale() {
+    handleSetTheme(true);
+  }
+
+  function handleFahrenheitScale() {
     handleSetTheme(false);
   }
 
@@ -27,26 +35,34 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
       keepMounted
       transformOrigin={{ vertical: "top", horizontal: "right", }}
       open={Boolean(anchorElUser)}
-      onClose={handleCloseUserMenu}
+      onClose={handleCloseMenu}
     >
       {ProfileMenuItems.map((ProfileMenuItems) => (
-        <StyledMenuItem key={ProfileMenuItems} onClick={handleCloseUserMenu}>
+        <StyledMenuItem key={ProfileMenuItems} onClick={handleCloseMenu}>
           <Typography sx={{ textAlign: "center" }}>{ProfileMenuItems}</Typography>
         </StyledMenuItem>
       ))}
 
       <Divider />
 
-      <StyledMenuItem key="language" onClick={handleCloseUserMenu}>
-        <StyledToggleButtonGroup color="primary">
+      <Box>
+        <StyledToggleButtonGroup onClick={handleCloseMenu}>
+          <StyledToggleButton value="celsius" onClick={handleCelsiusScale}>
+            °C
+          </StyledToggleButton>
+          <StyledToggleButton value="fahrenheit" onClick={handleFahrenheitScale}>
+            °F
+          </StyledToggleButton>
+        </StyledToggleButtonGroup>
+      </Box>
+      <Box sx={{ marginTop: "6px" }}>
+        <StyledToggleButtonGroup onClick={handleCloseMenu}>
           <StyledToggleButton value="english">EN</StyledToggleButton>
           <StyledToggleButton value="hungarian">HU</StyledToggleButton>
         </StyledToggleButtonGroup>
-      </StyledMenuItem>
-
-
-      <StyledMenuItem key="theme-toggle" onClick={handleCloseUserMenu}>
-        <StyledToggleButtonGroup color="secondary" >
+      </Box>
+      <Box sx={{ marginTop: "6px" }}>
+        <StyledToggleButtonGroup onClick={handleCloseMenu}>
           <StyledToggleButton value="light" onClick={handleLightModeIconClick}>
             <LightModeIcon sx={{ height: "16px" }} />
           </StyledToggleButton>
@@ -54,7 +70,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
             <DarkModeIcon sx={{ height: "16px" }} />
           </StyledToggleButton>
         </StyledToggleButtonGroup>
-      </StyledMenuItem>
+      </Box >
     </StyledMenu >
-  );
+  )
 }

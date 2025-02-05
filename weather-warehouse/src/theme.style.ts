@@ -1,47 +1,77 @@
 import { createTheme } from '@mui/material';
 
-export const greyTheme = createTheme({
+export const lightTheme = createTheme({
 	palette: {
-		text: {
-			primary: '#872341',
-			secondary: '#BE3144',
-			disabled: '#E17564'
+		mode: 'light',
+		primary: {
+			main: '#1976d2', // Blue
+			light: '#63a4ff', // Light Blue
+			dark: '#004ba0', // Dark Blue
+			contrastText: '#fff' // White text
 		},
-		action: {
-			active: '#fff',
-			hover: 'rgba(255, 255, 255, 0.08)',
-			selected: 'rgba(255, 255, 255, 0.16)',
-			disabled: 'rgba(255, 255, 255, 0.3)',
-			disabledBackground: 'rgba(255, 255, 255, 0.12)'
+		secondary: {
+			main: '#dc004e', // Pink
+			light: '#ff616f', // Light Pink
+			dark: '#9a0036', // Dark Pink
+			contrastText: '#fff' // White text
 		},
 		background: {
-			default: '##3c3c3c',
-			paper: '#fff'
+			default: '#f5f5f5', // Light Gray
+			paper: '#fff' // White
 		},
-		divider: 'rgba(255, 255, 255, 0.12)'
+		text: {
+			primary: '#000', // Black text
+			secondary: '#555' // Gray text
+		},
+		error: {
+			main: '#d32f2f' // Red
+		},
+		warning: {
+			main: '#ffa726' // Orange
+		},
+		info: {
+			main: '#0288d1' // Light Blue
+		},
+		success: {
+			main: '#388e3c' // Green
+		}
 	}
 });
 
 export const darkTheme = createTheme({
 	palette: {
-		text: {
-			primary: '#fff',
-			secondary: 'rgba(255, 255, 255, 0.7)',
-			disabled: 'rgba(255, 255, 255, 0.5)'
+		mode: 'dark',
+		primary: {
+			main: '#90caf9', // Light Blue
+			light: '#e3f2fd', // Very Light Blue
+			dark: '#42a5f5', // Medium Blue
+			contrastText: '#000' // Black text
 		},
-		action: {
-			active: '#fff',
-			hover: 'rgba(255, 255, 255, 0.08)',
-			selected: 'rgba(255, 255, 255, 0.16)',
-			disabled: 'rgba(255, 255, 255, 0.3)',
-			disabledBackground: 'rgba(255, 255, 255, 0.12)'
+		secondary: {
+			main: '#f48fb1', // Pink
+			light: '#f8bbd0', // Light Pink
+			dark: '#f06292', // Medium Pink
+			contrastText: '#000' // Black text
 		},
 		background: {
-			default: '#121212',
-			paper: '#121212'
+			default: '#121212', // Dark Gray/Black
+			paper: '#1e1e1e' // Darker Gray/Black
 		},
-		divider: 'rgba(255, 255, 255, 0.12)'
+		text: {
+			primary: '#ffffff', // White text
+			secondary: '#b0bec5' // Light Gray text
+		},
+		error: {
+			main: '#ef5350' // Red
+		},
+		warning: {
+			main: '#ffa726' // Orange
+		},
+		info: {
+			main: '#29b6f6' // Light Blue
+		},
+		success: {
+			main: '#66bb6a' // Green
+		}
 	}
 });
-
-export const lightTheme = createTheme({});

@@ -16,18 +16,24 @@ export const StyledIconButton = styled(Button)(({ theme }) => ({
 export const StyledMenu = styled(Menu)(({ theme }) => ({
 	'& .MuiPaper-root': {
 		borderRadius: '20px'
-	}
+	},
+	mt: '45px',
+	padding: '0',
+	borderRadius: '20px'
 }));
 
 export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 	paddingLeft: 16,
 	paddingRight: 16,
-	borderRadius: '10px'
+	borderRadius: '10px',
+	selected: false,
+	autoFocus: false
 }));
 
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)(
 	({ theme }) => ({
-		padding: 0,
+		paddingLeft: 16,
+		paddingRight: 16,
 		height: '30px'
 	})
 );

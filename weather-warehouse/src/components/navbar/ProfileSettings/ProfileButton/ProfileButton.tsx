@@ -10,11 +10,11 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseMenu = () => {
     setAnchorElUser(null);
   };
 
@@ -22,7 +22,7 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton
-          onClick={handleOpenUserMenu}
+          onClick={handleOpenMenu}
           color='secondary'
           sx={{ padding: 0, margin: "10px", width: "42px", height: "42px", boxShadow: 4, outline: 1 }}>
           <PersonOutlineOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
@@ -30,7 +30,7 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
       </Tooltip>
       <ProfileMenu
         handleSetTheme={handleSetTheme}
-        handleCloseUserMenu={handleCloseUserMenu}
+        handleCloseMenu={handleCloseMenu}
         anchorElUser={anchorElUser} />
     </Box>
   );
