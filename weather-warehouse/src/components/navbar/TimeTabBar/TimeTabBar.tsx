@@ -12,9 +12,9 @@ export function TimeTabBar(_: Readonly<TimeTabBarProps>) {
 			<Button
 				key={page}
 				onClick={noop}
-				variant="outlined"
-				color="primary"
-				sx={{ boxShadow: 4, margin: 1, borderRadius: 50, width: 150, height: 40, fontWeight: 600 }}
+				//variant="outlined"
+				//color="primary"
+				sx={{ boxShadow: 4, margin: 1, borderRadius: 20, width: 150, height: 40, fontWeight: 600, fontSize: 16 }}
 			>
 				{page}
 			</Button>

@@ -13,7 +13,7 @@ export function FilterBar() {
         color="transparent"
         elevation={0}
       >
-        <Toolbar sx={{ justifyContent: 'center' }}>
+        <Toolbar sx={{ justifyContent: 'center', padding: 0 }}>
           <LocationSearch />
           <DateFilter />
           <ActionsButton />
@@ -21,5 +21,4 @@ export function FilterBar() {
       </AppBar>
     </>
   );
-
 }

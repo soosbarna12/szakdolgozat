@@ -10,9 +10,9 @@ export const lightTheme = createTheme({
 			contrastText: '#fff' // White text
 		},
 		secondary: {
-			main: '#dc004e', // Pink
-			light: '#ff616f', // Light Pink
-			dark: '#9a0036', // Dark Pink
+			main: '#1976d2', // Blue
+			light: '#63a4ff', // Light Blue
+			dark: '#004ba0', // Dark Blue
 			contrastText: '#fff' // White text
 		},
 		background: {

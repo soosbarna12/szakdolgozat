@@ -23,8 +23,8 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
       <Tooltip title="Open settings">
         <IconButton
           onClick={handleOpenMenu}
-          color='secondary'
-          sx={{ padding: 0, margin: "10px", width: "42px", height: "42px", boxShadow: 4, outline: 1 }}>
+          //color='secondary'
+          sx={{ padding: 0, margin: "10px", width: "48px", height: "48px", boxShadow: 4, outline: 0 }}>
           <PersonOutlineOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
         </IconButton>
       </Tooltip>

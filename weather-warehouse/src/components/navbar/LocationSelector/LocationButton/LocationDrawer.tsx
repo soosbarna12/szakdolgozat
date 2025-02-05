@@ -16,16 +16,16 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
     <Drawer
       open={open}
       onClose={handleDrawerClose}
-      elevation={10}
+      elevation={4}
       slotProps={{ backdrop: { style: { opacity: 0.25 } } }}>
-      <Box sx={{ width: 300 }} paddingRight={"24px"} paddingLeft={"24px"}>
-        <List>
+      <Box sx={{ width: 300 }} paddingRight={"10px"} paddingLeft={"24px"}>
+        <List sx={{ padding: 0 }}>
           <Toolbar disableGutters>
             <Tooltip title="Close locations">
               <IconButton
                 onClick={handleDrawerClose}
-                color='secondary'
-                sx={{ padding: 0, margin: "10px", width: "42px", height: "42px", borderRadius: "100%", boxShadow: 4, outline: 1 }}>
+                //color='secondary'
+                sx={{ padding: 0, margin: "10px", width: "48px", height: "48px", borderRadius: "100%", boxShadow: 4, outline: 0 }}>
                 <PlaceOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
               </IconButton>
             </Tooltip>
@@ -35,7 +35,7 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
           {locations.map((text, index) => (
             <ListItem key={text} disablePadding onClick={handleDrawerClose}>
               <Button fullWidth variant="text" color="secondary"
-                sx={{ boxShadow: 4, margin: 1 }}>
+                sx={{ boxShadow: 4, margin: 1, borderRadius: "20px" }}>
                 <ListItemText primary={text} />
               </Button>
             </ListItem>

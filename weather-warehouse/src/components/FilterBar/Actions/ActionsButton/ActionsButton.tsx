@@ -14,9 +14,10 @@ export function ActionsButton() {
       <Tooltip title="Open actions">
         <Button
           onClick={handleOpenUserMenu}
-          variant="outlined"
+          //variant="outlined"
+          //color='primary'
           endIcon={<KeyboardArrowDownIcon />}
-          sx={{ boxShadow: 4, margin: 1, borderRadius: 50, width: 150, height: 40, fontWeight: 100 }}
+          sx={{ boxShadow: 4, margin: 1, borderRadius: 20, width: 150, height: 40, fontWeight: 100 }}
         >Actions
         </Button>
       </Tooltip>

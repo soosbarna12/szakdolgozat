@@ -4,7 +4,6 @@ import { FilterBar } from "./components/FilterBar/FilterBar";
 import { NavBar } from "./components/NavBar/NavBar";
 import { darkTheme, lightTheme } from "./theme.style";
 
-
 export function HomePage() {
   const [theme, setTheme] = React.useState(true);
 

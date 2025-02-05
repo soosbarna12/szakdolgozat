@@ -6,6 +6,7 @@ export const typographyStyle: SxProps<Theme> = {
 	fontFamily: 'monospace',
 	fontWeight: 600,
 	letterSpacing: '.3rem',
-	color: 'inherit',
+	//color: 'primary',
+	color: '#fff',
 	textDecoration: 'none'
 } as const;
