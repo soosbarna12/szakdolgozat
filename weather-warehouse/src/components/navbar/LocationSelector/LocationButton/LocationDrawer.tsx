@@ -18,14 +18,17 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
       onClose={handleDrawerClose}
       elevation={4}
       slotProps={{ backdrop: { style: { opacity: 0.25 } } }}>
-      <Box sx={{ width: 300 }} paddingRight={"10px"} paddingLeft={"24px"}>
+      <Box sx={{ width: 300 }} paddingRight={"10px"} paddingLeft={"24px"} paddingTop={"8px"}>
         <List sx={{ padding: 0 }}>
           <Toolbar disableGutters>
             <Tooltip title="Close locations">
               <IconButton
                 onClick={handleDrawerClose}
                 //color='secondary'
-                sx={{ padding: 0, margin: "10px", width: "48px", height: "48px", borderRadius: "100%", boxShadow: 4, outline: 0 }}>
+                sx={{
+                  padding: 0, margin: "10px", width: "48px", height: "48px",
+                  borderRadius: "100%", boxShadow: 4, outline: 0
+                }}>
                 <PlaceOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
               </IconButton>
             </Tooltip>

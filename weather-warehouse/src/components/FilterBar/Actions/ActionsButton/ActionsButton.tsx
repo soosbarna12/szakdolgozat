@@ -17,7 +17,7 @@ export function ActionsButton() {
           //variant="outlined"
           //color='primary'
           endIcon={<KeyboardArrowDownIcon />}
-          sx={{ boxShadow: 4, margin: 1, borderRadius: 20, width: 150, height: 40, fontWeight: 100 }}
+          sx={{ boxShadow: 4, margin: 1, borderRadius: 20, width: 120, height: 40, fontWeight: 600 }}
         >Actions
         </Button>
       </Tooltip>

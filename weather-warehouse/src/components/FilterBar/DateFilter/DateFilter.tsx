@@ -7,7 +7,7 @@ export function DateFilter() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         sx={{
-          boxShadow: 4, margin: 1, borderRadius: 50, width: 200, height: 40, border: 0, borderColor: "#f5f5f5",
+          boxShadow: 4, margin: 1, borderRadius: 50, width: 170, height: 40, border: 0, borderColor: "#f5f5f5",
           '& .MuiInputBase-root': {
             borderRadius: '20px',
             borderColor: "#f5f5f5",

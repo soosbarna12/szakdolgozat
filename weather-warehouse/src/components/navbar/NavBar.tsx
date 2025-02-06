@@ -16,14 +16,18 @@ export function NavBar(props: Readonly<NavBarProps>) {
 				position="static"
 				color="transparent"
 				elevation={0}
-				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1000, paddingTop: "8px", paddingBottom: "8px" }}
+				sx={{
+					zIndex: (theme) => theme.zIndex.drawer + 1000, paddingTop: "8px", paddingBottom: "0px",
+					//background: 'linear-gradient( #004ba0, #f5f5f5)',
+					//background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+				}}
 			>
 				<Toolbar>
 					<LocationButton />
 					<TimeTabBar />
 					<ProfileButton handleSetTheme={handleSetTheme} />
 				</Toolbar>
-			</AppBar>
+			</AppBar >
 		</>
 	);
 }

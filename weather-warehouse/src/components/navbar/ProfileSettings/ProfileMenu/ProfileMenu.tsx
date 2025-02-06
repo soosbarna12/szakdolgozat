@@ -1,8 +1,8 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, MenuItem, Typography } from "@mui/material";
 import React from "react";
-import { StyledMenu, StyledMenuItem, StyledToggleButton, StyledToggleButtonGroup } from '../../../../common.style';
+import { StyledMenu, StyledToggleButton, StyledToggleButtonGroup } from '../../../../common.style';
 import { ProfileMenuProps } from "./ProfileMenu.type";
 
 const ProfileMenuItems = ["Profile", "Logout"];
@@ -28,7 +28,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
 
   return (
     <StyledMenu
-      sx={{ mt: "45px", padding: "0", borderRadius: "20px" }}
+      sx={{ marginTop: "53px", padding: "0", borderRadius: "20px" }}
       id="menu-appbar"
       anchorEl={anchorElUser}
       anchorOrigin={{ vertical: "top", horizontal: "right", }}
@@ -38,9 +38,9 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
       onClose={handleCloseMenu}
     >
       {ProfileMenuItems.map((ProfileMenuItems) => (
-        <StyledMenuItem key={ProfileMenuItems} onClick={handleCloseMenu}>
+        <MenuItem key={ProfileMenuItems} onClick={handleCloseMenu}>
           <Typography sx={{ textAlign: "center" }}>{ProfileMenuItems}</Typography>
-        </StyledMenuItem>
+        </MenuItem>
       ))}
 
       <Divider />

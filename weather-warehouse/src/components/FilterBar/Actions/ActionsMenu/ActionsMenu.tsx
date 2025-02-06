@@ -10,6 +10,7 @@ export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
 
   return (
     <StyledMenu
+      PaperProps={{ sx: { width: "120px" } }}
       sx={{ mt: "45px", padding: "0", borderRadius: "20px" }}
       id="menu-appbar"
       anchorEl={anchorElUser}

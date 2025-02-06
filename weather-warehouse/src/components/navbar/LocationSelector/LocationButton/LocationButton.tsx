@@ -22,7 +22,10 @@ export function LocationButton() {
         <IconButton
           onClick={handleDrawerOpen}
           //color='secondary'
-          sx={{ padding: 0, margin: "10px", width: "48px", height: "48px", borderRadius: "100%", boxShadow: 4, outline: 0 }}>
+          sx={{
+            padding: 0, margin: "10px", width: "48px", height: "48px",
+            borderRadius: "100%", boxShadow: 4, outline: 0
+          }}>
           <PlaceOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
         </IconButton>
       </Tooltip>

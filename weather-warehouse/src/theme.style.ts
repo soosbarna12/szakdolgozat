@@ -1,6 +1,13 @@
 import { createTheme } from '@mui/material';
 
 export const lightTheme = createTheme({
+	components: {
+		MuiButtonBase: {
+			defaultProps: {
+				color: '#004ba0'
+			}
+		}
+	},
 	palette: {
 		mode: 'light',
 		primary: {

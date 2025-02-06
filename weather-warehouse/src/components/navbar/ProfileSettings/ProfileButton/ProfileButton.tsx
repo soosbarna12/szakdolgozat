@@ -24,7 +24,9 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
         <IconButton
           onClick={handleOpenMenu}
           //color='secondary'
-          sx={{ padding: 0, margin: "10px", width: "48px", height: "48px", boxShadow: 4, outline: 0 }}>
+          sx={{
+            padding: 0, margin: "10px", width: "48px", height: "48px", boxShadow: 4, outline: 0
+          }}>
           <PersonOutlineOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
         </IconButton>
       </Tooltip>

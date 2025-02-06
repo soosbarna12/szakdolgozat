@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@mui/material";
+import { Box, Stack, ThemeProvider } from "@mui/material";
 import React from "react";
 import { FilterBar } from "./components/FilterBar/FilterBar";
 import { NavBar } from "./components/NavBar/NavBar";
@@ -16,6 +16,18 @@ export function HomePage() {
     <ThemeProvider theme={theme ? lightTheme : darkTheme}>
       <NavBar handleSetTheme={handleSetTheme} />
       <FilterBar />
+      <Box component="main">
+        <Stack
+          spacing={2}
+          sx={{
+            alignItems: 'center',
+            mx: 3,
+            pb: 5,
+            mt: { xs: 8, md: 0 },
+          }}
+        >
+        </Stack>
+      </Box>
     </ThemeProvider>
   );
 }
