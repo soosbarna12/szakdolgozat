@@ -8,7 +8,15 @@ import { ProfileMenuProps } from "./ProfileMenu.type";
 const ProfileMenuItems = ["Profile", "Logout"];
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
-  const { disabled, setDisabled, anchorElUser, handleCloseMenu, handleSetTheme } = props;
+  const { anchorElUser, isDisabled, setDisabled, handleCloseMenu, handleSetTheme } = props;
+
+  function handleCelsiusScale() {
+    handleSetTheme(true);
+  }
+
+  function handleFahrenheitScale() {
+    handleSetTheme(false);
+  }
 
   function handleLightModeIconClick() {
     props.handleSetTheme(true);
@@ -17,15 +25,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
 
   function handleDarkModeIconClick() {
     props.handleSetTheme(false);
-    setDisabled(true);
-  }
-
-  function handleCelsiusScale() {
-    handleSetTheme(true);
-  }
-
-  function handleFahrenheitScale() {
-    handleSetTheme(false);
+    setDisabled(false);
   }
 
   return (
@@ -39,6 +39,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
       open={Boolean(anchorElUser)}
       onClose={handleCloseMenu}
     >
+
       {ProfileMenuItems.map((ProfileMenuItems) => (
         <MenuItem key={ProfileMenuItems} onClick={handleCloseMenu}>
           <Typography sx={{ textAlign: "center" }}>{ProfileMenuItems}</Typography>
@@ -47,40 +48,40 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
 
       <Divider />
 
+      {/* celsius and fahrenheit scale toggle */}
       <Box>
         <StyledToggleButtonGroup onClick={handleCloseMenu}>
-          <StyledToggleButton value="celsius" onClick={handleCelsiusScale}>
-            °C
-          </StyledToggleButton>
-          <StyledToggleButton value="fahrenheit" onClick={handleFahrenheitScale}>
-            °F
-          </StyledToggleButton>
+          <StyledToggleButton value="celsius" onClick={handleCelsiusScale}>°C</StyledToggleButton>
+          <StyledToggleButton value="fahrenheit" onClick={handleFahrenheitScale}>°F</StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
+
+      {/* language toggle */}
       <Box sx={{ marginTop: "6px" }}>
         <StyledToggleButtonGroup onClick={handleCloseMenu}>
           <StyledToggleButton value="english">EN</StyledToggleButton>
           <StyledToggleButton value="hungarian">HU</StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
+
+      {/* theme toggle */}
       <Box sx={{ marginTop: "6px" }}>
         <StyledToggleButtonGroup>
           <StyledToggleButton
             value="light"
             onClick={handleLightModeIconClick}
-            disabled={disabled}
-          >
+            disabled={isDisabled} >
             <LightModeIcon />
           </StyledToggleButton>
           <StyledToggleButton
             value="dark"
             onClick={handleDarkModeIconClick}
-            disabled={disabled}
-          >
+            disabled={!isDisabled} >
             <DarkModeIcon />
           </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box >
+
     </StyledMenu >
   )
 }
