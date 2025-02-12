@@ -1,3 +1,4 @@
 export interface NavBarProps {
-	handleSetTheme: (newTheme: boolean) => void;
+	isLightTheme: boolean;
+	handleSetLightTheme: (isLightTheme: boolean) => void;
 }

@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { NavBar } from "./components/NavBar/NavBar";
 import { TodayPage } from "./pages/TodayPage/TodayPage";
@@ -7,24 +7,23 @@ import { routes } from "./routes";
 import { darkTheme, lightTheme } from "./theme.style";
 
 export function App() {
-  const [theme, setTheme] = React.useState(() => {
+  const [isLightTheme, setIsLightTheme] = useState(() => {
     const storedTheme = localStorage.getItem("theme");
     return storedTheme !== "dark"; // default to light if no value is stored
   });
 
-  function handleSetTheme(newTheme: boolean
-  ) {
-    setTheme(newTheme);
+  function handleSetLightTheme(isLightTheme: boolean) {
+    setIsLightTheme(isLightTheme);
   }
 
   // save theme to local storage to not default the theme after redirecting to base url
-  React.useEffect(() => {
-    localStorage.setItem("theme", theme ? "light" : "dark");
-  }, [theme]);
+  useEffect(() => {
+    localStorage.setItem("theme", isLightTheme ? "light" : "dark");
+  }, [isLightTheme]);
 
   return (
-    <ThemeProvider theme={theme ? lightTheme : darkTheme}>
-      <NavBar handleSetTheme={handleSetTheme} />
+    <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
+      <NavBar isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
       <Routes>
         <Route path="/">
           <Route index element={<TodayPage />} />

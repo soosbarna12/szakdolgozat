@@ -6,9 +6,8 @@ import { ProfileButtonProps } from "./ProfileButton.type";
 
 
 export function ProfileButton(props: Readonly<ProfileButtonProps>) {
-  const { handleSetTheme } = props;
+  const { isLightTheme, handleSetLightTheme } = props;
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  const [isDisabled, setDisabled] = React.useState(false);
 
   function handleOpenMenu(event: React.MouseEvent<HTMLElement>) {
     setAnchorElUser(event.currentTarget);
@@ -29,11 +28,10 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
         </IconButton>
       </Tooltip>
       <ProfileMenu
-        handleSetTheme={handleSetTheme}
+        isLightTheme={isLightTheme}
+        handleSetLightTheme={handleSetLightTheme}
         handleCloseMenu={handleCloseMenu}
-        anchorElUser={anchorElUser}
-        isDisabled={isDisabled}
-        setDisabled={setDisabled} />
+        anchorElUser={anchorElUser} />
     </Box>
   );
 }

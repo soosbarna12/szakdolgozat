@@ -7,7 +7,7 @@ import { ProfileButton } from './ProfileSettings/ProfileButton/ProfileButton';
 import { TimeTabBar } from './TimeTabBar/TimeTabBar';
 
 export function NavBar(props: Readonly<NavBarProps>) {
-	const { handleSetTheme } = props;
+	const { isLightTheme, handleSetLightTheme } = props;
 
 	return (
 		<>
@@ -25,7 +25,7 @@ export function NavBar(props: Readonly<NavBarProps>) {
 				<Toolbar>
 					<LocationButton />
 					<TimeTabBar />
-					<ProfileButton handleSetTheme={handleSetTheme} />
+					<ProfileButton isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
 				</Toolbar>
 			</AppBar >
 		</>

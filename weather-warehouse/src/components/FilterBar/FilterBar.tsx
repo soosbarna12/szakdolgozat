@@ -12,7 +12,7 @@ export function FilterBar(props: Readonly<FilterBarProps>) {
     <>
       <CssBaseline />
       <AppBar position="static" color="transparent" elevation={0}>
-        <Toolbar sx={{ justifyContent: 'center', padding: 0 }}>
+        <Toolbar sx={{ justifyContent: 'center', padding: 0, marginBottom: 1 }}>
           {type === "historical" && (
             <>
               <LocationSearch type="historical" />

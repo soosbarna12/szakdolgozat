@@ -1,3 +1,4 @@
 export interface ProfileButtonProps {
-	handleSetTheme: (newTheme: boolean) => void;
+	isLightTheme: boolean;
+	handleSetLightTheme: (isLightTheme: boolean) => void;
 }

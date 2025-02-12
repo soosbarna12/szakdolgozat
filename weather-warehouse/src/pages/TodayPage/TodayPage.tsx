@@ -5,7 +5,6 @@ export function TodayPage() {
   return (
     <>
       <FilterBar type="today" />
-      Today
     </>
   );
 }
