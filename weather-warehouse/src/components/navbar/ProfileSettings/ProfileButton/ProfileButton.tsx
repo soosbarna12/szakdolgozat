@@ -7,16 +7,16 @@ import { ProfileButtonProps } from "./ProfileButton.type";
 
 export function ProfileButton(props: Readonly<ProfileButtonProps>) {
   const { handleSetTheme } = props;
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [disabled, setDisabled] = React.useState(false);
 
-  const handleCloseMenu = () => {
+  function handleOpenMenu(event: React.MouseEvent<HTMLElement>) {
+    setAnchorElUser(event.currentTarget);
+  }
+
+  function handleCloseMenu() {
     setAnchorElUser(null);
-  };
+  }
 
   return (
     <Box sx={{ flexGrow: 0 }}>
@@ -33,7 +33,9 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
       <ProfileMenu
         handleSetTheme={handleSetTheme}
         handleCloseMenu={handleCloseMenu}
-        anchorElUser={anchorElUser} />
+        anchorElUser={anchorElUser}
+        disabled={disabled}
+        setDisabled={setDisabled} />
     </Box>
   );
 }

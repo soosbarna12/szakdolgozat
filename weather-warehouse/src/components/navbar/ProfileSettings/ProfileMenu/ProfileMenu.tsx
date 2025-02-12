@@ -8,14 +8,16 @@ import { ProfileMenuProps } from "./ProfileMenu.type";
 const ProfileMenuItems = ["Profile", "Logout"];
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
-  const { anchorElUser, handleCloseMenu, handleSetTheme } = props;
+  const { disabled, setDisabled, anchorElUser, handleCloseMenu, handleSetTheme } = props;
 
   function handleLightModeIconClick() {
-    handleSetTheme(true);
+    props.handleSetTheme(true);
+    setDisabled(true);
   }
 
   function handleDarkModeIconClick() {
-    handleSetTheme(false);
+    props.handleSetTheme(false);
+    setDisabled(true);
   }
 
   function handleCelsiusScale() {
@@ -62,12 +64,20 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         </StyledToggleButtonGroup>
       </Box>
       <Box sx={{ marginTop: "6px" }}>
-        <StyledToggleButtonGroup onClick={handleCloseMenu}>
-          <StyledToggleButton value="light" onClick={handleLightModeIconClick}>
-            <LightModeIcon sx={{ height: "16px" }} />
+        <StyledToggleButtonGroup>
+          <StyledToggleButton
+            value="light"
+            onClick={handleLightModeIconClick}
+            disabled={disabled}
+          >
+            <LightModeIcon />
           </StyledToggleButton>
-          <StyledToggleButton value="dark" onClick={handleDarkModeIconClick}>
-            <DarkModeIcon sx={{ height: "16px" }} />
+          <StyledToggleButton
+            value="dark"
+            onClick={handleDarkModeIconClick}
+            disabled={disabled}
+          >
+            <DarkModeIcon />
           </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box >
