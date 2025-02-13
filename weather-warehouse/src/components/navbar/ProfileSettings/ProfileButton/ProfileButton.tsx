@@ -1,6 +1,7 @@
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { Box, IconButton, Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import React from "react";
+import { StyledIconButton } from '../../../../common.style';
 import { ProfileMenu } from "../ProfileMenu/ProfileMenu";
 import { ProfileButtonProps } from "./ProfileButton.type";
 
@@ -20,12 +21,11 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
-        <IconButton
+        <StyledIconButton
           onClick={handleOpenMenu}
-          //color='secondary'
-          sx={{ padding: 0, margin: "10px", width: "48px", height: "48px", boxShadow: 4, outline: 0 }}>
+          sx={{ boxShadow: 4 }}>
           <PersonOutlineOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
-        </IconButton>
+        </StyledIconButton>
       </Tooltip>
       <ProfileMenu
         isLightTheme={isLightTheme}

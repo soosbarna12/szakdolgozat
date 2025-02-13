@@ -1,13 +1,92 @@
 import { createTheme } from '@mui/material';
 
+// https://www.hover.dev/css-color-palette-generator
 export const lightTheme = createTheme({
-	components: {
+	palette: {
+		primary: {
+			main: '#7c3aed',
+			dark: '#5f14e0',
+			light: '#9b69f1',
+			contrastText: '#ffffff'
+		},
+		secondary: {
+			main: '#ed3a51',
+			dark: '#e0142f',
+			light: '#f1697a',
+			contrastText: '#ffffff'
+		},
+		background: {
+			default: '#efecf4',
+			paper: '#fbfafc'
+		},
+		divider: '#ddd7e7',
+		text: {
+			primary: '#241d30',
+			secondary: '#5f4d80',
+			disabled: '#8570a9'
+		},
+		success: {
+			main: '#3aed3a',
+			contrastText: '#032503'
+		},
+		warning: {
+			main: '#eded3a',
+			contrastText: '#252503'
+		},
+		error: {
+			main: '#ed3a3a',
+			contrastText: '#ffffff'
+		}
+	}
+});
+
+export const darkTheme = createTheme({
+	palette: {
+		primary: {
+			main: '#7c3aed',
+			contrastText: '#ffffff',
+			dark: '#5f14e0',
+			light: '#9b69f1'
+		},
+		secondary: {
+			main: '#ed3a51',
+			contrastText: '#ffffff',
+			dark: '#e0142f',
+			light: '#f1697a'
+		},
+		background: {
+			default: '#181320',
+			paper: '#3c3050'
+		},
+		divider: '#3c3050',
+		text: {
+			primary: '#fbfafc',
+			secondary: '#d6cfe2',
+			disabled: '#a08fbc'
+		},
+		success: {
+			main: '#3aed3a',
+			contrastText: '#032503'
+		},
+		warning: {
+			main: '#eded3a',
+			contrastText: '#252503'
+		},
+		error: {
+			main: '#ed3a3a',
+			contrastText: '#ffffff'
+		}
+	}
+});
+
+export const lightThemeh = createTheme({
+	/*components: {
 		MuiButtonBase: {
 			defaultProps: {
 				color: '#004ba0'
 			}
 		}
-	},
+	},*/
 	palette: {
 		mode: 'light',
 		primary: {
@@ -23,29 +102,14 @@ export const lightTheme = createTheme({
 			contrastText: '#fff' // White text
 		},
 		background: {
-			default: '#f5f5f5', // Light Gray
-			paper: '#fff' // White
-		},
-		text: {
-			primary: '#000', // Black text
-			secondary: '#555' // Gray text
-		},
-		error: {
-			main: '#d32f2f' // Red
-		},
-		warning: {
-			main: '#ffa726' // Orange
-		},
-		info: {
-			main: '#0288d1' // Light Blue
-		},
-		success: {
-			main: '#388e3c' // Green
+			default: '#808080', //'#f5f5f5', // Light Gray
+
+			paper: '#fff' // white - background color for drawer, menu, etc.
 		}
 	}
 });
 
-export const darkTheme = createTheme({
+export const darkThemeV1 = createTheme({
 	palette: {
 		mode: 'dark',
 		primary: {
@@ -67,18 +131,6 @@ export const darkTheme = createTheme({
 		text: {
 			primary: '#ffffff', // White text
 			secondary: '#b0bec5' // Light Gray text
-		},
-		error: {
-			main: '#ef5350' // Red
-		},
-		warning: {
-			main: '#ffa726' // Orange
-		},
-		info: {
-			main: '#29b6f6' // Light Blue
-		},
-		success: {
-			main: '#66bb6a' // Green
 		}
 	}
 });

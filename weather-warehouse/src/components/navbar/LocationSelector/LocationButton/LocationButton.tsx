@@ -1,6 +1,7 @@
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import { Box, IconButton, Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import React from "react";
+import { StyledIconButton } from '../../../../common.style';
 import { LocationDrawer } from "./LocationDrawer";
 
 
@@ -19,15 +20,11 @@ export function LocationButton() {
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open locations">
-        <IconButton
+        <StyledIconButton
           onClick={handleDrawerOpen}
-          //color='secondary'
-          sx={{
-            padding: 0, margin: "10px", width: "48px", height: "48px",
-            borderRadius: "100%", boxShadow: 4, outline: 0
-          }}>
+          sx={{ boxShadow: 4 }}>
           <PlaceOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
-        </IconButton>
+        </StyledIconButton>
       </Tooltip>
       <LocationDrawer toggleLocationDrawer={toggleLocationDrawer} open={open} />
     </Box >

@@ -1,3 +1,5 @@
+import { Pages } from '../../../types/pages';
+
 export interface LocationSearchProps {
-	type: 'forecast' | 'historical' | 'today';
+	type: Pages;
 }

@@ -1,5 +1,6 @@
 import { AppBar, CssBaseline, Toolbar } from "@mui/material";
 import React from "react";
+import { Pages } from "../../types/pages";
 import { ActionsButton } from "./Actions/ActionsButton/ActionsButton";
 import { DateFilter } from "./DateFilter/DateFilter";
 import { FilterBarProps } from "./FitlerBar.type";
@@ -13,14 +14,14 @@ export function FilterBar(props: Readonly<FilterBarProps>) {
       <CssBaseline />
       <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar sx={{ justifyContent: 'center', padding: 0, marginBottom: 1 }}>
-          {type === "historical" && (
+          {type === Pages.Historical && (
             <>
-              <LocationSearch type="historical" />
+              <LocationSearch type={Pages.Historical} />
               <DateFilter />
               <ActionsButton />
             </>
           )}
-          {(type === "today" || type === "forecast") && (
+          {(type === Pages.Today || type === Pages.Forecast) && (
             <LocationSearch type={type} />
           )}
         </Toolbar>

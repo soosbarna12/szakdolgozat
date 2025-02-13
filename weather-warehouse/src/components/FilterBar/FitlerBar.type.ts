@@ -1,3 +1,5 @@
+import { Pages } from '../../types/pages';
+
 export interface FilterBarProps {
-	type: 'historical' | 'today' | 'forecast';
+	type: Pages;
 }

@@ -1,26 +1,22 @@
-import { Box, Button, Container, Toolbar } from '@mui/material';
+import { Box, Container, Toolbar } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { StyledLocationSelectorButton } from '../../../common.style';
 import { routes } from '../../../routes';
-import { TimeTabBarProps } from './TimeTabBar.type';
 
-export function TimeTabBar(_: Readonly<TimeTabBarProps>) {
+export function TimeTabBar() {
 
 	function renderMenu() {
 		return routes.map((route) => (
-			<Button
+
+			<StyledLocationSelectorButton
 				component={Link}
 				to={route.path}
 				key={route.id}
-				//onClick={noop}
-				//onClick={() => window.open("/" + route.path, )}
-				//href={route.path}
-				//variant="outlined"
-				//color="primary"
-				sx={{ boxShadow: 4, margin: 1, borderRadius: 20, width: 150, height: 40, fontWeight: 600, fontSize: 16 }}
+				sx={{ boxShadow: 4 }}
 			>
 				{route.text}
-			</Button>
+			</ StyledLocationSelectorButton>
 		));
 	}
 

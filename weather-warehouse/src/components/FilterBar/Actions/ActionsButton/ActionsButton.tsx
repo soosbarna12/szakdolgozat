@@ -1,6 +1,7 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Box, Button, Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import React from "react";
+import { StyledMenuButton } from '../../../../common.style';
 import { ActionsMenu } from '../ActionsMenu/ActionsMenu';
 
 export function ActionsButton() {
@@ -12,14 +13,12 @@ export function ActionsButton() {
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open actions">
-        <Button
+        <StyledMenuButton
           onClick={handleOpenUserMenu}
-          //variant="outlined"
-          //color='primary'
           endIcon={<KeyboardArrowDownIcon />}
-          sx={{ boxShadow: 4, margin: 1, borderRadius: 20, width: 120, height: 40, fontWeight: 600 }}
+          sx={{ boxShadow: 4 }}
         >Actions
-        </Button>
+        </StyledMenuButton>
       </Tooltip>
       <ActionsMenu
         handleCloseMenu={handleCloseMenu}

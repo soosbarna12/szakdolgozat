@@ -1,32 +1,35 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 import * as React from 'react';
+import { StyledForecastTypography, StyledItem } from '../../../../common.style';
 
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  ...theme.applyStyles('dark', { backgroundColor: '#1A2027', }),
-}));
+const Days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export default function ForecastPage() {
   return (
-    <Box sx={{ flexGrow: 1 }} margin={"10px 200px 0 200px"}>
-      <Grid container spacing={12}>
-        <Grid size={4}>
-          <Item>MON</Item>
-        </Grid>
-        <Grid size={4}>
-          <Item>TUE</Item>
-        </Grid>
-        <Grid size={4}>
-          <Item>WED</Item>
-        </Grid>
+    <Box sx={{ flexGrow: 1, margin: "10px 200px 0 200px" }}>
+      <Grid container columns={7} spacing={2} justifyContent="center" alignItems="center">
+        {Days.map((day) => (
+
+
+          <Grid key={day} size={{ lg: 1 }}>
+            <StyledItem elevation={4}>
+              <Box
+                id="category-c"
+                sx={{ fontSize: '12px', textTransform: 'uppercase' }}
+              >
+                <StyledForecastTypography variant='h6' sx={{ textAlign: "center" }}>
+                  {day}
+                </StyledForecastTypography>
+              </Box>
+              <Box component="ul" aria-labelledby="category-c" sx={{ pl: 2 }}>
+
+              </Box>
+            </StyledItem>
+          </Grid>
+
+
+        ))}
       </Grid>
     </Box>
   );
