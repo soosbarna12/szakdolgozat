@@ -13,16 +13,6 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 
-export const StyledIconButton = styled(IconButton)(({ theme }) => ({
-	padding: 0,
-	margin: '10px',
-	width: '48px',
-	height: '48px',
-	outline: 0,
-	backgroundColor: theme.palette.background.paper,
-	'&:hover': { backgroundColor: theme.palette.background.default }
-}));
-
 export const StyledMenu = styled(Menu)(({ theme }) => ({
 	'& .MuiPaper-root': {
 		borderRadius: '20px'
@@ -57,11 +47,26 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)(
 	})
 );
 
+export const StyledIconButton = styled(IconButton)(({ theme }) => ({
+	padding: 0,
+	margin: '10px',
+	width: '48px',
+	height: '48px',
+	outline: 0,
+	color: theme.palette.primary.contrastText,
+	backgroundColor: theme.palette.primary.dark,
+	'&:hover': { backgroundColor: theme.palette.primary.light }
+}));
+
+//
 export const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 	paddingLeft: 16,
 	paddingRight: 16,
-	borderRadius: '10px',
-	width: '48px'
+	border: '1',
+	borderColor: theme.palette.primary.main,
+	borderRadius: '20px',
+	width: '48px',
+	color: theme.palette.primary.main
 }));
 
 export const StyledButton2 = styled(Button)(({ theme }) => ({
@@ -75,9 +80,12 @@ export const StyledButton2 = styled(Button)(({ theme }) => ({
 
 //
 export const StyledForecastTypography = styled(Typography)(({ theme }) => ({
-	fontSize: '20px',
-	textTransform: 'uppercase',
-	backgroundColor: theme.palette.primary.light,
+	variants: 'h6',
+	fontSize: '18px',
+	textAlign: 'center',
+	padding: '8px',
+	color: theme.palette.primary.contrastText,
+	backgroundColor: theme.palette.primary.main,
 	borderRadius: '20px'
 }));
 
@@ -103,7 +111,7 @@ export const StyledButton = styled(Button)(({ theme }) => ({
 })) as typeof Button;
 
 // FINAL
-export const StyledLocationSelectorButton = styled(Button)(({ theme }) => ({
+export const StyledTimeTabButton = styled(Button)(({ theme }) => ({
 	fontSize: 16,
 	fontWeight: 600,
 	color: theme.palette.primary.contrastText,

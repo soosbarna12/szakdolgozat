@@ -14,11 +14,8 @@ export default function ForecastPage() {
 
           <Grid key={day} size={{ lg: 1 }}>
             <StyledItem elevation={4}>
-              <Box
-                id="category-c"
-                sx={{ fontSize: '12px', textTransform: 'uppercase' }}
-              >
-                <StyledForecastTypography variant='h6' sx={{ textAlign: "center" }}>
+              <Box>
+                <StyledForecastTypography>
                   {day}
                 </StyledForecastTypography>
               </Box>

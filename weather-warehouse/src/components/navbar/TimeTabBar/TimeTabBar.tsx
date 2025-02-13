@@ -1,7 +1,7 @@
 import { Box, Container, Toolbar } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { StyledLocationSelectorButton } from '../../../common.style';
+import { StyledTimeTabButton } from '../../../common.style';
 import { routes } from '../../../routes';
 
 export function TimeTabBar() {
@@ -9,14 +9,14 @@ export function TimeTabBar() {
 	function renderMenu() {
 		return routes.map((route) => (
 
-			<StyledLocationSelectorButton
+			<StyledTimeTabButton
 				component={Link}
 				to={route.path}
 				key={route.id}
 				sx={{ boxShadow: 4 }}
 			>
 				{route.text}
-			</ StyledLocationSelectorButton>
+			</ StyledTimeTabButton>
 		));
 	}
 
