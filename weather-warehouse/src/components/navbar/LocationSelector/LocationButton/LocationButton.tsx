@@ -1,7 +1,7 @@
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import { Box, Tooltip } from "@mui/material";
 import React from "react";
-import { StyledIconButton } from '../../../../common.style';
+import { StyledIconButton } from '../../../../stlyes/button.style';
 import { LocationDrawer } from "./LocationDrawer";
 
 

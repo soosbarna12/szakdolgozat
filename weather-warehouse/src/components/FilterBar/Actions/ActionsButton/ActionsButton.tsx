@@ -1,7 +1,7 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box, Tooltip } from "@mui/material";
 import React from "react";
-import { StyledMenuButton } from '../../../../common.style';
+import { StyledMenuButton } from '../../../../stlyes/button.style';
 import { ActionsMenu } from '../ActionsMenu/ActionsMenu';
 
 export function ActionsButton() {

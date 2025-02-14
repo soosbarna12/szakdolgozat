@@ -2,17 +2,20 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { Box, DialogContent, Divider, MenuItem, Typography } from "@mui/material";
 import React from "react";
-import { StyledButton, StyledDialog, StyledMenu, StyledTextField, StyledToggleButton, StyledToggleButtonGroup } from '../../../../common.style';
+import { StyledButton, StyledToggleButton, StyledToggleButtonGroup } from '../../../../stlyes/button.style';
+import { StyledDialog, StyledMenu } from '../../../../stlyes/common.style';
+import { StyledTextField } from '../../../../stlyes/inputField.style';
+import { Language } from '../../../../types/language.type';
+import { ProfileMenuItem } from '../../../../types/profileMenuItem.type';
+import { TemperatureScale } from '../../../../types/temperatureScale.type';
+import { Theme } from '../../../../types/theme.type';
 import { ProfileMenuProps } from "./ProfileMenu.type";
-
-
-const ProfileMenuItems = ["Profile", "Logout"];
 
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   const { anchorElUser, isLightTheme, handleCloseMenu, handleSetLightTheme } = props;
   const [openLogin, setOpenLogin] = React.useState(false);
-
+  const profileMenuItems = Object.values(ProfileMenuItem);
 
   function handleLoginClick() {
     setOpenLogin(true);
@@ -40,8 +43,8 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
     return (
       <Box>
         <StyledToggleButtonGroup onClick={handleCloseMenu}>
-          <StyledToggleButton value="celsius" onClick={handleCelsiusScale}>°C</StyledToggleButton>
-          <StyledToggleButton value="fahrenheit" onClick={handleFahrenheitScale}>°F</StyledToggleButton>
+          <StyledToggleButton value={TemperatureScale.Celsius} onClick={handleCelsiusScale}>°C</StyledToggleButton>
+          <StyledToggleButton value={TemperatureScale.Fahrenheit} onClick={handleFahrenheitScale}>°F</StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
     )
@@ -51,8 +54,8 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
     return (
       <Box sx={{ marginTop: "6px" }}>
         <StyledToggleButtonGroup onClick={handleCloseMenu}>
-          <StyledToggleButton value="english">EN</StyledToggleButton>
-          <StyledToggleButton value="hungarian">HU</StyledToggleButton>
+          <StyledToggleButton value={Language.English}>EN</StyledToggleButton>
+          <StyledToggleButton value={Language.Hungarian}>HU</StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
     )
@@ -80,13 +83,13 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
       <Box sx={{ marginTop: "6px" }}>
         <StyledToggleButtonGroup>
           <StyledToggleButton
-            value="light"
+            value={Theme.Light}
             onClick={handleLightModeIconClick}
             disabled={isLightTheme} >
             <LightModeIcon />
           </StyledToggleButton>
           <StyledToggleButton
-            value="dark"
+            value={Theme.Dark}
             onClick={handleDarkModeIconClick}
             disabled={!isLightTheme} >
             <DarkModeIcon />
@@ -94,6 +97,13 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         </StyledToggleButtonGroup>
       </Box >
     )
+  }
+
+  function renderMenuItems() {
+    return profileMenuItems.map((profileMenuItem, index) => (
+      <MenuItem key={profileMenuItem + index} onClick={handleCloseMenu}>
+        <Typography sx={{ textAlign: "center" }}>{profileMenuItem}</Typography>
+      </MenuItem>))
   }
 
   return (
@@ -112,13 +122,10 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
           <Typography sx={{ textAlign: "center" }}>Log In</Typography>
         </MenuItem>
 
-        {ProfileMenuItems.map((ProfileMenuItems) => (
-          <MenuItem key={ProfileMenuItems} onClick={handleCloseMenu}>
-            <Typography sx={{ textAlign: "center" }}>{ProfileMenuItems}</Typography>
-          </MenuItem>
-        ))}
+        {renderMenuItems()}
 
         <Divider />
+
         {renderTemperatureScaleToggle()}
         {renderLanguageToggle()}
         {renderThemeToggle()}

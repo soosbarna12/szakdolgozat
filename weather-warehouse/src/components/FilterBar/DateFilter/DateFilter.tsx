@@ -1,7 +1,7 @@
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React from "react";
-import { StyledDatePicker } from "../../../common.style";
+import { StyledDatePicker } from "../../../stlyes/inputField.style";
 
 export function DateFilter() {
   return (

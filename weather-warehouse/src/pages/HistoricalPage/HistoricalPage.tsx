@@ -1,30 +1,33 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 import * as React from 'react';
-import { StyledItem } from '../../common.style';
 import { FilterBar } from '../../components/FilterBar/FilterBar';
-import { Pages } from '../../types/pages';
+import { ContentBox, StyledItem } from '../../stlyes/content.style';
+import { Pages } from '../../types/page.type';
 
 export function HistoricalPage() {
   return (
     <>
       <FilterBar type={Pages.Historical} />
-      <Box sx={{ flexGrow: 1 }} margin={"10px 200px 0 200px"}>
+      <ContentBox>
         <Grid container spacing={2} >
           <Grid size={{ xs: 6, md: 8 }}>
-            <StyledItem>xs=6 md=8</StyledItem>
+            <StyledItem sx={{ height: "400px" }}>
+              <h4>Lorem ipsum</h4>
+              <Box>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque hic dolorem numquam corrupti? Veritatis ex corporis qui ipsam doloribus architecto nisi eum. Possimus a molestias maiores debitis deserunt praesentium maxime.</Box>
+            </StyledItem>
           </Grid>
           <Grid size={{ xs: 6, md: 4 }}>
-            <StyledItem>xs=6 md=4</StyledItem>
+            <StyledItem sx={{ height: "400px" }}></StyledItem>
           </Grid>
           <Grid size={{ xs: 6, md: 4 }}>
-            <StyledItem>xs=6 md=4</StyledItem>
+            <StyledItem sx={{ height: "400px" }}></StyledItem>
           </Grid>
           <Grid size={{ xs: 6, md: 8 }}>
-            <StyledItem>xs=6 md=8</StyledItem>
+            <StyledItem sx={{ height: "400px" }}></StyledItem>
           </Grid>
         </Grid>
-      </Box >
+      </ContentBox>
     </>
   )
 }

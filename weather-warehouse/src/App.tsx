@@ -2,24 +2,32 @@ import { ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { NavBar } from "./components/NavBar/NavBar";
+import { ROUTES } from "./consts/routes";
+import { LOCAL_STORAGE_THEME_NAME } from "./consts/theme.const";
 import { TodayPage } from "./pages/TodayPage/TodayPage";
-import { routes } from "./routes";
-import { darkTheme, lightTheme } from "./theme.style";
+import { darkTheme, lightTheme } from "./stlyes/theme.style";
+import { Theme } from "./types/theme.type";
 
 export function App() {
   const [isLightTheme, setIsLightTheme] = useState(() => {
-    const storedTheme = localStorage.getItem("theme");
-    return storedTheme !== "dark"; // default to light if no value is stored
+    const storedTheme = localStorage.getItem(LOCAL_STORAGE_THEME_NAME);
+    return storedTheme !== Theme.Dark; // default to light if no value is stored
   });
+
+  // save theme to local storage to not default the theme after redirecting to base url
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_THEME_NAME, isLightTheme ? Theme.Light : Theme.Dark);
+  }, [isLightTheme]);
 
   function handleSetLightTheme(isLightTheme: boolean) {
     setIsLightTheme(isLightTheme);
   }
 
-  // save theme to local storage to not default the theme after redirecting to base url
-  useEffect(() => {
-    localStorage.setItem("theme", isLightTheme ? "light" : "dark");
-  }, [isLightTheme]);
+  function renderRouteElements() {
+    return ROUTES.map(({ id, path, element }) => (
+      <Route key={id} path={path} element={element} />
+    ));
+  }
 
   return (
     <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
@@ -27,9 +35,7 @@ export function App() {
       <Routes>
         <Route path="/">
           <Route index element={<TodayPage />} />
-          {routes.map(({ id, path, element }) => (
-            <Route key={id} path={path} element={element} />
-          ))}
+          {renderRouteElements()}
           <Route path="*" element={<TodayPage />} />
         </Route>
       </Routes>

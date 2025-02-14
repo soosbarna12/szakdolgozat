@@ -1,4 +1,4 @@
-export enum ProfileMenuItems {
+export enum ProfileMenuItem {
 	Login = 'Login',
 	Profile = 'Profile',
 	Logout = 'Logout'

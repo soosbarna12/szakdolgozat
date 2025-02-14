@@ -1,6 +1,6 @@
 import { MenuItem, Typography } from "@mui/material";
 import React from "react";
-import { StyledMenu } from "../../../../common.style";
+import { StyledMenu } from "../../../../stlyes/common.style";
 import { ActionsMenuProps } from "./ActionsMenu.type";
 
 const ActionsMenuItems = ["Edit", "Duplicate", "Archive", "More"];

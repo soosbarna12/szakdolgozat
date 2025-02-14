@@ -1,10 +1,10 @@
 import React from 'react';
-import { ForecastPage } from './pages/ForecastPage/ForecastPage';
-import { HistoricalPage } from './pages/HistoricalPage/HistoricalPage';
-import { TodayPage } from './pages/TodayPage/TodayPage';
-import { Pages } from './types/pages';
+import { ForecastPage } from '../pages/ForecastPage/ForecastPage';
+import { HistoricalPage } from '../pages/HistoricalPage/HistoricalPage';
+import { TodayPage } from '../pages/TodayPage/TodayPage';
+import { Pages } from '../types/page.type';
 
-export const routes = [
+export const ROUTES = [
 	{
 		text: 'Historical',
 		path: '/historical',

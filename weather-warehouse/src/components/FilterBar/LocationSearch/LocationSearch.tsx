@@ -1,8 +1,8 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { InputAdornment } from "@mui/material";
 import React from "react";
-import { StyledLocationSearch } from '../../../common.style';
-import { Pages } from '../../../types/pages';
+import { StyledLocationSearch } from '../../../stlyes/inputField.style';
+import { Pages } from '../../../types/page.type';
 import { noop } from "../../../utils/noop";
 import { LocationSearchProps } from './LocationSearch.type';
 

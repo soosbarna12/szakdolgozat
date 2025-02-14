@@ -1,13 +1,13 @@
 import { Box, Container, Toolbar } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { StyledTimeTabButton } from '../../../common.style';
-import { routes } from '../../../routes';
+import { ROUTES } from '../../../consts/routes';
+import { StyledTimeTabButton } from '../../../stlyes/button.style';
 
 export function TimeTabBar() {
 
 	function renderMenu() {
-		return routes.map((route) => (
+		return ROUTES.map((route) => (
 
 			<StyledTimeTabButton
 				component={Link}

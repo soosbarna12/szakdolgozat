@@ -1,7 +1,7 @@
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { Box, Tooltip } from "@mui/material";
 import React from "react";
-import { StyledIconButton } from '../../../../common.style';
+import { StyledIconButton } from '../../../../stlyes/button.style';
 import { ProfileMenu } from "../ProfileMenu/ProfileMenu";
 import { ProfileButtonProps } from "./ProfileButton.type";
 
