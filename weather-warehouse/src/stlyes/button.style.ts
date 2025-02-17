@@ -16,7 +16,7 @@ export const StyledButton = styled(Button)(({ theme }) => ({
 	borderWidth: 0,
 	borderRadius: '20px',
 	backgroundColor: theme.palette.primary.dark,
-	'&:hover': { backgroundColor: theme.palette.primary.light }
+	'&:hover': { backgroundColor: theme.palette.primary.main }
 })) as typeof Button;
 
 // FINAL
@@ -29,7 +29,7 @@ export const StyledTimeTabButton = styled(Button)(({ theme }) => ({
 	margin: '10px',
 	borderRadius: '20px',
 	backgroundColor: theme.palette.primary.dark,
-	'&:hover': { backgroundColor: theme.palette.primary.light }
+	'&:hover': { backgroundColor: theme.palette.primary.main }
 })) as typeof Button;
 
 // FINAL
@@ -42,7 +42,7 @@ export const StyledMenuButton = styled(Button)(({ theme }) => ({
 	borderRadius: 20,
 	backgroundColor: theme.palette.background.paper,
 	'&:hover': { backgroundColor: theme.palette.background.default },
-	'&:hover:not(.Mui-focused)': { backgroundColor: theme.palette.primary.light }
+	'&:hover:not(.Mui-focused)': { backgroundColor: theme.palette.primary.main }
 }));
 
 export const StyledButton2 = styled(Button)(({ theme }) => ({
@@ -70,7 +70,7 @@ export const StyledIconButton = styled(IconButton)(({ theme }) => ({
 	outline: 0,
 	color: theme.palette.primary.contrastText,
 	backgroundColor: theme.palette.primary.dark,
-	'&:hover': { backgroundColor: theme.palette.primary.light }
+	'&:hover': { backgroundColor: theme.palette.primary.main }
 }));
 
 //

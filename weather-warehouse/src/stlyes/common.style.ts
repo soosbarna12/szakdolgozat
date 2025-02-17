@@ -13,7 +13,7 @@ export const StyledDialog = styled(Dialog)(({ theme }) => ({
 	'& .MuiPaper-root': {
 		borderRadius: '20px'
 	},
-	mt: '45px',
+	mt: '300px',
 	padding: '0',
 	borderRadius: '20px'
 }));

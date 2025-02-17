@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material';
 
 // https://www.hover.dev/css-color-palette-generator
-export const lightTheme = createTheme({
+export const lightThemeV2 = createTheme({
 	palette: {
 		primary: {
 			main: '#7c3aed',
@@ -40,10 +40,10 @@ export const lightTheme = createTheme({
 	}
 });
 
-export const darkTheme = createTheme({
+export const darkThemeV2 = createTheme({
 	palette: {
 		primary: {
-			main: '#7c3aed',
+			main: '#7c3bed',
 			contrastText: '#ffffff',
 			dark: '#5f14e0',
 			light: '#9b69f1'
@@ -75,6 +75,60 @@ export const darkTheme = createTheme({
 		error: {
 			main: '#ed3a3a',
 			contrastText: '#ffffff'
+		}
+	}
+});
+
+// V2 https://www.w3schools.com/w3css/w3css_color_generator.asp
+// V3 https://uicolors.app/create
+export const lightTheme = createTheme({
+	palette: {
+		primary: {
+			light: '#a9ebf0',
+			main: '#20a9ba',
+			dark: '#1e6e80',
+			contrastText: '#ffffff'
+		},
+		secondary: {
+			light: '#d5f6f8',
+			main: '#3bc5d5',
+			dark: '#215a69',
+			contrastText: '#000000'
+		},
+		background: {
+			default: '#efefef',
+			paper: '#e3e1e1 '
+		},
+		text: {
+			primary: '#0f323d',
+			secondary: '#0f323d', //'#1d889d',
+			disabled: '#204c59'
+		}
+	}
+});
+
+// V3 https://uicolors.app/create
+export const darkTheme = createTheme({
+	palette: {
+		primary: {
+			light: '#a9ebf0',
+			main: '#20a9ba',
+			dark: '#1e6e80',
+			contrastText: '#ffffff'
+		},
+		secondary: {
+			light: '#d5f6f8',
+			main: '#3bc5d5',
+			dark: '#215a69',
+			contrastText: '#000000'
+		},
+		background: {
+			default: '#0e0e10',
+			paper: '#28282b' //'#18181a'
+		},
+		text: {
+			primary: '#dbf9ff',
+			secondary: '#dbf9ff'
 		}
 	}
 });

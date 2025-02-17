@@ -1,7 +1,6 @@
 import { OutlinedInput, styled } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 
-// default border color, dark mode too much color
 export const StyledTextField = styled(OutlinedInput)(({ theme }) => ({
 	height: '40px',
 	margin: '5px',
@@ -21,13 +20,11 @@ export const StyledTextField = styled(OutlinedInput)(({ theme }) => ({
 	},
 	'&:hover:not(.Mui-focused)': {
 		'& .MuiOutlinedInput-notchedOutline': {
-			//borderColor: theme.palette.primary.main
-			borderColor: theme.palette.primary.light
+			borderColor: theme.palette.primary.main
 		}
 	}
 }));
 
-// hover bgcolor too dark, dark mode too much color
 export const StyledLocationSearch = styled(OutlinedInput)(({ theme }) => ({
 	height: '40px',
 	margin: '5px',
@@ -49,13 +46,11 @@ export const StyledLocationSearch = styled(OutlinedInput)(({ theme }) => ({
 	},
 	'&:hover:not(.Mui-focused)': {
 		'& .MuiOutlinedInput-notchedOutline': {
-			//borderColor: theme.palette.primary.main
-			borderColor: theme.palette.primary.light
+			borderColor: theme.palette.primary.main
 		}
 	}
 }));
 
-// dark mode too much color
 export const StyledDatePicker = styled(DatePicker)(({ theme }) => ({
 	width: '170px',
 	height: '40px',
@@ -76,8 +71,7 @@ export const StyledDatePicker = styled(DatePicker)(({ theme }) => ({
 	},
 	'&:hover:not(.Mui-focused)': {
 		'& .MuiOutlinedInput-notchedOutline': {
-			//borderColor: theme.palette.primary.main
-			borderColor: theme.palette.primary.light
+			borderColor: theme.palette.primary.main
 		}
 	}
 }));

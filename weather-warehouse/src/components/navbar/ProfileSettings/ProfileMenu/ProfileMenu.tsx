@@ -1,14 +1,14 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { Box, DialogContent, Divider, MenuItem, Typography } from "@mui/material";
+import { Box, Divider, MenuItem, Typography } from "@mui/material";
 import React from "react";
-import { StyledButton, StyledToggleButton, StyledToggleButtonGroup } from '../../../../stlyes/button.style';
-import { StyledDialog, StyledMenu } from '../../../../stlyes/common.style';
-import { StyledTextField } from '../../../../stlyes/inputField.style';
+import { StyledToggleButton, StyledToggleButtonGroup } from '../../../../stlyes/button.style';
+import { StyledMenu } from '../../../../stlyes/common.style';
 import { Language } from '../../../../types/language.type';
 import { ProfileMenuItem } from '../../../../types/profileMenuItem.type';
 import { TemperatureScale } from '../../../../types/temperatureScale.type';
 import { Theme } from '../../../../types/theme.type';
+import { LoginForm } from '../../../LoginForm/LoginForm';
 import { ProfileMenuProps } from "./ProfileMenu.type";
 
 
@@ -60,23 +60,6 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
       </Box>
     )
   }
-
-
-  function renderLoginDialog() {
-    return (
-      <StyledDialog open={openLogin} onClose={handleCloseLogin} maxWidth="xs" fullWidth>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Typography variant="h5" sx={{ textAlign: "left" }}>Log In</Typography>
-          <StyledTextField placeholder="Username" />
-          <StyledTextField placeholder="Password" type="password" />
-          <StyledButton variant="outlined" onClick={handleCloseLogin}>
-            Submit
-          </StyledButton>
-        </DialogContent>
-      </StyledDialog>
-    );
-  }
-
 
   function renderThemeToggle() {
     return (
@@ -130,8 +113,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         {renderLanguageToggle()}
         {renderThemeToggle()}
       </StyledMenu >
-
-      {renderLoginDialog()}
+      <LoginForm open={openLogin} onClose={handleCloseLogin} />
     </>
   )
 }
