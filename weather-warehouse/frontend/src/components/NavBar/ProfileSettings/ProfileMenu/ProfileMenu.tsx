@@ -9,7 +9,7 @@ import { ProfileMenuItem } from '../../../../types/profileMenuItem.type';
 import { TemperatureScale } from '../../../../types/temperatureScale.type';
 import { Theme } from '../../../../types/theme.type';
 import { LoginForm } from '../../../LoginForm/LoginForm';
-import { ProfileMenuProps } from "./ProfileMenu.type";
+import { ProfileMenuProps } from './ProfileMenu.type';
 
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
