@@ -15,8 +15,11 @@ export function TimeTabBar() {
 					component={Link}
 					to={route.path}
 					key={route.id}
-					sx={{ boxShadow: 4 }}
-					disabled={isActive}
+					sx={{
+						boxShadow: 4,
+						backgroundColor: isActive ? 'theme.palette.background.paper' : 'inherit',
+						color: isActive ? '#fff' : 'inherit',
+					}}
 				>
 					{route.text}
 				</StyledTimeTabButton>

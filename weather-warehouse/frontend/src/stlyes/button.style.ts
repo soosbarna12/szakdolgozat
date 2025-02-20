@@ -23,12 +23,14 @@ export const StyledButton = styled(Button)(({ theme }) => ({
 export const StyledTimeTabButton = styled(Button)(({ theme }) => ({
 	fontSize: 16,
 	fontWeight: 600,
-	color: theme.palette.primary.contrastText,
+	color: theme.palette.primary.dark,
+	//color: theme.palette.primary.contrastText,
 	width: '150px',
 	height: '40px',
 	margin: '10px',
 	borderRadius: '20px',
 	backgroundColor: theme.palette.primary.dark,
+	//backgroundColor: theme.palette.background.paper,
 	'&:hover': { backgroundColor: theme.palette.primary.main }
 })) as typeof Button;
 
