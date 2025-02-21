@@ -1,4 +1,4 @@
-import { Box, Container, Toolbar } from '@mui/material';
+import { Box, Container, Toolbar, useTheme } from '@mui/material';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ROUTES } from '../../../consts/routes';
@@ -6,6 +6,7 @@ import { StyledTimeTabButton } from '../../../stlyes/button.style';
 
 export function TimeTabBar() {
 	const location = useLocation();
+	const theme = useTheme();
 
 	function renderMenu() {
 		return ROUTES.map((route) => {
@@ -17,7 +18,9 @@ export function TimeTabBar() {
 					key={route.id}
 					sx={{
 						boxShadow: 4,
-						backgroundColor: isActive ? 'theme.palette.background.paper' : 'inherit',
+						backgroundColor: isActive
+							? theme.palette.primary.dark
+							: theme.palette.background.paper,
 						color: isActive ? '#fff' : 'inherit',
 					}}
 				>

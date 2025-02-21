@@ -6,7 +6,6 @@ import {
 	ToggleButtonGroup
 } from '@mui/material';
 
-//
 export const StyledButton = styled(Button)(({ theme }) => ({
 	fontSize: 16,
 	fontWeight: 600,
@@ -19,7 +18,6 @@ export const StyledButton = styled(Button)(({ theme }) => ({
 	'&:hover': { backgroundColor: theme.palette.primary.main }
 })) as typeof Button;
 
-// FINAL
 export const StyledTimeTabButton = styled(Button)(({ theme }) => ({
 	fontSize: 16,
 	fontWeight: 600,
@@ -29,12 +27,11 @@ export const StyledTimeTabButton = styled(Button)(({ theme }) => ({
 	height: '40px',
 	margin: '10px',
 	borderRadius: '20px',
-	backgroundColor: theme.palette.primary.dark,
-	//backgroundColor: theme.palette.background.paper,
+	//backgroundColor: theme.palette.primary.dark,
+	backgroundColor: theme.palette.background.paper,
 	'&:hover': { backgroundColor: theme.palette.primary.main }
 })) as typeof Button;
 
-// FINAL
 export const StyledMenuButton = styled(Button)(({ theme }) => ({
 	height: 40,
 	fontWeight: 600,
@@ -75,7 +72,6 @@ export const StyledIconButton = styled(IconButton)(({ theme }) => ({
 	'&:hover': { backgroundColor: theme.palette.primary.main }
 }));
 
-//
 export const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 	paddingLeft: 16,
 	paddingRight: 16,
