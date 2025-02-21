@@ -1,6 +1,6 @@
 import { MenuItem, Typography } from "@mui/material";
 import React from "react";
-import { StyledMenu } from "../../../../stlyes/common.style";
+import { StyledMenu, StyledMenuItem } from "../../../../stlyes/common.style";
 import { ActionsMenuProps } from "./ActionsMenu.type";
 
 const ActionsMenuItems = ["Edit", "Duplicate", "Archive", "More"];
@@ -21,9 +21,9 @@ export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
       onClose={handleCloseMenu}
     >
       {ActionsMenuItems.map((ActionsMenuItems) => (
-        <MenuItem key={ActionsMenuItems} onClick={handleCloseMenu}>
+        <StyledMenuItem key={ActionsMenuItems} onClick={handleCloseMenu}>
           <Typography sx={{ textAlign: "center" }}>{ActionsMenuItems}</Typography>
-        </MenuItem>
+        </StyledMenuItem>
       ))}
     </StyledMenu >
   );

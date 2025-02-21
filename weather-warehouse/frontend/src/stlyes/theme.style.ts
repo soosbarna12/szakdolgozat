@@ -92,12 +92,12 @@ export const lightTheme = createTheme({
 		secondary: {
 			light: '#d5f6f8',
 			main: '#3bc5d5',
-			dark: '#215a69',
+			dark: '#c9c9c9', // menu item hover
 			contrastText: '#000000'
 		},
 		background: {
-			default: '#efefef',
-			paper: '#e3e1e1 '
+			default: '#efefef', // background
+			paper: '#e3e1e1 ' // floating object background
 		},
 		text: {
 			primary: '#0f323d',
@@ -119,12 +119,12 @@ export const darkTheme = createTheme({
 		secondary: {
 			light: '#d5f6f8',
 			main: '#3bc5d5',
-			dark: '#215a69',
+			dark: '#37373b', // menu item hover
 			contrastText: '#000000'
 		},
 		background: {
-			default: '#0e0e10',
-			paper: '#28282b' //'#18181a'
+			default: '#0e0e10', // background
+			paper: '#28282b' // floating object background ('#18181a')
 		},
 		text: {
 			primary: '#dbf9ff',

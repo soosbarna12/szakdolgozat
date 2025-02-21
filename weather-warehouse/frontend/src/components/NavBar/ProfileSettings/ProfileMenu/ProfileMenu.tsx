@@ -3,19 +3,17 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import { Box, Divider, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import { StyledToggleButton, StyledToggleButtonGroup } from '../../../../stlyes/button.style';
-import { StyledMenu } from '../../../../stlyes/common.style';
+import { StyledMenu, StyledMenuItem } from '../../../../stlyes/common.style';
 import { Language } from '../../../../types/language.type';
-import { ProfileMenuItem } from '../../../../types/profileMenuItem.type';
 import { TemperatureScale } from '../../../../types/temperatureScale.type';
 import { Theme } from '../../../../types/theme.type';
-import { LoginForm } from '../../../LoginForm/LoginForm';
 import { ProfileMenuProps } from './ProfileMenu.type';
+import { LoginForm } from '../../../AuthenticationForms/LoginForm/LoginForm';
 
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   const { anchorElUser, isLightTheme, handleCloseMenu, handleSetLightTheme } = props;
   const [openLogin, setOpenLogin] = React.useState(false);
-  const profileMenuItems = Object.values(ProfileMenuItem);
 
   function handleLoginClick() {
     setOpenLogin(true);
@@ -42,9 +40,9 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   function renderTemperatureScaleToggle() {
     return (
       <Box>
-        <StyledToggleButtonGroup onClick={handleCloseMenu}>
-          <StyledToggleButton value={TemperatureScale.Celsius} onClick={handleCelsiusScale}>°C</StyledToggleButton>
-          <StyledToggleButton value={TemperatureScale.Fahrenheit} onClick={handleFahrenheitScale}>°F</StyledToggleButton>
+        <StyledToggleButtonGroup onClick={handleCloseMenu} >
+          <StyledToggleButton value={TemperatureScale.Celsius} onClick={handleCelsiusScale} >°C </StyledToggleButton>
+          < StyledToggleButton value={TemperatureScale.Fahrenheit} onClick={handleFahrenheitScale} >°F </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
     )
@@ -52,10 +50,11 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
 
   function renderLanguageToggle() {
     return (
-      <Box sx={{ marginTop: "6px" }}>
+      <Box sx={{ marginTop: "6px" }
+      }>
         <StyledToggleButtonGroup onClick={handleCloseMenu}>
-          <StyledToggleButton value={Language.English}>EN</StyledToggleButton>
-          <StyledToggleButton value={Language.Hungarian}>HU</StyledToggleButton>
+          <StyledToggleButton value={Language.English}> EN </StyledToggleButton>
+          < StyledToggleButton value={Language.Hungarian} > HU </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
     )
@@ -63,7 +62,8 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
 
   function renderThemeToggle() {
     return (
-      <Box sx={{ marginTop: "6px" }}>
+      <Box sx={{ marginTop: "6px" }
+      }>
         <StyledToggleButtonGroup>
           <StyledToggleButton
             value={Theme.Light}
@@ -71,7 +71,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
             disabled={isLightTheme} >
             <LightModeIcon />
           </StyledToggleButton>
-          <StyledToggleButton
+          < StyledToggleButton
             value={Theme.Dark}
             onClick={handleDarkModeIconClick}
             disabled={!isLightTheme} >
@@ -80,13 +80,6 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         </StyledToggleButtonGroup>
       </Box >
     )
-  }
-
-  function renderMenuItems() {
-    return profileMenuItems.map((profileMenuItem, index) => (
-      <MenuItem key={profileMenuItem + index} onClick={handleCloseMenu}>
-        <Typography sx={{ textAlign: "center" }}>{profileMenuItem}</Typography>
-      </MenuItem>))
   }
 
   return (
@@ -101,11 +94,17 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         open={Boolean(anchorElUser)}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleLoginClick}>
+        <StyledMenuItem onClick={handleLoginClick}>
           <Typography sx={{ textAlign: "center" }}>Log In</Typography>
-        </MenuItem>
+        </StyledMenuItem>
 
-        {renderMenuItems()}
+        <StyledMenuItem onClick={handleCloseMenu} >
+          <Typography sx={{ textAlign: "center" }}>Profile</Typography>
+        </StyledMenuItem>
+
+        <StyledMenuItem onClick={handleCloseMenu} >
+          <Typography sx={{ textAlign: "center" }}>Log Out</Typography>
+        </StyledMenuItem>
 
         <Divider />
 
@@ -113,7 +112,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         {renderLanguageToggle()}
         {renderThemeToggle()}
       </StyledMenu >
-      <LoginForm open={openLogin} onClose={handleCloseLogin} />
+      < LoginForm open={openLogin} onClose={handleCloseLogin} />
     </>
   )
 }

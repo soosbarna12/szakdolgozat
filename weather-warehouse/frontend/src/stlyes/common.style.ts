@@ -21,9 +21,9 @@ export const StyledDialog = styled(Dialog)(({ theme }) => ({
 export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 	paddingLeft: 16,
 	paddingRight: 16,
-	borderRadius: '10px',
 	selected: false,
-	autoFocus: false
+	autoFocus: false,
+	'&:hover': { backgroundColor: theme.palette.secondary.dark },
 }));
 
 //

@@ -75,9 +75,12 @@ export const StyledIconButton = styled(IconButton)(({ theme }) => ({
 export const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 	paddingLeft: 16,
 	paddingRight: 16,
-	border: '1',
-	borderColor: theme.palette.primary.main,
+	//border: '1',
+	//borderColor: theme.palette.primary.main,
 	borderRadius: '20px',
 	width: '48px',
-	color: theme.palette.primary.main
+	color: theme.palette.primary.contrastText,
+	//color: theme.palette.primary.main,
+	backgroundColor: theme.palette.primary.dark,
+	'&:hover': { backgroundColor: theme.palette.secondary.dark }
 }));

@@ -7,8 +7,10 @@
 		"editor.defaultFormatter": "vscode.typescript-language-features"
 	},
 	"editor.codeActionsOnSave": {
-		"source.organizeImports": "explicit"
+		"source.organizeImports": "never",
+		"source.fixAll.eslint": "explicit"
 	},
 	"editor.formatOnSave": true,
+	//editor.formatOnSave": false,
 	"javascript.updateImportsOnFileMove.enabled": "always"
 }

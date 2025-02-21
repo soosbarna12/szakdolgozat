@@ -3,7 +3,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 
 export const StyledTextField = styled(OutlinedInput)(({ theme }) => ({
 	height: '40px',
-	margin: '5px',
+	margin: '0px',
 	color: theme.palette.text.secondary,
 	borderWidth: '2px',
 	borderRadius: '20px',
