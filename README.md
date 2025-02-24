@@ -51,7 +51,7 @@
 
 ### Prerequisites
 
--   Node.js
+-   Node.js (v22)
 -   npm or yarn
 -   Git
 
@@ -69,7 +69,6 @@
     npm  install    
     node  app.js
     ```
-    The backend server will run at  http://127.0.0.1:4000.
     
 3.  **Frontend Setup:**
     ```
@@ -96,22 +95,16 @@ The project took approximately  **50 hours**  in total, covering:
 ## Demo screenshots
 
 ### Historical page
-
-![historical_page](https://github.com/user-attachments/assets/57d56ace-8a55-4a6c-9d8c-277d5d5949ec)
+![historical_page](https://github.com/user-attachments/assets/0ccf97e2-eab6-4b3d-ac5a-3e6fd286b3b5)
 
 ### Forecast page
-
-![forecast_page](https://github.com/user-attachments/assets/8427b3db-1742-4761-b81b-271492f66308)
+![forecast_page](https://github.com/user-attachments/assets/f0c2d8e5-6f5d-4c69-acc3-def92df65c7e)
 
 ### Location selector
-
-![location_selector](https://github.com/user-attachments/assets/86ebc1a1-2474-4441-9aab-89963b77c26c)
+![location_selector](https://github.com/user-attachments/assets/1720b415-7423-4d14-a928-ebc8a1d32d4a)
 
 ### Login form
+![login_form](https://github.com/user-attachments/assets/e417cbf0-b897-42d9-9a1b-f8e9c2aa410e)
 
-![login_form](https://github.com/user-attachments/assets/2084bca6-be87-4ac5-9aa1-426864940467)
-
-Dark mode
-
-![dark_mode](https://github.com/user-attachments/assets/f93e00e9-b646-48fa-a983-dd517e1e17a9)
-
+### Dark mode
+![dark_mode](https://github.com/user-attachments/assets/ae8702dc-db6c-4a08-b0b4-d8dbb307101b)
