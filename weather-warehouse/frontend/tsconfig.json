@@ -5,6 +5,9 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
-		"jsx": "react"
-	}
+		"jsx": "react",
+		"allowJs": true,
+    	"checkJs": false,
+	},
+	"include": ["src/**/*", "app.js"]
 }

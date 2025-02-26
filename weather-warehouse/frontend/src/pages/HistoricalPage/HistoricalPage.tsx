@@ -8,7 +8,6 @@ import { Pages } from '../../types/page.type';
 export function HistoricalPage() {
   return (
     <>
-      <FilterBar type={Pages.Historical} />
       <ContentBox>
         <Grid container spacing={2} >
           <Grid size={{ xs: 6, md: 8 }}>

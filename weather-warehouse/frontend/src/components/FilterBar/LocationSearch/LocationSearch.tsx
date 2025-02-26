@@ -13,14 +13,15 @@ const widthByType: Record<Pages, number> = {
 };
 
 export function LocationSearch(props: Readonly<LocationSearchProps>) {
-  const { type } = props;
+  const { type, location, onLocationChange } = props;
   const width = widthByType[type];
 
   return (
     <StyledLocationSearch
       id="input-with-icon-adornment"
       placeholder='Location'
-      onClick={noop}
+      value={location}
+      onChange={(event) => onLocationChange(event.target.value)}
       color="primary"
       sx={{ boxShadow: 4, width }}
       startAdornment={

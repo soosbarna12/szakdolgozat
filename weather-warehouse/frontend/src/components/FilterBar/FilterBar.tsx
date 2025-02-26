@@ -7,13 +7,13 @@ import { FilterBarProps } from "./FitlerBar.type";
 import { LocationSearch } from "./LocationSearch/LocationSearch";
 
 export function FilterBar(props: Readonly<FilterBarProps>) {
-  const { type } = props;
+  const { type, location, onLocationChange } = props;
 
   function renderFilterBar() {
     if (type === Pages.Historical) {
       return (
         <>
-          <LocationSearch type={Pages.Historical} />
+          <LocationSearch type={Pages.Historical} location={location} onLocationChange={onLocationChange} />
           <DateFilter />
           <ActionsButton />
         </>
@@ -21,7 +21,7 @@ export function FilterBar(props: Readonly<FilterBarProps>) {
     }
 
     return (
-      <LocationSearch type={type} />
+      <LocationSearch type={type} location={location} onLocationChange={onLocationChange} />
     );
   }
 
