@@ -6,13 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
+import { Skeleton } from "@mui/material";
 
 export function TodayPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [location, setLocation] = React.useState(searchParams.get("location") || "");
+  const [location, handleLocation] = React.useState(searchParams.get("location") || "Budapest");
 
   const handleLocationChange = (newLocation: string) => {
-    setLocation(newLocation);
+    handleLocation(newLocation);
     setSearchParams({ location: newLocation });
   };
 
@@ -28,8 +29,16 @@ export function TodayPage() {
   return (
     <>
       <FilterBar type={Pages.Today} location={location} onLocationChange={handleLocationChange} />
-      <ContentBox>
-        {isLoading && <p>Loading...</p>}
+      <ContentBox sx={{ display: "flex", justifyContent: "center" }}>
+        {isLoading && (
+          <Skeleton
+            variant="rectangular"
+            animation="wave"
+            width="350px"
+            height="350px"
+            sx={{ borderRadius: '20px' }}
+          />
+        )}
         {error && <p>Error fetching data.</p>}
         {data && <WeatherCard data={data} />}
       </ContentBox>
