@@ -34,7 +34,7 @@ export function TodayPage() {
             variant="rectangular"
             animation="wave"
             width="350px"
-            height="350px"
+            height="375px"
             sx={{ borderRadius: '20px' }}
           />
         )}

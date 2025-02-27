@@ -3,11 +3,8 @@ import { StyledItem } from "../../../stlyes/content.style";
 import { WiDaySunny, WiCloud, WiRain, WiSnow, WiThunderstorm, WiFog } from "react-icons/wi";
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { WeatherCardProps } from "./WeatherCard.type";
 
-
-interface WeatherCardProps {
-  data: any;
-}
 
 const toTitleCase = (str: string) => {
   return str
@@ -16,7 +13,7 @@ const toTitleCase = (str: string) => {
     .join(" ");
 };
 
-export function WeatherCard({ data }: WeatherCardProps) {
+export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
   const theme = useTheme();
 
   const getWeatherIcon = (weatherMain: string) => {
@@ -98,11 +95,13 @@ export function WeatherCard({ data }: WeatherCardProps) {
   };
 
   function renderWeatherDetails() {
+    const precipitation = data.rain?.["1h"] || data.rain?.["3h"] || data.snow?.["1h"] || data.snow?.["3h"] || 0;
     return (
       <Box>
         <Typography>
           Feels Like: {convertKelvinToCelsius(data.main.feels_like)} °C
         </Typography>
+        <Typography>Precipitation: {precipitation} mm/h</Typography>
         <Typography>Humidity: {data.main.humidity}%</Typography>
         <Typography>Pressure: {data.main.pressure} hPa</Typography>
         <Typography>Wind: {data.wind.speed} m/s</Typography>
@@ -111,7 +110,7 @@ export function WeatherCard({ data }: WeatherCardProps) {
   };
 
   return (
-    <StyledItem sx={{ width: "350px", height: "350px" }}>
+    <StyledItem sx={{ width: "350px", height: "375px" }}>
       <Typography align="left">
         {renderHeader()}
         {renderWeatherIconAndTemp()}
