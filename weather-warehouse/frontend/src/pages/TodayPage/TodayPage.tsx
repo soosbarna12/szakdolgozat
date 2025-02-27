@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { Pages } from "../../types/page.type";
 import { ContentBox } from "../../stlyes/content.style";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
 import { Skeleton } from "@mui/material";
 
+
 export function TodayPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [location, handleLocation] = React.useState(searchParams.get("location") || "Budapest");
+  const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
 
   const handleLocationChange = (newLocation: string) => {
-    handleLocation(newLocation);
-    setSearchParams({ location: newLocation });
+    setLocation(newLocation);
+    localStorage.setItem("location", newLocation);
   };
 
   const { data, error, isLoading } = useQuery({
