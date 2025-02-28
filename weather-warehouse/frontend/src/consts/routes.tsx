@@ -3,6 +3,7 @@ import { ForecastPage } from '../pages/ForecastPage/ForecastPage';
 import { HistoricalPage } from '../pages/HistoricalPage/HistoricalPage';
 import { TodayPage } from '../pages/TodayPage/TodayPage';
 import { Pages } from '../types/page.type';
+import { AdminPage } from '../pages/AdminPage/AdminPage';
 
 export const ROUTES = [
 	{
@@ -22,5 +23,11 @@ export const ROUTES = [
 		path: '/forecast',
 		id: Pages.Forecast,
 		element: <ForecastPage />
+	},
+	{
+		text: 'Admin',
+		path: '/admin',
+		id: 'Admin',
+		element: <AdminPage />
 	}
 ];
