@@ -6,7 +6,6 @@ import 'leaflet/dist/leaflet.css';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { DataMapProps } from './DataMap.type';
-import { MutableRefObject, useRef } from 'react';
 import { useMapEvent } from 'react-leaflet';
 
 
@@ -21,10 +20,8 @@ function RecenterAutomatically({ coords }: { coords: [number, number] }) {
 }
 
 export function DataMap({ data }: Readonly<DataMapProps>) {
-  // changed code: store coords in state
   const [coords, setCoords] = useState<[number, number]>([51.505, -0.09]);
 
-  // changed code: update coords from data
   useEffect(() => {
     if (data && data.coord) {
       setCoords([data.coord.lat, data.coord.lon]);
@@ -32,24 +29,16 @@ export function DataMap({ data }: Readonly<DataMapProps>) {
   }, [data]);
 
   return (
-    <MapContainer
-      style={{ height: "100%", width: "100%" }}
-      center={coords}
-      zoom={13}
-      scrollWheelZoom={true}
-    > 
-      <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={coords}>
-          <Popup>{data?.name}</Popup>
-        </Marker>
+    <MapContainer style={{ height: '100%', width: '100%' }} center={coords} zoom={13}>
       <RecenterAutomatically coords={coords} />
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
     </MapContainer>
   );
 
-  
+
   /*
   const [lat, setLat] = useState(51.505);
   const [lon, setLon] = useState(-0.09);
