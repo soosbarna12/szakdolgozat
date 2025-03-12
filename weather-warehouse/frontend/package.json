@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@aerisweather/mapsgl": "^1.6.5",
 		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"@emotion/react": "^11.14.0",
 		"@emotion/styled": "^11.14.0",
@@ -16,15 +17,21 @@
 		"@toolpad/core": "^0.12.0",
 		"@types/react": "^19.0.8",
 		"@types/react-dom": "^19.0.3",
+		"@xweather/maps-ui-sdk": "^1.0.3",
 		"axios": "^1.7.9",
+		"chart.js": "^4.4.8",
 		"dayjs": "^1.11.13",
+		"leaflet": "^1.9.4",
 		"lodash": "^4.17.21",
 		"material-ui": "^0.20.0",
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0",
+		"react": "^19.0.0-rc.1",
+		"react-chartjs-2": "^5.3.0",
+		"react-dom": "^19.0.0-rc.1",
 		"react-icons": "^5.5.0",
+		"react-leaflet": "^5.0.0-rc.2",
 		"react-router-dom": "^7.1.5",
 		"react-scripts": "5.0.1",
+		"recharts": "^2.15.1",
 		"styled-components": "^6.1.15",
 		"typescript": "5.4.3"
 	},
@@ -42,6 +49,7 @@
 	},
 	"devDependencies": {
 		"@babel/preset-react": "^7.26.3",
+		"@types/leaflet": "^1.9.16",
 		"ajv": "^7.2.4"
 	},
 	"browserslist": {
