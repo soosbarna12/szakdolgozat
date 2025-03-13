@@ -20,4 +20,17 @@ router.get('/data', async (req, res) => {
   }
 })
 
+router.get("/reverse-geocode", async (req, res) => {
+  try {
+    const { lat, lon } = req.query;
+    const response = await axios.get(
+      `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    );
+    const cityName = response.data?.[0]?.name || "";
+    res.send(cityName);
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
 module.exports = router;
