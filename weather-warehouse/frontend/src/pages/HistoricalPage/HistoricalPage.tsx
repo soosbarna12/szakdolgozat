@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import dayjs from "dayjs";
+import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
 
 
 export function HistoricalPage() {
@@ -70,6 +71,7 @@ export function HistoricalPage() {
       <FilterBar
         type={Pages.Historical}
         location={location}
+        onDateChange={handleDateChange}
         onLocationChange={handleLocationChange}
       />
 
@@ -107,9 +109,26 @@ export function HistoricalPage() {
           </Grid>
 
           <Grid size={{ xs: 6, md: 8 }}>
-            <StyledItem sx={{ height: "400px" }}>
-              <h4>Temperatures</h4>
+            <StyledItem >
               <DataTable data={tableData} />
+            </StyledItem>
+          </Grid>
+
+          <Grid size={{ xs: 6, md: 8 }}>
+            <StyledItem sx={{ height: "400px" }}>
+              <DataChart data={tableData} />
+            </StyledItem>
+          </Grid>
+
+          <Grid size={{ xs: 6, md: 4 }}>
+            <StyledItem sx={{ height: "400px" }}>
+              <h4>Lorem ipsum</h4>
+              <Box>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque hic
+                dolorem numquam corrupti? Veritatis ex corporis qui ipsam doloribus
+                architecto nisi eum. Possimus a molestias maiores debitis deserunt
+                praesentium maxime.
+              </Box>
             </StyledItem>
           </Grid>
 

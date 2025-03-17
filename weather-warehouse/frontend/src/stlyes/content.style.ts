@@ -1,4 +1,5 @@
-import { Box, Paper, styled } from '@mui/material';
+import { Box, Paper, styled, TableCell } from '@mui/material';
+import { LineChart } from 'recharts';
 
 export const ContentBox = styled(Box)`
 	flex-grow: 1;
@@ -24,10 +25,27 @@ export const ContentBox = styled(Box)`
 	}
 `;
 
-//
 export const StyledItem = styled(Paper)(({ theme }) => ({
 	padding: theme.spacing(2),
 	textAlign: 'center',
 	borderRadius: '20px',
 	backgroundColor: theme.palette.background.paper
 }));
+
+export const StyledTableContainer = styled(Paper)(() => ({
+	borderRadius: 20,
+	overflow: "hidden",
+}));
+
+export const StyledTableHeaderCell = styled(TableCell)(({ theme }) => ({
+	fontWeight: 700,
+	color: theme.palette.primary.contrastText,
+	backgroundColor: theme.palette.primary.dark,
+}));
+
+export const StlyedLineChart = styled(LineChart)(({ theme }) => ({
+	borderRadius: 20,
+	backgroundColor: theme.palette.background.paper,
+	padding: theme.spacing(2),
+	boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+  }));
