@@ -10,11 +10,17 @@ import axios from "axios";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import dayjs from "dayjs";
 import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
+import { useAlert } from "../../utils/AlertContext";
 
 
 export function HistoricalPage() {
   const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
   const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs | null>(null);
+  const { showAlert } = useAlert();
+
+
+
+
 
   const handleLocationChange = (newLocation: string) => {
     setLocation(newLocation);
@@ -25,14 +31,29 @@ export function HistoricalPage() {
     setSelectedDate(dateValue);
   };
 
-  const { data } = useQuery({
+
+
+  const { data, error } = useQuery({
     queryKey: ["weather", location],
     queryFn: async () => {
       const response = await axios.get(`/today/data?location=${location}`);
+      if (response.data?.cod === "404") {
+        throw new Error("City not found");
+      }
       return response.data;
     },
     enabled: !!location,
   });
+
+  useEffect(() => {
+    if (error) {
+      showAlert("Error fetching data", "error");
+    }
+  }, [error, showAlert]);
+
+
+
+
 
   const [tableData, setTableData] = useState([
     { date: "2023-08-01", maxTemp: 32, minTemp: 25, humidity: 60 },
@@ -65,6 +86,7 @@ export function HistoricalPage() {
       setTableData((prev) => [...prev, newRecord]);
     }
   }, [selectedDate]);
+
 
   return (
     <>
@@ -109,7 +131,7 @@ export function HistoricalPage() {
           </Grid>
 
           <Grid size={{ xs: 6, md: 8 }}>
-            <StyledItem >
+            <StyledItem sx={{ height: "400px" }}>
               <DataTable data={tableData} />
             </StyledItem>
           </Grid>

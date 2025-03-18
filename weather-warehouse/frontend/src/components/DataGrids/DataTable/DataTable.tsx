@@ -1,36 +1,32 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from "@mui/material";
 import React from "react";
-import { styled } from "@mui/material/styles";
-import { StyledTableContainer, StyledTableHeaderCell } from "../../../stlyes/content.style";
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    border: "1px solid #ccc",
-}));
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+import { StyledDataGrid } from "../../../stlyes/content.style";
 
 export function DataTable({ data }: { data: Array<{ date: string; maxTemp: number; minTemp: number; humidity: number }> }) {
+    const columns: GridColDef[] = [
+        { field: "date", headerName: "Date", flex: 1 },
+        { field: "maxTemp", headerName: "Max Temp (°C)", flex: 1 },
+        { field: "minTemp", headerName: "Min Temp (°C)", flex: 1 },
+        { field: "humidity", headerName: "Humidity (%)", flex: 1 },
+    ];
+
+    const rows = data.map((item, index) => ({
+        id: index,
+        date: item.date,
+        maxTemp: item.maxTemp,
+        minTemp: item.minTemp,
+        humidity: item.humidity,
+    }));
+
     return (
-        <StyledTableContainer>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableHeaderCell>Date</StyledTableHeaderCell>
-                        <StyledTableHeaderCell>Max Temp (°C)</StyledTableHeaderCell>
-                        <StyledTableHeaderCell>Min Temp (°C)</StyledTableHeaderCell>
-                        <StyledTableHeaderCell>Humidity (%)</StyledTableHeaderCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.map((item) => (
-                        <TableRow key={item.date}>
-                            <StyledTableCell>{item.date}</StyledTableCell>
-                            <StyledTableCell>{item.maxTemp}</StyledTableCell>
-                            <StyledTableCell>{item.minTemp}</StyledTableCell>
-                            <StyledTableCell>{item.humidity}</StyledTableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </StyledTableContainer>
+        <Box sx={{ width: "100%", height: 400 }}>
+            <StyledDataGrid
+                rows={rows}
+                columns={columns}
+                hideFooterPagination
+                hideFooterSelectedRowCount
+            />
+        </Box>
     );
 }

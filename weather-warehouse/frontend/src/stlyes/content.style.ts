@@ -1,4 +1,5 @@
 import { Box, Paper, styled, TableCell } from '@mui/material';
+import { DataGrid } from "@mui/x-data-grid";
 import { LineChart } from 'recharts';
 
 export const ContentBox = styled(Box)`
@@ -35,6 +36,11 @@ export const StyledItem = styled(Paper)(({ theme }) => ({
 export const StyledTableContainer = styled(Paper)(() => ({
 	borderRadius: 20,
 	overflow: "hidden",
+	boxShadow: "none",
+}));
+
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    border: "1px solid #ccc",
 }));
 
 export const StyledTableHeaderCell = styled(TableCell)(({ theme }) => ({
@@ -47,5 +53,16 @@ export const StlyedLineChart = styled(LineChart)(({ theme }) => ({
 	borderRadius: 20,
 	backgroundColor: theme.palette.background.paper,
 	padding: theme.spacing(2),
-	boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+}));
+
+export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+	borderRadius: 20,
+	border: 0,
+	'& .MuiDataGrid-columnHeaders': {
+	  backgroundColor: theme.palette.primary.main,
+	  color: theme.palette.primary.contrastText,
+	},
+	'& .MuiDataGrid-row:hover': {
+	  backgroundColor: theme.palette.action.hover
+	}
   }));
