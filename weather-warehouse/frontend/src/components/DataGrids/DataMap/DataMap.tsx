@@ -8,16 +8,11 @@ import axios from 'axios';
 import { DataMapProps } from './DataMap.type';
 import { useMapEvent } from 'react-leaflet';
 import { MapLocationChange } from './MapLocationChange';
+import { useMapCoordinates } from './useMapCoordinates';
 
 
 export function DataMap({ data }: Readonly<DataMapProps>) {
-  const [coords, setCoords] = useState<[number, number]>([51.505, -0.09]);
-
-  useEffect(() => {
-    if (data && data.coord) {
-      setCoords([data.coord.lat, data.coord.lon]);
-    }
-  }, [data]);
+  const coords = useMapCoordinates(data);
 
   return (
     <MapContainer style={{ height: '100%', width: '100%' }} center={coords} zoom={20}>
