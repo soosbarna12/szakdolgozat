@@ -11,7 +11,7 @@ export function DateFilter({ onDateChange }: DateFilterProps) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <StyledDatePicker
         sx={{ boxShadow: 4 }}
-        onChange={(value) => onDateChange?.(value)}
+        onAccept={(value) => onDateChange?.(value)}
         slotProps={{
           textField: { size: 'small', placeholder: "Date" },
           popper: { sx: { ".MuiPaper-root": { borderRadius: "20px" } } },
