@@ -64,5 +64,8 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 	},
 	'& .MuiDataGrid-row:hover': {
 	  backgroundColor: theme.palette.action.hover
-	}
+	},
+	'& .MuiDataGrid-columnHeader': {
+        backgroundColor: theme.palette.primary.dark,
+    }
   }));
