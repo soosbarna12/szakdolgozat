@@ -11,7 +11,9 @@ router.get('/data', async (req, res) => {
       throw res.status(400).json({ error: 'Location is required' });
     }
 
-    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`);
+    const lang = req.query.lang || 'en';
+
+    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&lang=${lang}`);
     console.log(response.data);
     res.send(response.data);
   } catch (error) {

@@ -18,8 +18,8 @@ export function DataMap({ data }: Readonly<DataMapProps>) {
     <MapContainer style={{ height: '100%', width: '100%' }} center={coords} zoom={20}>
       <MapLocationChange coords={coords} />
       <TileLayer
-        attribution="© CARTO"
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png"
       />
     </MapContainer>
   );

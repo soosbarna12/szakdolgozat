@@ -31,7 +31,7 @@ export function useHistoricalData() {
   const { data, error } = useQuery({
     queryKey: ["weather", location],
     queryFn: async () => {
-      const response = await axios.get(`/today/data?location=${location}`);
+      const response = await axios.get(`/today/data?location=${location}&lang=en`);
       if (response.data?.cod === "404") {
         throw new Error("City not found");
       }
