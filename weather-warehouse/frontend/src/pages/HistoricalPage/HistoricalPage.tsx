@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 import { FilterBar } from "../../components/FilterBar/FilterBar";
@@ -8,16 +8,30 @@ import { DataMap } from "../../components/DataGrids/DataMap/DataMap";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
 import { useHistoricalData } from "./useHistoricalData";
+import { useHistoricalDataQuery } from "./useHistoricalDataQuery";
+import dayjs from "dayjs";
 
 
 export function HistoricalPage() {
-  const {
-    location,
-    handleLocationChange,
-    handleDateChange,
-    data,
-    tableData
-  } = useHistoricalData();
+
+  const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
+  const [date, setDate] = useState<dayjs.Dayjs | null>(null);
+  const { data } = useHistoricalDataQuery({ location, date });
+
+  const { tableData } = useHistoricalData({ data, date });
+
+
+  // Handle location change
+  const handleLocationChange = (newLocation: string) => {
+    setLocation(newLocation);
+    localStorage.setItem("location", newLocation);
+  };
+
+  // Handle date change
+  const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
+    setDate(dateValue);
+  };
+
 
 
   return (
