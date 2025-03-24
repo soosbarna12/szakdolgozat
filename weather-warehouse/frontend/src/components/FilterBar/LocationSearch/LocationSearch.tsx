@@ -1,62 +1,77 @@
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { InputAdornment } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { useDebounce } from 'use-debounce';
-import { StyledLocationSearch } from '../../../stlyes/inputField.style';
-import { Pages } from '../../../types/page.type';
-import { noop } from "../../../utils/noop";
-import { LocationSearchProps } from './LocationSearch.type';
-import axios from 'axios';
-
-const widthByType: Record<Pages, number> = {
-  [Pages.Historical]: 250,
-  [Pages.Today]: 400,
-  [Pages.Forecast]: 400
-};
+import Autocomplete from '@mui/material/Autocomplete';
+import StyledTextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { useDebounce } from "use-debounce";
+import axios from "axios";
+import { LocationSearchProps } from "./LocationSearch.type";
 
 export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const { type, location, onLocationChange } = props;
-  const width = widthByType[type];
+  const [inputValue, setInputValue] = useState(location);
+  const [debouncedValue] = useDebounce(inputValue, 500);
+  const [options, setOptions] = useState<Array<{ name: string; country: string; state?: string }>>([]);
 
-  const [value, setValue] = useState(location);
-  const [debouncedValue] = useDebounce(value, 500);
-
+  // Fetch location suggestions when debounced value changes
   useEffect(() => {
-    onLocationChange(debouncedValue);
-  }, [debouncedValue, onLocationChange]);
-
-  useEffect(() => {
-    if (!location) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          try {
-            const response = await axios.get(`/today/data?lat=${lat}&lon=${lon}`);
-            const city = response.data.name;
-            const country = response.data.sys?.country;
-            setValue(`${city}, ${country}`);
-          } catch (error) {
-            console.error(error);
-          }
-        },
-        (error) => console.error(error)
-      );
+    if (debouncedValue.trim() === "") {
+      setOptions([]);
+      return;
     }
-  }, []);
+
+    const fetchSuggestions = async () => {
+      try {
+        const apiKey = "462394b96065d405cd9ca7b3ef92d634";
+        const limit = 5;
+        const response = await axios.get(
+          `https://api.openweathermap.org/geo/1.0/direct?q=${debouncedValue}&limit=${limit}&appid=${apiKey}`
+        );
+        setOptions(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchSuggestions();
+  }, [debouncedValue]);
 
   return (
-    <StyledLocationSearch
-      id="input-with-icon-adornment"
-      placeholder="Location"
-      value={value}
-      onChange={(event) => setValue(event.target.value)}
-      sx={{ boxShadow: 4, width }}
-      startAdornment={
-        <InputAdornment position="start">
-          <SearchOutlinedIcon />
-        </InputAdornment>
+    <Autocomplete
+      freeSolo
+      options={options}
+      getOptionLabel={(option) =>
+        typeof option === "string"
+          ? option
+          : `${option.name}${option.state ? `, ${option.state}` : ""}, ${option.country}`
       }
+      value={location}
+      inputValue={inputValue}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
+      onChange={(event, newValue) => {
+        if (newValue && typeof newValue !== "string") {
+          const selectedLocation = `${newValue.name}${newValue.state ? `, ${newValue.state}` : ""}, ${newValue.country}`;
+          setInputValue(selectedLocation);
+          onLocationChange(selectedLocation);
+        }
+      }}
+      renderInput={(params) => (
+        <StyledTextField
+          {...params}
+          placeholder="Location"
+          variant="outlined"
+          sx={{ boxShadow: 4, width: type === "Historical" ? 250 : 400 }}
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchOutlinedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      )}
     />
   );
 }

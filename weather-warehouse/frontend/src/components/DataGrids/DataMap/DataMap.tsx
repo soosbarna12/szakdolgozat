@@ -15,7 +15,7 @@ export function DataMap({ data }: Readonly<DataMapProps>) {
   const coords = useMapCoordinates(data);
 
   return (
-    <MapContainer style={{ height: '100%', width: '100%' }} center={coords} zoom={20}>
+    <MapContainer style={{ height: '100%', width: '100%' }} center={coords}>
       <MapLocationChange coords={coords} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
