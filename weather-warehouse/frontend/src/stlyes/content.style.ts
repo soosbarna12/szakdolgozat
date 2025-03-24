@@ -8,6 +8,7 @@ export const ContentBox = styled(Box)`
     margin-right: auto;
     margin-top: 2px;
     width: 98%;
+    overflow: hidden; /* Remove scrollbars */
 
     @media (min-width: 600px) {
         width: 95%;
