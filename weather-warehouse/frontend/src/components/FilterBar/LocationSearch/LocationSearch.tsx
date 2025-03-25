@@ -6,6 +6,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useDebounce } from "use-debounce";
 import axios from "axios";
 import { LocationSearchProps } from "./LocationSearch.type";
+import { StyledAutocompleteDropdown, StyledLocationSearch } from "../../../stlyes/inputField.style";
 
 export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const { type, location, onLocationChange } = props;
@@ -46,9 +47,8 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
       }
       value={location}
       inputValue={inputValue}
-      onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue);
-      }}
+      onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
+      PaperComponent={StyledAutocompleteDropdown}
       onChange={(event, newValue) => {
         if (newValue && typeof newValue !== "string") {
           const selectedLocation = `${newValue.name}${newValue.state ? `, ${newValue.state}` : ""}, ${newValue.country}`;
@@ -56,12 +56,24 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
           onLocationChange(selectedLocation);
         }
       }}
+      renderOption={(props, option) => {
+        const uniqueKey = typeof option === "string"
+          ? option
+          : `${option.name}${option.state || ""}${option.country}`;
+        return (
+          <li {...props} key={uniqueKey}>
+            {typeof option === "string"
+              ? option
+              : `${option.name}${option.state ? `, ${option.state}` : ""}, ${option.country}`}
+          </li>
+        );
+      }}
       renderInput={(params) => (
-        <StyledTextField
+        <StyledLocationSearch
           {...params}
           placeholder="Location"
-          variant="outlined"
           sx={{ boxShadow: 4, width: type === "Historical" ? 250 : 400 }}
+          variant="outlined"
           InputProps={{
             ...params.InputProps,
             startAdornment: (

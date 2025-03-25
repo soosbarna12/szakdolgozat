@@ -17,7 +17,7 @@ export function DataMap({ data }: Readonly<DataMapProps>) {
 
   return (
     <StyledMapContainer
-      center={coords} zoom={10} maxZoom={10} minZoom={2}>
+      center={coords} zoom={12} maxZoom={12} minZoom={2}>
       <MapLocationChange coords={coords} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
