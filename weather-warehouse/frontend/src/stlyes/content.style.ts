@@ -1,5 +1,6 @@
 import { Box, Paper, styled, TableCell } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid";
+import { MapContainer } from 'react-leaflet';
 import { LineChart } from 'recharts';
 
 export const ContentBox = styled(Box)`
@@ -34,6 +35,14 @@ export const StyledItem = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper
 }));
 
+export const StyledMapContainer = styled(MapContainer)(({ theme }) => ({
+	height: '100%',
+	width: '100%',
+	borderRadius: 10,
+	overflow: "hidden",
+	boxShadow: "none",
+}));
+
 export const StyledTableContainer = styled(Paper)(() => ({
 	borderRadius: 20,
 	overflow: "hidden",
@@ -57,7 +66,7 @@ export const StlyedLineChart = styled(LineChart)(({ theme }) => ({
 }));
 
 export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-	borderRadius: 20,
+	borderRadius: 10,
 	border: 0,
 	'& .MuiDataGrid-columnHeaders': {
 	  backgroundColor: theme.palette.primary.main,

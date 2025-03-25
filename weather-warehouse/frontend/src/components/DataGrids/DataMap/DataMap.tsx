@@ -9,18 +9,20 @@ import { DataMapProps } from './DataMap.type';
 import { useMapEvent } from 'react-leaflet';
 import { MapLocationChange } from './MapLocationChange';
 import { useMapCoordinates } from './useMapCoordinates';
+import { StyledMapContainer } from '../../../stlyes/content.style';
 
 
 export function DataMap({ data }: Readonly<DataMapProps>) {
   const coords = useMapCoordinates(data);
 
   return (
-    <MapContainer style={{ height: '100%', width: '100%' }} center={coords} zoom={10} maxZoom={6} minZoom={5}>
+    <StyledMapContainer
+      center={coords} zoom={10} maxZoom={10} minZoom={2}>
       <MapLocationChange coords={coords} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png"
       />
-    </MapContainer>
+    </StyledMapContainer>
   );
 }
