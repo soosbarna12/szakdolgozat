@@ -1,7 +1,7 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { Box, Divider, MenuItem, Typography } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyledToggleButton, StyledToggleButtonGroup } from '../../../../stlyes/button.style';
 import { StyledMenu, StyledMenuItem } from '../../../../stlyes/common.style';
 import { Language } from '../../../../types/language.type';
@@ -12,16 +12,28 @@ import { LoginForm } from '../../../AuthenticationForms/LoginForm/LoginForm';
 
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
-  const { anchorElUser, isLightTheme, handleCloseMenu, handleSetLightTheme } = props;
-  const [openLogin, setOpenLogin] = React.useState(false);
+  const { anchorElUser, isLightTheme, handleSetLightTheme, handleCloseMenu } = props;
+  const [openLogin, setOpenLogin] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(
+    localStorage.getItem("loggedIn") === "true"
+  );
 
-  function handleLoginClick() {
+  const handleLoginClick = () => {
     setOpenLogin(true);
-  }
+  };
 
-  function handleCloseLogin() {
-    setOpenLogin(false);
-  }
+  const handleCloseLogin = () => { setOpenLogin(false); };
+
+  const handleLogout = () => {
+    localStorage.removeItem("loggedIn");
+    setLoggedIn(false);
+    handleCloseMenu();
+  };
+
+  useEffect(() => {
+    const stored = localStorage.getItem("loggedIn") === "true";
+    setLoggedIn(stored);
+  }, [anchorElUser]);
 
   function handleCelsiusScale() {
   }
@@ -88,31 +100,33 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         sx={{ marginTop: "53px", padding: "0", borderRadius: "20px" }}
         id="menu-appbar"
         anchorEl={anchorElUser}
-        anchorOrigin={{ vertical: "top", horizontal: "right", }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
         keepMounted
-        transformOrigin={{ vertical: "top", horizontal: "right", }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={Boolean(anchorElUser)}
-        onClose={handleCloseMenu}
+        onClose={(event, reason) => handleCloseMenu()} 
       >
-        <StyledMenuItem onClick={handleLoginClick}>
-          <Typography sx={{ textAlign: "center" }}>Log In</Typography>
-        </StyledMenuItem>
-
-        <StyledMenuItem onClick={handleCloseMenu} >
-          <Typography sx={{ textAlign: "center" }}>Profile</Typography>
-        </StyledMenuItem>
-
-        <StyledMenuItem onClick={handleCloseMenu} >
-          <Typography sx={{ textAlign: "center" }}>Log Out</Typography>
-        </StyledMenuItem>
-
+        {!loggedIn && (
+          <StyledMenuItem onClick={handleLoginClick}>
+            <Typography sx={{ textAlign: "center" }}>Log In</Typography>
+          </StyledMenuItem>
+        )}
+        {loggedIn && (
+          <>
+            <StyledMenuItem onClick={handleCloseMenu}>
+              <Typography sx={{ textAlign: "center" }}>Profile</Typography>
+            </StyledMenuItem>
+            <StyledMenuItem onClick={handleLogout}>
+              <Typography sx={{ textAlign: "center" }}>Log Out</Typography>
+            </StyledMenuItem>
+          </>
+        )}
         <Divider />
-
         {renderTemperatureScaleToggle()}
         {renderLanguageToggle()}
         {renderThemeToggle()}
       </StyledMenu >
-      < LoginForm open={openLogin} onClose={handleCloseLogin} />
+      < LoginForm open={openLogin} onClose={() => { setOpenLogin(false); handleCloseMenu(); }} onLoginSuccess={() => setLoggedIn(true)} />
     </>
   )
 }
