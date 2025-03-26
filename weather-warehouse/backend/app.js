@@ -4,12 +4,13 @@ const sql = require('mssql');
 const http = require('http');
 
 const sqlConfig = {
-  user: 'admin',      // if you're using SQL authentication
-  password: 'admin',
-  server: 'localhost', // use localhost here
+  user: 'sa',      
+  password: 'admin1234',
+  server: 'localhost', 
+  port: 1433, // add the correct port number
   database: 'weather-warehouse',
   options: {
-    instanceName: 'weather-warehouse', // specify your LocalDB instance name
+    // remove or adjust instanceName if not needed
     trustServerCertificate: true
   }
 };
