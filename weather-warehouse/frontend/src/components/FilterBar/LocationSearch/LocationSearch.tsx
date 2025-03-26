@@ -28,7 +28,14 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
         const response = await axios.get(
           `https://api.openweathermap.org/geo/1.0/direct?q=${debouncedValue}&limit=${limit}&appid=${apiKey}`
         );
-        setOptions(response.data);
+        const newResults = response.data.filter(
+          (loc: any, index: number, self: any[]) =>
+            index ===
+            self.findIndex(
+              (t) => t.name === loc.name && t.state === loc.state && t.country === loc.country
+            )
+        );
+        setOptions(newResults);
       } catch (error) {
         console.error(error);
       }
@@ -38,17 +45,14 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
 
   return (
     <Autocomplete
-      freeSolo
       options={options}
       getOptionLabel={(option) =>
         typeof option === "string"
           ? option
           : `${option.name}${option.state ? `, ${option.state}` : ""}, ${option.country}`
       }
-      value={location}
       inputValue={inputValue}
-      onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
-      PaperComponent={StyledAutocompleteDropdown}
+      onInputChange={(event, newValue) => setInputValue(newValue)}
       onChange={(event, newValue) => {
         if (newValue && typeof newValue !== "string") {
           const selectedLocation = `${newValue.name}${newValue.state ? `, ${newValue.state}` : ""}, ${newValue.country}`;
@@ -56,18 +60,7 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
           onLocationChange(selectedLocation);
         }
       }}
-      renderOption={(props, option) => {
-        const uniqueKey = typeof option === "string"
-          ? option
-          : `${option.name}${option.state || ""}${option.country}`;
-        return (
-          <li {...props} key={uniqueKey}>
-            {typeof option === "string"
-              ? option
-              : `${option.name}${option.state ? `, ${option.state}` : ""}, ${option.country}`}
-          </li>
-        );
-      }}
+      PaperComponent={StyledAutocompleteDropdown}
       renderInput={(params) => (
         <StyledLocationSearch
           {...params}
