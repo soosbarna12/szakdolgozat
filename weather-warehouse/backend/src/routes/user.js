@@ -57,7 +57,6 @@ router.post('/login', async (req, res) => {
     }
     
     const user = result.recordset[0];
-    // In production, compare hashed passwords
     if (user.password !== password) {
       return res.status(401).json({ error: "Invalid username or password." });
     }
@@ -69,8 +68,49 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/data', (req, res) => {
-  res.send('hello world user')
+router.get('/data', async (req, res) => {
+  try {
+    const pool = await sql.connect();
+    const result = await pool.request().query(`
+      SELECT 
+        userId, 
+        username, 
+        CASE WHEN active = 1 THEN 'active' ELSE 'pending' END AS status 
+      FROM Users
+    `);
+    res.json(result.recordset);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
+});
+
+router.post('/accept', async (req, res) => {
+  try {
+    const { id } = req.body;
+    const pool = await sql.connect();
+    await pool.request()
+      .input('id', sql.Int, id)
+      .query('UPDATE Users SET active = 1 WHERE userId = @id');
+    res.status(200).json({ message: "User accepted successfully" });
+  } catch (error) {
+    console.error("Error accepting user:", error);
+    res.status(500).json({ error: "Failed to accept user" });
+  }
+});
+
+router.delete('/delete', async (req, res) => {
+  try {
+    const { id } = req.body;
+    const pool = await sql.connect();
+    await pool.request()
+      .input('id', sql.Int, id)
+      .query('DELETE FROM Users WHERE userId = @id');
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Failed to delete user" });
+  }
 });
 
 module.exports = router;
