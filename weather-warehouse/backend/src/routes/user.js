@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const sql = require("mssql");
+const bcrypt = require("bcrypt"); // Import bcrypt
+
+const SALT_ROUNDS = 10; // Number of salt rounds for hashing
 
 router.post('/register', async (req, res) => {
   try {
@@ -8,31 +11,35 @@ router.post('/register', async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({ error: "Username and password are required." });
     }
-    
-    // validate password strength
+
+    // Validate password strength
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
         error: "Password requirements: At least 8 characters, one uppercase letter, one lowercase letter, and one digit."
       });
     }
-    
+
     const pool = await sql.connect();
-    
-    // check if the username already exists
+
+    // Check if the username already exists
     const checkResult = await pool.request()
       .input('username', sql.VarChar, username)
       .query('SELECT * FROM Users WHERE username = @username');
-    
+
     if (checkResult.recordset.length > 0) {
       return res.status(400).json({ error: "Username already exists." });
     }
-    
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+    // Insert the user into the database
     const result = await pool.request()
       .input('username', sql.VarChar, username)
-      .input('password', sql.VarChar, password)
+      .input('password', sql.VarChar, hashedPassword) // Store hashed password
       .query('INSERT INTO Users (username, password) VALUES (@username, @password); SELECT SCOPE_IDENTITY() AS id;');
-    
+
     res.status(201).json({ message: "User registered successfully", id: result.recordset[0].id });
   } catch (error) {
     console.error("Registration error:", error);
@@ -46,22 +53,28 @@ router.post('/login', async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({ error: "Username and password are required." });
     }
-    
+
     const pool = await sql.connect();
     const result = await pool.request()
       .input('username', sql.VarChar, username)
       .query('SELECT * FROM Users WHERE username = @username');
-    
+
     if (result.recordset.length === 0) {
       return res.status(401).json({ error: "Invalid username or password." });
     }
-    
+
     const user = result.recordset[0];
-    if (user.password !== password) {
+
+    // Compare the hashed password with the provided password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid username or password." });
     }
-    
-    res.status(200).json({ message: "Logged in successfully" });
+
+    // Determine role based on username
+    const role = user.username.toLowerCase() === "admin" ? "admin" : "user";
+
+    res.status(200).json({ message: "Logged in successfully", role });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: error.message || "Login failed" });

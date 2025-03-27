@@ -26,8 +26,10 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
 
   const handleLogout = () => {
     localStorage.removeItem("loggedIn");
+    localStorage.removeItem("role"); // Clear the role
     setLoggedIn(false);
     handleCloseMenu();
+    window.location.reload(); // Refresh the page
   };
 
   useEffect(() => {
@@ -104,7 +106,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         keepMounted
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={Boolean(anchorElUser)}
-        onClose={(event, reason) => handleCloseMenu()} 
+        onClose={(event, reason) => handleCloseMenu()}
       >
         {!loggedIn && (
           <StyledMenuItem onClick={handleLoginClick}>

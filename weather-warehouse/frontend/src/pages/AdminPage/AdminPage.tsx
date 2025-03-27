@@ -1,5 +1,6 @@
-import React from 'react';
-import { Box, Button, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, Paper, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAlert } from '../../utils/AlertContext';
@@ -11,12 +12,26 @@ interface User {
 }
 
 export function AdminPage() {
+  const navigate = useNavigate();
   const { showAlert } = useAlert();
+
+  // Redirect if the user is not an admin
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('loggedIn') === 'true';
+    const role = localStorage.getItem('role');
+    if (!loggedIn || role !== 'admin') {
+      showAlert('Access Denied. Admins only.', 'error');
+      navigate('/'); // Redirect non-admin or logged-out users
+    }
+  }, [navigate, showAlert]);
 
   const { data: users, error, isLoading, refetch } = useQuery<User[]>({
     queryKey: ['users'],
     queryFn: async () => {
-      const response = await axios.get('/user/data');
+      const username = localStorage.getItem('username');
+      const response = await axios.get('/user/data', {
+        headers: { 'x-username': username }
+      });
       return response.data;
     }
   });
@@ -44,7 +59,43 @@ export function AdminPage() {
   };
 
   if (isLoading) {
-    return <Typography>Loading users...</Typography>;
+    return (
+      <Box p={3}>
+        <Typography variant="h4" gutterBottom>
+          User Management
+        </Typography>
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>User ID</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {[...Array(5)].map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <Skeleton variant="text" width={50} />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton variant="text" width={100} />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton variant="text" width={80} />
+                  </TableCell>
+                  <TableCell align="right">
+                    <Skeleton variant="rectangular" width={100} height={30} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Box>
+    );
   }
 
   if (error) {
@@ -54,7 +105,7 @@ export function AdminPage() {
   return (
     <Box p={3}>
       <Typography variant="h4" gutterBottom>
-        Admin - User Management
+        User Management
       </Typography>
       <Paper>
         <Table>

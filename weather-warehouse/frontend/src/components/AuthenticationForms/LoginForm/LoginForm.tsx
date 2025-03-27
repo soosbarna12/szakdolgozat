@@ -47,15 +47,18 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
 
   const handleLogin = async () => {
     try {
-      await axios.post('/user/login', {
+      const response = await axios.post('/user/login', {
         username,
         password
       });
       showAlert('Logged in successfully', 'success');
-      // Mark as logged in (also store in localStorage)
+      // Mark as logged in
       localStorage.setItem('loggedIn', 'true');
+      // Store the role returned by the backend
+      localStorage.setItem('role', response.data.role);
       if (onLoginSuccess) onLoginSuccess();
       onClose();
+      window.location.reload(); // Refresh the page
     } catch (error: any) {
       console.error(error);
       showAlert(error.response?.data?.error || 'Login failed', 'error');
