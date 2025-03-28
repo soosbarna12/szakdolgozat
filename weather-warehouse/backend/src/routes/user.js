@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const sql = require("mssql");
-const bcrypt = require("bcrypt"); // Import bcrypt
+const bcrypt = require("bcrypt");
 
-const SALT_ROUNDS = 10; // Number of salt rounds for hashing
+const SALT_ROUNDS = 10; // number of salt rounds for hashing
 
 router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    // validate input
     if (!username || !password) {
       return res.status(400).json({ error: "Username and password are required." });
     }
@@ -50,11 +52,15 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    // validate input
     if (!username || !password) {
       return res.status(400).json({ error: "Username and password are required." });
     }
 
     const pool = await sql.connect();
+
+    // fetch user by username
     const result = await pool.request()
       .input('username', sql.VarChar, username)
       .query('SELECT * FROM Users WHERE username = @username');
@@ -71,7 +77,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: "Invalid username or password." });
     }
 
-    // Determine role based on username
+    // Set role based on the username from the database.
     const role = user.username.toLowerCase() === "admin" ? "admin" : "user";
 
     res.status(200).json({ message: "Logged in successfully", role });
@@ -84,6 +90,8 @@ router.post('/login', async (req, res) => {
 router.get('/data', async (req, res) => {
   try {
     const pool = await sql.connect();
+
+    // Query to fetch all users with their status
     const result = await pool.request().query(`
       SELECT 
         userId, 
@@ -102,6 +110,8 @@ router.post('/accept', async (req, res) => {
   try {
     const { id } = req.body;
     const pool = await sql.connect();
+
+    // Update the user's active status to 1
     await pool.request()
       .input('id', sql.Int, id)
       .query('UPDATE Users SET active = 1 WHERE userId = @id');
@@ -116,6 +126,8 @@ router.delete('/delete', async (req, res) => {
   try {
     const { id } = req.body;
     const pool = await sql.connect();
+
+    // Delete the user from the database
     await pool.request()
       .input('id', sql.Int, id)
       .query('DELETE FROM Users WHERE userId = @id');

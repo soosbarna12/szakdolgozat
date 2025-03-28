@@ -105,9 +105,6 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
               </InputAdornment>
             }
           />
-          <Link href="/" variant="body2" sx={{ textAlign: 'right' }}>
-            Forgot password
-          </Link>
           <StyledButton variant="outlined" onClick={handleLogin}>
             Log In
           </StyledButton>

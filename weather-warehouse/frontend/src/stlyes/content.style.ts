@@ -78,4 +78,4 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 	'& .MuiDataGrid-columnHeader': {
         backgroundColor: theme.palette.primary.dark,
     }
-  }));
+}));

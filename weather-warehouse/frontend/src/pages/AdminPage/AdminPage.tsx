@@ -99,7 +99,9 @@ export function AdminPage() {
   }
 
   if (error) {
-    return <Typography>Error fetching users.</Typography>;
+    return (
+      <p>Error fetching data.</p>
+    );
   }
 
   return (

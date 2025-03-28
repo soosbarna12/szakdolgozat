@@ -25,6 +25,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     overflow-x: hidden; /* Prevent horizontal scrolling */
   }
+
+  ::-ms-reveal {
+    display: none;
+}
 `;
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
