@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { Pages } from "../../types/page.type";
-import { ContentBox } from "../../stlyes/content.style";
+import { ContentBox, StyledItem } from "../../stlyes/content.style";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
@@ -35,7 +35,11 @@ export function TodayPage() {
           />
         )}
         {error && <p>Error fetching data.</p>}
-        {data && <WeatherCard data={data} />}
+        {data &&
+          <StyledItem sx={{ height: "400px", width: "350px" }}>
+            <WeatherCard data={data} />
+          </StyledItem>
+        }
       </ContentBox>
     </>
   );

@@ -13,7 +13,9 @@ const toTitleCase = (str: string) => {
     .join(" ");
 };
 
+
 export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
+
   const theme = useTheme();
 
   const getWeatherIcon = (weatherMain: string) => {
@@ -57,6 +59,7 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
   const convertKelvinToCelsius = (kelvin: number) => {
     return Math.floor(kelvin - 273.15);
   };
+
 
   function renderHeader() {
     return (
@@ -109,14 +112,15 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
     );
   };
 
+
   return (
-    <StyledItem sx={{ width: "350px", height: "375px" }}>
-      <Typography align="left">
-        {renderHeader()}
-        {renderWeatherIconAndTemp()}
-        {renderWeatherDescription()}
-        {renderWeatherDetails()}
-      </Typography>
-    </StyledItem>
+    //<StyledItem sx={{ width: "350px", height: "375px" }}>
+    <Typography align="left">
+      {renderHeader()}
+      {renderWeatherIconAndTemp()}
+      {renderWeatherDescription()}
+      {renderWeatherDetails()}
+    </Typography>
+    //</StyledItem>
   );
 }
