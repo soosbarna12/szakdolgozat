@@ -12,17 +12,13 @@ import { useHistoricalData } from "../../hooks/useHistoricalData";
 import dayjs from "dayjs";
 import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
-import { Skeleton } from "@mui/material";
-
 
 export function HistoricalPage() {
-
   const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
-  const { data: historicalData, error: historicalError, isLoading: historicalIsLoading } = useHistoricalDataQuery({ location, date });
-  const { data: todayData, error, isLoading } = useTodayDataQuery(location);
+  const { data: historicalData, error: historicalError } = useHistoricalDataQuery({ location, date });
+  const { data: todayData, error } = useTodayDataQuery(location);
   const { tableData } = useHistoricalData({ data: historicalData, date });
-
 
   // Handle location change
   const handleLocationChange = (newLocation: string) => {
@@ -34,7 +30,6 @@ export function HistoricalPage() {
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
     setDate(dateValue);
   };
-
 
   return (
     <>
@@ -48,24 +43,22 @@ export function HistoricalPage() {
       <ContentBox>
         <Grid container spacing={2}>
 
-        <Grid size={{ xs: 6, md: 8 }}>
+          <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
-              {historicalIsLoading && <p>Loading historical data...</p>}
-              {historicalError && <p>Error fetching historical data.</p>}
-              {historicalData && <DataMap data={historicalData} />}
+              {historicalError ? (
+                <p>Error fetching historical data.</p>
+              ) : (
+                <DataMap data={historicalData} />
+              )}
             </StyledItem>
           </Grid>
 
           <Grid size={{ xs: 6, md: 4 }}>
             <StyledItem sx={{ height: "400px" }}>
-              {isLoading ? (
-                <Skeleton variant="rectangular" animation="wave" width="100%" height="100%" />
-              ) : error ? (
+              {error ? (
                 <p>Error fetching today's weather data.</p>
-              ) : todayData ? (
-                <WeatherCard data={todayData} />
               ) : (
-                <p>No data available for today's weather.</p>
+                <WeatherCard data={todayData} />
               )}
             </StyledItem>
           </Grid>
@@ -84,21 +77,13 @@ export function HistoricalPage() {
 
           <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
-              {tableData.length === 0 ? (
-                <Skeleton variant="rectangular" animation="wave" width="100%" height="100%" />
-              ) : (
-                <DataTable data={tableData} />
-              )}
+              <DataTable data={tableData} />
             </StyledItem>
           </Grid>
 
           <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
-              {tableData.length === 0 ? (
-                <Skeleton variant="rectangular" animation="wave" width="100%" height="100%" />
-              ) : (
-                <DataChart data={tableData} />
-              )}
+              <DataChart data={tableData} />
             </StyledItem>
           </Grid>
 

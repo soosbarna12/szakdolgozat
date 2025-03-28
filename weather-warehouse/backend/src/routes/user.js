@@ -96,7 +96,7 @@ router.get('/data', async (req, res) => {
       SELECT 
         userId, 
         username, 
-        CASE WHEN active = 1 THEN 'active' ELSE 'pending' END AS status 
+        CASE WHEN isActive = 1 THEN 'isActive' ELSE 'pending' END AS status 
       FROM Users
     `);
     res.json(result.recordset);
@@ -111,10 +111,10 @@ router.post('/accept', async (req, res) => {
     const { id } = req.body;
     const pool = await sql.connect();
 
-    // Update the user's active status to 1
+    // Update the user's isActive status to 1
     await pool.request()
       .input('id', sql.Int, id)
-      .query('UPDATE Users SET active = 1 WHERE userId = @id');
+      .query('UPDATE Users SET isActive = 1 WHERE userId = @id');
     res.status(200).json({ message: "User accepted successfully" });
   } catch (error) {
     console.error("Error accepting user:", error);
