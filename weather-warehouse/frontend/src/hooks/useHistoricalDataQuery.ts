@@ -4,14 +4,14 @@ import { useEffect } from "react";
 import { UseHistoricalDataQueryProps } from "../pages/HistoricalPage/HistoricalPage.type";
 import { useAlert } from "../utils/AlertContext";
 
+
 export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryProps>) {
   const { showAlert } = useAlert();
   const { location, date } = props;
 
-
   // Fetch weather data for the selected location
-  const { data, error } = useQuery({
-    queryKey: ["weather", location],
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["historicalWeatherData", location],
     queryFn: async () => {
       const response = await axios.get(`/today/data?location=${location}&lang=en`);
       if (response.data?.cod === "404") {
@@ -19,17 +19,14 @@ export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryPro
       }
       return response.data;
     },
-    enabled: !!location,
+    enabled: !!location, // Only fetch if location is provided
   });
 
   
-    // Show alert if there is an error fetching data
-    useEffect(() => {
-        if (error) {
-        showAlert("Error fetching data", "error");
-        }
-    }, [error, showAlert]);
+  // Show alert if there is an error fetching data
+  if (error) {
+    showAlert("Error fetching historical weather data", "error");
+  }
 
-
-  return { data };
+  return { data, error, isLoading };
 }
