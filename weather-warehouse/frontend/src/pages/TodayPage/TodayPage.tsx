@@ -6,24 +6,20 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
 import { Skeleton } from "@mui/material";
+import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
 
 
 export function TodayPage() {
+
   const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
+  const { data, error, isLoading } = useTodayDataQuery(location);
+
 
   const handleLocationChange = (newLocation: string) => {
     setLocation(newLocation);
     localStorage.setItem("location", newLocation);
   };
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["weather", location],
-    queryFn: async () => {
-      const response = await axios.get(`/today/data?location=${location}`);
-      return response.data;
-    },
-    enabled: !!location,
-  });
 
   return (
     <>

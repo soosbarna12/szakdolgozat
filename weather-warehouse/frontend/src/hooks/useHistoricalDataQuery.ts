@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useAlert } from "../../utils/AlertContext";
-import { UseHistoricalDataQueryProps } from "./HistoricalPage.type";
 import { useEffect } from "react";
+import { UseHistoricalDataQueryProps } from "../pages/HistoricalPage/HistoricalPage.type";
+import { useAlert } from "../utils/AlertContext";
 
 export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryProps>) {
   const { showAlert } = useAlert();

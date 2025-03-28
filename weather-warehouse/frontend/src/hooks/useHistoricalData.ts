@@ -2,8 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useAlert } from "../../utils/AlertContext";
-import { UseHistoricalDataProps } from "./HistoricalPage.type";
+import { UseHistoricalDataProps } from "../pages/HistoricalPage/HistoricalPage.type";
 
 export function useHistoricalData(props: Readonly<UseHistoricalDataProps>) {
   const { data, date: selectedDate } = props;

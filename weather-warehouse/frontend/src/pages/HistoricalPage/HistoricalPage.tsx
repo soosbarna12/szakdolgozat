@@ -7,8 +7,8 @@ import { Pages } from "../../types/page.type";
 import { DataMap } from "../../components/DataGrids/DataMap/DataMap";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
-import { useHistoricalData } from "./useHistoricalData";
-import { useHistoricalDataQuery } from "./useHistoricalDataQuery";
+import { useHistoricalDataQuery } from "../../hooks/useHistoricalDataQuery";
+import { useHistoricalData } from "../../hooks/useHistoricalData";
 import dayjs from "dayjs";
 
 
@@ -16,9 +16,8 @@ export function HistoricalPage() {
 
   const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
-  const { data } = useHistoricalDataQuery({ location, date });
-
-  const { tableData } = useHistoricalData({ data, date });
+  const { data: historicalData } = useHistoricalDataQuery({ location, date });
+  const { tableData } = useHistoricalData({ data: historicalData, date });
 
 
   // Handle location change
@@ -31,7 +30,6 @@ export function HistoricalPage() {
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
     setDate(dateValue);
   };
-
 
 
   return (
@@ -48,7 +46,7 @@ export function HistoricalPage() {
 
           <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
-              <DataMap data={data} />
+              <DataMap data={historicalData} />
             </StyledItem>
           </Grid>
 
