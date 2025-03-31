@@ -1,7 +1,9 @@
+require('dotenv').config({ path: __dirname + '/../authentication/jwtToken.env' });
 const express = require("express");
 const router = express.Router();
 const sql = require("mssql");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 const SALT_ROUNDS = 10; // number of salt rounds for hashing
 
@@ -52,8 +54,6 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    // validate input
     if (!username || !password) {
       return res.status(400).json({ error: "Username and password are required." });
     }
@@ -77,10 +77,14 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: "Invalid username or password." });
     }
 
-    // Set role based on the username from the database.
+    // Determine role based on username
     const role = user.username.toLowerCase() === "admin" ? "admin" : "user";
 
-    res.status(200).json({ message: "Logged in successfully", role });
+    // Create JWT payload and sign token
+    const payload = { userId: user.userId, username: user.username, role };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+    res.status(200).json({ message: "Logged in successfully", token, role });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: error.message || "Login failed" });
@@ -90,13 +94,12 @@ router.post('/login', async (req, res) => {
 router.get('/data', async (req, res) => {
   try {
     const pool = await sql.connect();
-
-    // Query to fetch all users with their status
+    // Query to fetch all users with their status (active or pending)
     const result = await pool.request().query(`
       SELECT 
         userId, 
         username, 
-        CASE WHEN isActive = 1 THEN 'isActive' ELSE 'pending' END AS status 
+        CASE WHEN isActive = 1 THEN 'active' ELSE 'pending' END AS status 
       FROM Users
     `);
     res.json(result.recordset);
@@ -127,10 +130,25 @@ router.delete('/delete', async (req, res) => {
     const { id } = req.body;
     const pool = await sql.connect();
 
+    // Check if the user is an admin
+    const userCheck = await pool.request()
+      .input('id', sql.Int, id)
+      .query('SELECT username FROM Users WHERE userId = @id');
+
+    if (userCheck.recordset.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const user = userCheck.recordset[0];
+    if (user.username.toLowerCase() === "admin") {
+      return res.status(403).json({ error: "Cannot delete admin user" });
+    }
+
     // Delete the user from the database
     await pool.request()
       .input('id', sql.Int, id)
       .query('DELETE FROM Users WHERE userId = @id');
+
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error);

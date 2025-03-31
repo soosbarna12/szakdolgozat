@@ -10,37 +10,36 @@ import { Theme } from '../../../../types/theme.type';
 import { ProfileMenuProps } from './ProfileMenu.type';
 import { LoginForm } from '../../../AuthenticationForms/LoginForm/LoginForm';
 
-
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   const { anchorElUser, isLightTheme, handleSetLightTheme, handleCloseMenu } = props;
   const [openLogin, setOpenLogin] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(
-    localStorage.getItem("loggedIn") === "true"
-  );
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
 
-  const handleLoginClick = () => {
+  async function handleLoginClick() {
+    // Open login form to obtain a valid token
     setOpenLogin(true);
-  };
+  }
 
   const handleCloseLogin = () => { setOpenLogin(false); };
 
   const handleLogout = () => {
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("role"); // Clear the role
+    localStorage.removeItem("token");
+    localStorage.removeItem("role"); // Optionally clear role if stored
     setLoggedIn(false);
     handleCloseMenu();
     window.location.reload(); // Refresh the page
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem("loggedIn") === "true";
-    setLoggedIn(stored);
+    setLoggedIn(!!localStorage.getItem("token"));
   }, [anchorElUser]);
 
   function handleCelsiusScale() {
+    // ...
   }
 
   function handleFahrenheitScale() {
+    // ...
   }
 
   function handleLightModeIconClick() {
@@ -54,46 +53,44 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   function renderTemperatureScaleToggle() {
     return (
       <Box>
-        <StyledToggleButtonGroup onClick={handleCloseMenu} >
-          <StyledToggleButton value={TemperatureScale.Celsius} onClick={handleCelsiusScale} >°C </StyledToggleButton>
-          < StyledToggleButton value={TemperatureScale.Fahrenheit} onClick={handleFahrenheitScale} >°F </StyledToggleButton>
+        <StyledToggleButtonGroup onClick={handleCloseMenu}>
+          <StyledToggleButton value={TemperatureScale.Celsius} onClick={handleCelsiusScale}>°C</StyledToggleButton>
+          <StyledToggleButton value={TemperatureScale.Fahrenheit} onClick={handleFahrenheitScale}>°F</StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
-    )
+    );
   }
 
   function renderLanguageToggle() {
     return (
-      <Box sx={{ marginTop: "6px" }
-      }>
+      <Box sx={{ marginTop: "6px" }}>
         <StyledToggleButtonGroup onClick={handleCloseMenu}>
           <StyledToggleButton value={Language.English}> EN </StyledToggleButton>
-          < StyledToggleButton value={Language.Hungarian} > HU </StyledToggleButton>
+          <StyledToggleButton value={Language.Hungarian}> HU </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
-    )
+    );
   }
 
   function renderThemeToggle() {
     return (
-      <Box sx={{ marginTop: "6px" }
-      }>
+      <Box sx={{ marginTop: "6px" }}>
         <StyledToggleButtonGroup>
           <StyledToggleButton
             value={Theme.Light}
             onClick={handleLightModeIconClick}
-            disabled={isLightTheme} >
+            disabled={isLightTheme}>
             <LightModeIcon />
           </StyledToggleButton>
-          < StyledToggleButton
+          <StyledToggleButton
             value={Theme.Dark}
             onClick={handleDarkModeIconClick}
-            disabled={!isLightTheme} >
+            disabled={!isLightTheme}>
             <DarkModeIcon />
           </StyledToggleButton>
         </StyledToggleButtonGroup>
-      </Box >
-    )
+      </Box>
+    );
   }
 
   return (
@@ -106,8 +103,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         keepMounted
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={Boolean(anchorElUser)}
-        onClose={(event, reason) => handleCloseMenu()}
-      >
+        onClose={() => handleCloseMenu()}>
         {!loggedIn && (
           <StyledMenuItem onClick={handleLoginClick}>
             <Typography sx={{ textAlign: "center" }}>Log In</Typography>
@@ -127,8 +123,14 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         {renderTemperatureScaleToggle()}
         {renderLanguageToggle()}
         {renderThemeToggle()}
-      </StyledMenu >
-      < LoginForm open={openLogin} onClose={() => { setOpenLogin(false); handleCloseMenu(); }} onLoginSuccess={() => setLoggedIn(true)} />
+      </StyledMenu>
+      <LoginForm 
+        open={openLogin} 
+        onClose={() => { setOpenLogin(false); handleCloseMenu(); }} 
+        onLoginSuccess={() => {
+          setLoggedIn(true);
+        }} 
+      />
     </>
   )
 }

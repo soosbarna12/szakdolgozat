@@ -23,7 +23,6 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
   const [password, setPassword] = React.useState('');
   const { showAlert } = useAlert();
 
-  // reset fields when the dialog opens
   React.useEffect(() => {
     if (open) {
       setUsername('');
@@ -52,13 +51,12 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
         password
       });
       showAlert('Logged in successfully', 'success');
-      // Mark as logged in
-      localStorage.setItem('loggedIn', 'true');
-      // Store the role returned by the backend
+      // Store only the token (and role if needed)
+      localStorage.setItem('token', response.data.token);
       localStorage.setItem('role', response.data.role);
       if (onLoginSuccess) onLoginSuccess();
       onClose();
-      window.location.reload(); // Refresh the page
+      window.location.reload(); // refresh the page as needed
     } catch (error: any) {
       console.error(error);
       showAlert(error.response?.data?.error || 'Login failed', 'error');
