@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Paper, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -6,35 +7,46 @@ import axios from 'axios';
 import { useAlert } from '../../utils/AlertContext';
 import { ContentBox } from '../../stlyes/content.style';
 
-
 interface User {
   userId: number;
   username: string;
   status: string;
 }
 
+// Define a type for your decoded token payload
+interface JwtPayload {
+  userId: number;
+  username: string;
+  role: string;
+}
 
 export function AdminPage() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
 
-  // Redirect if the user is not an admin
   useEffect(() => {
-    const loggedIn = localStorage.getItem('loggedIn') === 'true';
-    const role = localStorage.getItem('role');
-    if (!loggedIn || role !== 'admin') {
+    const token = localStorage.getItem('token');
+    if (!token) {
       showAlert('Access Denied. Admins only.', 'error');
-      navigate('/'); // Redirect non-admin or logged-out users
+      navigate('/');
+      return;
+    }
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      if (decoded.role !== 'admin') {
+        showAlert('Access Denied. Admins only.', 'error');
+        navigate('/');
+      }
+    } catch (error) {
+      showAlert('Invalid session. Access Denied.', 'error');
+      navigate('/');
     }
   }, [navigate, showAlert]);
 
   const { data: users, error, isLoading, refetch } = useQuery<User[]>({
     queryKey: ['users'],
     queryFn: async () => {
-      const username = localStorage.getItem('username');
-      const response = await axios.get('/user/data', {
-        headers: { 'x-username': username }
-      });
+      const response = await axios.get('/user/data');
       return response.data;
     }
   });
@@ -60,7 +72,6 @@ export function AdminPage() {
       showAlert('Failed to delete user', 'error');
     }
   };
-
 
   if (isLoading) {
     return (
