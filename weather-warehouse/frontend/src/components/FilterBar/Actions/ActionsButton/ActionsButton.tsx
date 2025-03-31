@@ -4,7 +4,11 @@ import React from "react";
 import { StyledMenuButton } from '../../../../stlyes/button.style';
 import { ActionsMenu } from '../ActionsMenu/ActionsMenu';
 
-export function ActionsButton() {
+interface ActionsButtonProps {
+  onSaveLocation?: () => void;
+}
+
+export function ActionsButton({ onSaveLocation }: ActionsButtonProps) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => { setAnchorElUser(event.currentTarget); };
@@ -17,12 +21,15 @@ export function ActionsButton() {
           onClick={handleOpenUserMenu}
           endIcon={<KeyboardArrowDownIcon />}
           sx={{ boxShadow: 4 }}
-        >Actions
+        >
+          Actions
         </StyledMenuButton>
       </Tooltip>
       <ActionsMenu
         handleCloseMenu={handleCloseMenu}
-        anchorElUser={anchorElUser} />
+        anchorElUser={anchorElUser}
+        onSaveLocation={onSaveLocation}
+      />
     </Box>
   );
 }

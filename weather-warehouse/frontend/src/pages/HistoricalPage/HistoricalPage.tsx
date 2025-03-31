@@ -12,6 +12,8 @@ import { useHistoricalData } from "../../hooks/useHistoricalData";
 import dayjs from "dayjs";
 import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
+import axios from "axios";
+import { useAlert } from "../../utils/AlertContext";
 
 export function HistoricalPage() {
   const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
@@ -19,6 +21,7 @@ export function HistoricalPage() {
   const { data: historicalData, error: historicalError } = useHistoricalDataQuery({ location, date });
   const { data: todayData, error } = useTodayDataQuery(location);
   const { tableData } = useHistoricalData({ data: historicalData, date });
+  const { showAlert } = useAlert();
 
   // Handle location change
   const handleLocationChange = (newLocation: string) => {
@@ -31,6 +34,34 @@ export function HistoricalPage() {
     setDate(dateValue);
   };
 
+  // New: Save location action from the FilterBar actions menu
+  const handleSaveLocation = async () => {
+    if (!location) {
+      showAlert("No location to save", "warning");
+      return;
+    }
+    try {
+      const apiKey = "462394b96065d405cd9ca7b3ef92d634";
+      const geoRes = await axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${apiKey}`);
+      if (geoRes.data && geoRes.data.length > 0) {
+        const { lat, lon } = geoRes.data[0];
+        // Manually attach the token in the headers
+        const token = localStorage.getItem("token");
+        await axios.post(
+          "/user/saveLocation",
+          { latitude: lat, longitude: lon },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        showAlert("Location saved successfully", "success");
+      } else {
+        showAlert("Location not found", "error");
+      }
+    } catch (error) {
+      console.error(error);
+      showAlert("Failed to save location", "error");
+    }
+  };
+
   return (
     <>
       <FilterBar
@@ -38,6 +69,7 @@ export function HistoricalPage() {
         location={location}
         onDateChange={handleDateChange}
         onLocationChange={handleLocationChange}
+        onSaveLocation={handleSaveLocation}
       />
 
       <ContentBox>

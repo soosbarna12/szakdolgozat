@@ -156,4 +156,57 @@ router.delete('/delete', async (req, res) => {
   }
 });
 
+// New route: saveLocation
+router.post('/saveLocation', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  const token = authHeader.split(" ")[1];
+  let payload;
+  try {
+    payload = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    return res.status(401).json({ error: "Invalid token" });
+  }
+  
+  // Try to get userId from token payload; if missing, look it up from the Users table
+  let userID = payload.userId;
+  if (!userID) {
+    try {
+      const pool = await sql.connect();
+      const result = await pool.request()
+        .input('username', sql.VarChar, payload.username)
+        .query('SELECT userId FROM Users WHERE username = @username');
+      if (result.recordset.length > 0) {
+        userID = result.recordset[0].userId;
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Failed to determine user ID" });
+    }
+  }
+  
+  if (!userID) {
+    return res.status(400).json({ error: "User ID could not be determined." });
+  }
+  
+  const { latitude, longitude } = req.body;
+  if (latitude === undefined || longitude === undefined) {
+    return res.status(400).json({ error: "Missing coordinates" });
+  }
+  try {
+    let pool = await sql.connect();
+    await pool.request()
+      .input('userID', sql.Int, userID)
+      .input('latitude', sql.Decimal(10, 8), latitude)
+      .input('longitude', sql.Decimal(11, 8), longitude)
+      .query('INSERT INTO userLocations (userID, latitude, longitude) VALUES (@userID, @latitude, @longitude)');
+    res.status(200).json({ message: "Location saved" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to save location" });
+  }
+});
+
 module.exports = router;
