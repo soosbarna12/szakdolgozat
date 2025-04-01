@@ -1,47 +1,31 @@
-import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { UseHistoricalDataProps } from "../pages/HistoricalPage/HistoricalPage.type";
 import { HistoricalDataTable } from "../types/historicalDataTable.type";
+import { kelvinToCelsius } from "../utils/dataConverters";
+
 
 export function useHistoricalData(props: Readonly<UseHistoricalDataProps>) {
+  const [tableData, setTableData] = useState<HistoricalDataTable[]>([]);
   const { data, date: selectedDate } = props;
 
-  // Include location property in each record.
-  const [tableData, setTableData] = useState<HistoricalDataTable[]>([
-  ]);
-
-  // Update table data when new data is fetched
   useEffect(() => {
     if (data?.main?.temp_max && data?.main?.temp_min) {
       const currentDate = new Date().toISOString().split("T")[0];
-      setTableData((prev) => [
-        ...prev,
-        {
-          date: currentDate,
-          maxTemp: Math.round(data.main.temp_max - 273.15),
-          minTemp: Math.round(data.main.temp_min - 273.15),
-          humidity: data.main.humidity,
-          location: [data.name, data.state, data.sys?.country].filter(Boolean).join(", ")
-        },
-      ]);
-    }
-  }, [data]);
-
-  // Add new record to the table when a new date is selected
-  useEffect(() => {
-    if (selectedDate) {
+      
       const newRecord = {
-        date: selectedDate.format("YYYY-MM-DD"),
-        maxTemp: 28,
-        minTemp: 18,
-        humidity: 55,
-        location: "Static"
+        date: selectedDate ? selectedDate.format("YYYY-MM-DD") : currentDate,
+        maxTemp: kelvinToCelsius(data.main.temp_max),
+        minTemp: kelvinToCelsius(data.main.temp_min),
+        humidity: data.main.humidity,
+        location: [data.name, data.state, data.sys?.country].filter(Boolean).join(", "),
       };
-      setTableData((prev) => [...prev, newRecord]);
+
+      setTableData((prev) => {
+        const isDuplicate = prev.some((record) => record.date === newRecord.date && record.location === newRecord.location);
+        return isDuplicate ? prev : [...prev, newRecord];
+      });
     }
-  }, [selectedDate]);
+  }, [data, selectedDate]);
 
   return { tableData };
 }
