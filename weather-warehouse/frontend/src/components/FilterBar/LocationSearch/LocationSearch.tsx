@@ -8,11 +8,13 @@ import axios from "axios";
 import { LocationSearchProps } from "./LocationSearch.type";
 import { StyledAutocompleteDropdown, StyledLocationSearch } from "../../../stlyes/inputField.style";
 
+
 export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const { type, location, onLocationChange } = props;
   const [inputValue, setInputValue] = useState(location);
   const [debouncedValue] = useDebounce(inputValue, 500);
   const [options, setOptions] = useState<Array<{ name: string; country: string; state?: string }>>([]);
+
 
   // Fetch location suggestions when debounced value changes
   useEffect(() => {

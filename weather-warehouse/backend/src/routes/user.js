@@ -156,7 +156,7 @@ router.delete('/delete', async (req, res) => {
   }
 });
 
-// New route: saveLocation
+// saveLocation
 router.post('/saveLocation', async (req, res) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
@@ -169,7 +169,7 @@ router.post('/saveLocation', async (req, res) => {
   } catch (err) {
     return res.status(401).json({ error: "Invalid token" });
   }
-  
+
   // Try to get userId from token payload; if missing, look it up from the Users table
   let userID = payload.userId;
   if (!userID) {
@@ -186,23 +186,31 @@ router.post('/saveLocation', async (req, res) => {
       return res.status(500).json({ error: "Failed to determine user ID" });
     }
   }
-  
+
   if (!userID) {
     return res.status(400).json({ error: "User ID could not be determined." });
   }
-  
-  const { latitude, longitude } = req.body;
-  if (latitude === undefined || longitude === undefined) {
-    return res.status(400).json({ error: "Missing coordinates" });
+
+  const { name, latitude, longitude, date, dateSaved } = req.body;
+
+  // Validate required fields
+  if (!name || latitude === undefined || longitude === undefined || !date ) {
+    return res.status(400).json({ error: "Missing required fields" });
   }
+
   try {
-    let pool = await sql.connect();
+    const pool = await sql.connect();
     await pool.request()
       .input('userID', sql.Int, userID)
+      .input('name', sql.VarChar, name)
       .input('latitude', sql.Decimal(10, 8), latitude)
       .input('longitude', sql.Decimal(11, 8), longitude)
-      .query('INSERT INTO userLocations (userID, latitude, longitude) VALUES (@userID, @latitude, @longitude)');
-    res.status(200).json({ message: "Location saved" });
+      .input('date', sql.DateTime, date)
+      .query(`
+        INSERT INTO userLocations2 (userID, name, latitude, longitude, date) 
+        VALUES (@userID, @name, @latitude, @longitude, @date)
+      `);
+    res.status(200).json({ message: "Location saved successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to save location" });

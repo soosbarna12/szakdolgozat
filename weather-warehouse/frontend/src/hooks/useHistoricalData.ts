@@ -3,14 +3,13 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { UseHistoricalDataProps } from "../pages/HistoricalPage/HistoricalPage.type";
+import { HistoricalDataTable } from "../types/historicalDataTable.type";
 
 export function useHistoricalData(props: Readonly<UseHistoricalDataProps>) {
   const { data, date: selectedDate } = props;
 
   // Include location property in each record.
-  const [tableData, setTableData] = useState([
-    { date: "2023-08-01", maxTemp: 32, minTemp: 25, humidity: 60, location: "" },
-    { date: "2023-07-31", maxTemp: 34, minTemp: 23, humidity: 70, location: "" },
+  const [tableData, setTableData] = useState<HistoricalDataTable[]>([
   ]);
 
   // Update table data when new data is fetched
@@ -38,7 +37,7 @@ export function useHistoricalData(props: Readonly<UseHistoricalDataProps>) {
         maxTemp: 28,
         minTemp: 18,
         humidity: 55,
-        location: ""
+        location: "Static"
       };
       setTableData((prev) => [...prev, newRecord]);
     }

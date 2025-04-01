@@ -14,6 +14,8 @@ import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
 import axios from "axios";
 import { useAlert } from "../../utils/AlertContext";
+//import "../../pages/HistoricalPage/HistoricalPage.mock";
+
 
 export function HistoricalPage() {
   const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
@@ -34,7 +36,7 @@ export function HistoricalPage() {
     setDate(dateValue);
   };
 
-  // New: Save location action from the FilterBar actions menu
+  // Save location action from the FilterBar actions menu
   const handleSaveLocation = async () => {
     if (!location) {
       showAlert("No location to save", "warning");
@@ -44,12 +46,11 @@ export function HistoricalPage() {
       const apiKey = "462394b96065d405cd9ca7b3ef92d634";
       const geoRes = await axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${apiKey}`);
       if (geoRes.data && geoRes.data.length > 0) {
-        const { lat, lon } = geoRes.data[0];
-        // Manually attach the token in the headers
+        const { name, lat, lon, } = geoRes.data[0];
         const token = localStorage.getItem("token");
         await axios.post(
           "/user/saveLocation",
-          { latitude: lat, longitude: lon },
+          { name: name, latitude: lat, longitude: lon, date: date },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         showAlert("Location saved successfully", "success");
@@ -61,6 +62,7 @@ export function HistoricalPage() {
       showAlert("Failed to save location", "error");
     }
   };
+
 
   return (
     <>
