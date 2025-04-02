@@ -9,7 +9,9 @@ import { TodayPage } from "./pages/TodayPage/TodayPage";
 import { darkTheme, lightTheme } from "./stlyes/theme.style";
 import { Theme } from "./types/theme.type";
 
+
 const queryClient = new QueryClient();
+
 
 export function App() {
   const [isLightTheme, setIsLightTheme] = useState(() => {

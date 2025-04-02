@@ -122,6 +122,8 @@ router.post('/login', async (req, res) => {
 
     const user = result.recordset[0];
 
+    console.log(user);
+
     // compare the hashed password with the provided password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
@@ -132,8 +134,11 @@ router.post('/login', async (req, res) => {
     const role = user.username.toLowerCase() === "admin" ? "admin" : "user";
 
     // create JWT payload and sign token
-    const payload = { userId: user.userId, username: user.username, role };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const payload = { userId: user.userID, username: user.username, role };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" });
+
+    console.log(payload);
+    console.log(token);
 
     res.status(200).json({ message: "Logged in successfully", token, role });
 
@@ -282,7 +287,9 @@ router.post('/saveLocation', async (req, res) => {
 
 // fetch saved locations from the database
 router.get('/savedLocations', async (req, res) => {
+  console.log(req.headers);
   const authHeader = req.headers.authorization; // get the authorization header from the request
+  console.log(req.headers);
   if (!authHeader) {
     return res.status(401).json({ error: "Unauthorized" });
   }
@@ -294,8 +301,11 @@ router.get('/savedLocations', async (req, res) => {
     payload = jwt.verify(token, process.env.JWT_SECRET); // verify jwt token
 
   } catch (err) {
+    console.log(err);
     return res.status(401).json({ error: "Invalid token" });
   }
+
+  console.log(payload);
 
   try {
     const pool = await sql.connect(); // database connection

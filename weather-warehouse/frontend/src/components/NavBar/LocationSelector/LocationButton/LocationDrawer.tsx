@@ -1,30 +1,33 @@
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import { Box, Drawer, List, ListItem, ListItemText, Toolbar, Tooltip, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import axios from "../../../../utils/axiosConfig";
+import React from "react";
 import { StyledButton, StyledIconButton } from '../../../../stlyes/button.style';
 import { LocationDrawerProps } from "./LocationDrawer.type";
+import { useSavedLocationQuery } from '../../../../hooks/useSavedLocationsQuery';
+
 
 export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
   const { toggleLocationDrawer, open } = props;
-  const [locations, setLocations] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (open) {
-      const fetchLocations = async () => {
-        try {
-          const response = await axios.get("/user/savedLocations");
-          setLocations(response.data);
-        } catch (error) {
-          console.error("Error fetching saved locations:", error);
-        }
-      };
-      fetchLocations();
-    }
-  }, [open]);
+  const { savedLocations } = useSavedLocationQuery(open)
 
   function handleDrawerClose() {
     toggleLocationDrawer(false);
+  }
+
+  function renderLocations() {
+    if (savedLocations?.length > 0) {
+      return (
+        savedLocations.map((location: string, index: number) => (
+          <ListItem key={index} disablePadding onClick={handleDrawerClose}>
+            <StyledButton fullWidth variant="text" color="primary"
+              sx={{ boxShadow: 4, margin: 1 }}>
+              <ListItemText primary={location} />
+            </StyledButton>
+          </ListItem>
+        ))
+      )
+    }
+    return <Typography>No saved locations found.</Typography>
   }
 
   return (
@@ -39,7 +42,6 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
             <Tooltip title="Close locations">
               <StyledIconButton
                 onClick={handleDrawerClose}
-                //color='secondary'
                 sx={{
                   padding: 0, margin: "10px", width: "48px", height: "48px",
                   borderRadius: "100%", boxShadow: 4, outline: 0
@@ -49,22 +51,9 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
             </Tooltip>
             <Typography variant="body1" textTransform={"uppercase"}>Saved locations</Typography>
           </Toolbar>
-
-          {locations.length > 0 ? (
-            locations.map((location, index) => (
-              <ListItem key={index} disablePadding onClick={handleDrawerClose}>
-                <StyledButton fullWidth variant="text" color="primary"
-                  sx={{ boxShadow: 4, margin: 1 }}>
-                  <ListItemText primary={location} />
-                </StyledButton>
-              </ListItem>
-            ))
-          ) : (
-            <Typography>No saved locations found.</Typography>
-          )}
+          {renderLocations()}
         </List>
       </Box >
     </Drawer>
-
   );
 }

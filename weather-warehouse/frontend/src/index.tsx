@@ -6,38 +6,10 @@ import { AlertProvider } from './utils/AlertContext';
 import { createGlobalStyle } from 'styled-components';
 
 
-// css for hiding the scrollbar
-const GlobalStyle = createGlobalStyle`
-  html {
-    overflow-y: auto; /* Allow scrolling */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    
-    /* Remove content shift compensation as we no longer have visible scrollbars */
-    margin-right: 0;
-  }
-  
-  /* WebKit browsers (Chrome, Safari, newer versions of Opera) */
-  html::-webkit-scrollbar {
-    display: none;
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-  }
-
-  ::-ms-reveal {
-    display: none;
-}
-`;
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
-    <GlobalStyle />
     <AlertProvider>
       <BrowserRouter>
         <App />

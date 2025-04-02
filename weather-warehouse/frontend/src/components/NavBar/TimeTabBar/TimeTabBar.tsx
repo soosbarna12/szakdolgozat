@@ -1,24 +1,10 @@
 import { Box, Container, Toolbar, useTheme } from '@mui/material';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
 import { ROUTES } from '../../../consts/routes';
 import { StyledTimeTabButton } from '../../../stlyes/button.style';
+import { getIsAdmin } from '../../../utils/getIsAdmin';
 
-interface JwtPayload {
-  role: string;
-}
-
-function getIsAdmin(): boolean {
-  const token = localStorage.getItem('token');
-  if (!token) return false;
-  try {
-    const decoded = jwtDecode<JwtPayload>(token);
-    return decoded.role === 'admin';
-  } catch {
-    return false;
-  }
-}
 
 export function TimeTabBar() {
   const location = useLocation();
@@ -26,14 +12,17 @@ export function TimeTabBar() {
   const isAdmin = getIsAdmin();
 
   function renderMenu() {
-    return ROUTES.filter((route) => {
+    let availableTabs = ROUTES.filter((route) => {
       // Exclude the "Admin" route if the user is not an admin
       if (route.id === 'Admin' && !isAdmin) {
         return false;
       }
       return true;
-    }).map((route) => {
+    })
+
+    return availableTabs.map((route) => {
       const isActive = location.pathname === route.path;
+
       return (
         <StyledTimeTabButton
           component={Link}

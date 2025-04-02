@@ -1,26 +1,27 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DialogContent, IconButton, InputAdornment, Link, Typography } from '@mui/material';
 import * as React from 'react';
-import axios from 'axios';
 import { LoginFormProps } from './LoginForm.type';
 import { StyledDialog } from '../../../stlyes/common.style';
 import { StyledTextField } from '../../../stlyes/inputField.style';
 import { StyledButton } from '../../../stlyes/button.style';
-import { useAlert } from '../../../utils/AlertContext';
 import { SignUpForm } from '../SignUpForm/SignUpForm';
 import { PasswordRecoveryForm } from '../RecoveryForm/RecoveryForm';
+import { useEffect, useState } from 'react';
+import { useLoginQuery } from '../../../hooks/useLoginQuery';
 
 
-export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: () => void }>) {
+export function LoginForm(props: Readonly<LoginFormProps>) {
   const { open, onClose, onLoginSuccess } = props;
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [openSignUp, setOpenSignUp] = React.useState(false);
-  const [openRecovery, setOpenRecovery] = React.useState(false);
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const { showAlert } = useAlert();
+  const [showPassword, setShowPassword] = useState(false);
+  const [openSignUp, setOpenSignUp] = useState(false);
+  const [openRecovery, setOpenRecovery] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { isSuccess, refetch: refetchLoginQuery } = useLoginQuery(username, password);
 
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (open) {
       setUsername('');
       setPassword('');
@@ -28,8 +29,23 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
     }
   }, [open]);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event: React.MouseEvent) => { event.preventDefault(); };
+  // useffectbe kell rakni, mert ha a login sikeres, akkor a useLoginQuery hookban a isSuccess true lesz, viszont a refretch meghívása után nem fog egyből az isSuccess frissülni
+  useEffect(() => {
+    if (isSuccess) {
+      onLoginSuccess();
+      window.location.reload(); // refresh the page
+      onClose();
+    }
+  }, [isSuccess])
+
+
+  function handleClickShowPassword() {
+    setShowPassword((show) => !show);
+  }
+
+  function handleMouseDownPassword(event: React.MouseEvent) {
+    event.preventDefault();
+  };
 
   function renderShowPassword() {
     return showPassword ? (
@@ -39,34 +55,20 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
     );
   }
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('/user/login', {
-        username,
-        password
-      });
-      showAlert('Logged in successfully', 'success');
-      // Store only the token (and role if needed)
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('role', response.data.role);
-      if (onLoginSuccess) onLoginSuccess();
-      onClose();
-      window.location.reload(); // refresh the page as needed
-    } catch (error: any) {
-      console.error(error);
-      showAlert(error.response?.data?.error || 'Login failed', 'error');
-    }
+  function handleLogin() {
+    refetchLoginQuery(); // neccessary to use this query when clicking the login button
   };
 
-  const handleSignUpClick = () => {
+  function handleSignUpClick() {
     onClose();
     setOpenSignUp(true);
   };
 
-  const handleRecoveryClick = () => {
+  function handleRecoveryClick() {
     onClose();
     setOpenRecovery(true);
   };
+
 
   return (
     <>

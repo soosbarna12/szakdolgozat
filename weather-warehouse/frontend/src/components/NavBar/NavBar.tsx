@@ -11,7 +11,7 @@ export function NavBar(props: Readonly<NavBarProps>) {
 
 	return (
 		<>
-			<CssBaseline />
+			<CssBaseline /> {/* for admin page, if not resets the theme*/}
 			<AppBar
 				position="static"
 				color="transparent"

@@ -6,7 +6,6 @@ import { LocationDrawer } from "./LocationDrawer";
 
 
 export function LocationButton() {
-
   const [open, setOpen] = React.useState(false);
 
   function toggleLocationDrawer(newOpen: boolean) {

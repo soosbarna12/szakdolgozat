@@ -9,30 +9,29 @@ import { TemperatureScale } from '../../../../types/temperatureScale.type';
 import { Theme } from '../../../../types/theme.type';
 import { ProfileMenuProps } from './ProfileMenu.type';
 import { LoginForm } from '../../../AuthenticationForms/LoginForm/LoginForm';
+import { render } from '@testing-library/react';
+
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   const { anchorElUser, isLightTheme, handleSetLightTheme, handleCloseMenu } = props;
   const [openLogin, setOpenLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
 
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem("token"));
+  }, [anchorElUser]);
+
   async function handleLoginClick() {
     // Open login form to obtain a valid token
     setOpenLogin(true);
   }
 
-  const handleCloseLogin = () => { setOpenLogin(false); };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("role"); // Optionally clear role if stored
     setLoggedIn(false);
     handleCloseMenu();
     window.location.reload(); // Refresh the page
   };
-
-  useEffect(() => {
-    setLoggedIn(!!localStorage.getItem("token"));
-  }, [anchorElUser]);
 
   function handleCelsiusScale() {
     // ...
@@ -48,6 +47,15 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
 
   function handleDarkModeIconClick() {
     handleSetLightTheme(false);
+  }
+
+  function handleLoginSuccess() {
+    setLoggedIn(true);
+  }
+
+  function handleCloseLoginForm() {
+    setOpenLogin(false);
+    handleCloseMenu();
   }
 
   function renderTemperatureScaleToggle() {
@@ -93,6 +101,31 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
     );
   }
 
+  function renderLoggedOutMenuItem() {
+    if (!loggedIn) {
+      return (
+        <StyledMenuItem onClick={handleLoginClick}>
+          <Typography sx={{ textAlign: "center" }}>Log In</Typography>
+        </StyledMenuItem>
+      )
+    }
+  }
+
+  function renderLoggedInMenuItems() {
+    if (loggedIn) {
+      return (
+        <>
+          <StyledMenuItem onClick={handleCloseMenu}>
+            <Typography sx={{ textAlign: "center" }}>Profile</Typography>
+          </StyledMenuItem>
+          <StyledMenuItem onClick={handleLogout}>
+            <Typography sx={{ textAlign: "center" }}>Log Out</Typography>
+          </StyledMenuItem>
+        </>
+      )
+    }
+  }
+
   return (
     <>
       <StyledMenu
@@ -104,32 +137,21 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={Boolean(anchorElUser)}
         onClose={() => handleCloseMenu()}>
-        {!loggedIn && (
-          <StyledMenuItem onClick={handleLoginClick}>
-            <Typography sx={{ textAlign: "center" }}>Log In</Typography>
-          </StyledMenuItem>
-        )}
-        {loggedIn && (
-          <>
-            <StyledMenuItem onClick={handleCloseMenu}>
-              <Typography sx={{ textAlign: "center" }}>Profile</Typography>
-            </StyledMenuItem>
-            <StyledMenuItem onClick={handleLogout}>
-              <Typography sx={{ textAlign: "center" }}>Log Out</Typography>
-            </StyledMenuItem>
-          </>
-        )}
+
+        {renderLoggedOutMenuItem()}
+        {renderLoggedInMenuItems()}
+
         <Divider />
+
         {renderTemperatureScaleToggle()}
         {renderLanguageToggle()}
         {renderThemeToggle()}
+
       </StyledMenu>
-      <LoginForm 
-        open={openLogin} 
-        onClose={() => { setOpenLogin(false); handleCloseMenu(); }} 
-        onLoginSuccess={() => {
-          setLoggedIn(true);
-        }} 
+      <LoginForm
+        open={openLogin}
+        onClose={handleCloseLoginForm}
+        onLoginSuccess={handleLoginSuccess}
       />
     </>
   )
