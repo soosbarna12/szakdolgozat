@@ -1,11 +1,5 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import {
-  DialogContent,
-  IconButton,
-  InputAdornment,
-  Link,
-  Typography
-} from '@mui/material';
+import { DialogContent, IconButton, InputAdornment, Link, Typography } from '@mui/material';
 import * as React from 'react';
 import axios from 'axios';
 import { LoginFormProps } from './LoginForm.type';
@@ -14,11 +8,14 @@ import { StyledTextField } from '../../../stlyes/inputField.style';
 import { StyledButton } from '../../../stlyes/button.style';
 import { useAlert } from '../../../utils/AlertContext';
 import { SignUpForm } from '../SignUpForm/SignUpForm';
+import { PasswordRecoveryForm } from '../RecoveryForm/RecoveryForm';
+
 
 export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: () => void }>) {
   const { open, onClose, onLoginSuccess } = props;
   const [showPassword, setShowPassword] = React.useState(false);
   const [openSignUp, setOpenSignUp] = React.useState(false);
+  const [openRecovery, setOpenRecovery] = React.useState(false);
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const { showAlert } = useAlert();
@@ -32,9 +29,7 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
   }, [open]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event: React.MouseEvent) => {
-    event.preventDefault();
-  };
+  const handleMouseDownPassword = (event: React.MouseEvent) => { event.preventDefault(); };
 
   function renderShowPassword() {
     return showPassword ? (
@@ -68,13 +63,20 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
     setOpenSignUp(true);
   };
 
+  const handleRecoveryClick = () => {
+    onClose();
+    setOpenRecovery(true);
+  };
+
   return (
     <>
       <StyledDialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+
           <Typography variant="h5" sx={{ textAlign: 'left' }}>
             Log In
           </Typography>
+
           <StyledTextField
             name="username"
             type="text"
@@ -83,6 +85,7 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+
           <StyledTextField
             name="password"
             type={showPassword ? 'text' : 'password'}
@@ -103,9 +106,11 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
               </InputAdornment>
             }
           />
+
           <StyledButton variant="outlined" onClick={handleLogin}>
             Log In
           </StyledButton>
+
           <Link
             component="button"
             onClick={handleSignUpClick}
@@ -114,9 +119,20 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
           >
             Sign up
           </Link>
+
+          <Link
+            component="button"
+            onClick={handleRecoveryClick}
+            variant="body2"
+            sx={{ textAlign: 'center' }}
+          >
+            Forgot Password?
+          </Link>
+
         </DialogContent>
       </StyledDialog>
       <SignUpForm open={openSignUp} onClose={() => setOpenSignUp(false)} />
+      <PasswordRecoveryForm open={openRecovery} onClose={() => setOpenRecovery(false)} />
     </>
   );
 }

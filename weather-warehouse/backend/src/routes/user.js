@@ -10,11 +10,11 @@ const SALT_ROUNDS = 10; // number of salt rounds for hashing
 // user registration
 router.post('/register', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, securityQuestion, securityAnswer } = req.body;
 
     // validate input
-    if (!username || !password) {
-      return res.status(400).json({ error: "Username and password are required." });
+    if (!username || !password || !securityQuestion || !securityAnswer) {
+      return res.status(400).json({ error: "All fields are required (username, password, security question, and answer)." });
     }
 
     // validate password strength
@@ -36,20 +36,68 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: "Username already exists." });
     }
 
-    // hash the password
+    // hash the password and security answer
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    const hashedAnswer = await bcrypt.hash(securityAnswer, SALT_ROUNDS);
 
     // insert the user into the database
     const result = await pool.request()
       .input('username', sql.VarChar, username)
       .input('password', sql.VarChar, hashedPassword)
-      .query('INSERT INTO Users (username, password) VALUES (@username, @password); SELECT SCOPE_IDENTITY() AS id;');
+      .input('securityQuestion', sql.VarChar, securityQuestion)
+      .input('securityAnswer', sql.VarChar, hashedAnswer)
+      .query('INSERT INTO Users (username, password, securityQuestion, securityAnswer) VALUES (@username, @password, @securityQuestion, @securityAnswer); SELECT SCOPE_IDENTITY() AS id;');
 
     res.status(201).json({ message: "User registered successfully", id: result.recordset[0].id });
 
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ error: error.message || "Registration failed" });
+  }
+});
+
+// user password recovery
+router.post('/recoverPassword', async (req, res) => {
+  try {
+    const { username, securityAnswer, newPassword } = req.body;
+
+    if (!username || !securityAnswer || !newPassword) {
+      return res.status(400).json({ error: "All fields are required (username, security answer, and new password)." });
+    }
+
+    const pool = await sql.connect();
+
+    // fetch user by username
+    const result = await pool.request()
+      .input('username', sql.VarChar, username)
+      .query('SELECT * FROM Users WHERE username = @username');
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    const user = result.recordset[0];
+
+    // verify the security answer
+    const isAnswerValid = await bcrypt.compare(securityAnswer, user.securityAnswer);
+    if (!isAnswerValid) {
+      return res.status(401).json({ error: "Invalid security answer." });
+    }
+
+    // hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+
+    // update the password
+    await pool.request()
+      .input('username', sql.VarChar, username)
+      .input('password', sql.VarChar, hashedPassword)
+      .query('UPDATE Users SET password = @password WHERE username = @username');
+
+    res.status(200).json({ message: "Password updated successfully." });
+
+  } catch (error) {
+    console.error("Password recovery error:", error);
+    res.status(500).json({ error: error.message || "Password recovery failed" });
   }
 });
 
@@ -96,7 +144,7 @@ router.post('/login', async (req, res) => {
 });
 
 // user data status
-router.get('/data', async (req, res) => {
+router.get('/userData', async (req, res) => {
   try {
     const pool = await sql.connect(); // database connection
     const result = await pool.request().query(`

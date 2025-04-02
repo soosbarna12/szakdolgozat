@@ -46,7 +46,7 @@ export function AdminPage() {
   const { data: users, error, isLoading, refetch } = useQuery<User[]>({
     queryKey: ['users'],
     queryFn: async () => {
-      const response = await axios.get('/user/data');
+      const response = await axios.get('/user/userData');
       return response.data;
     }
   });
