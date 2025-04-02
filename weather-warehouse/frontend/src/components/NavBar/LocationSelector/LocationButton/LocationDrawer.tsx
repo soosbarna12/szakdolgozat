@@ -1,13 +1,27 @@
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import { Box, Drawer, List, ListItem, ListItemText, Toolbar, Tooltip, Typography } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "../../../../utils/axiosConfig";
 import { StyledButton, StyledIconButton } from '../../../../stlyes/button.style';
 import { LocationDrawerProps } from "./LocationDrawer.type";
 
-const locations = ["Budapest", "New York", "Berlin"];
-
 export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
   const { toggleLocationDrawer, open } = props;
+  const [locations, setLocations] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (open) {
+      const fetchLocations = async () => {
+        try {
+          const response = await axios.get("/user/savedLocations");
+          setLocations(response.data);
+        } catch (error) {
+          console.error("Error fetching saved locations:", error);
+        }
+      };
+      fetchLocations();
+    }
+  }, [open]);
 
   function handleDrawerClose() {
     toggleLocationDrawer(false);
@@ -36,14 +50,18 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
             <Typography variant="body1" textTransform={"uppercase"}>Saved locations</Typography>
           </Toolbar>
 
-          {locations.map((text, index) => (
-            <ListItem key={text} disablePadding onClick={handleDrawerClose}>
-              <StyledButton fullWidth variant="text" color="primary"
-                sx={{ boxShadow: 4, margin: 1 }}>
-                <ListItemText primary={text} />
-              </StyledButton>
-            </ListItem>
-          ))}
+          {locations.length > 0 ? (
+            locations.map((location, index) => (
+              <ListItem key={index} disablePadding onClick={handleDrawerClose}>
+                <StyledButton fullWidth variant="text" color="primary"
+                  sx={{ boxShadow: 4, margin: 1 }}>
+                  <ListItemText primary={location} />
+                </StyledButton>
+              </ListItem>
+            ))
+          ) : (
+            <Typography>No saved locations found.</Typography>
+          )}
         </List>
       </Box >
     </Drawer>

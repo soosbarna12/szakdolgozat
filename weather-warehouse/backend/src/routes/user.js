@@ -7,16 +7,19 @@ const jwt = require('jsonwebtoken');
 
 const SALT_ROUNDS = 10; // number of salt rounds for hashing
 
+// user registration
 router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body;
+    const pool = await sql.connect(); // database connection
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS); // hash the password
 
     // validate input
     if (!username || !password) {
       return res.status(400).json({ error: "Username and password are required." });
     }
 
-    // Validate password strength
+    // validate password strength
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
@@ -24,9 +27,7 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    const pool = await sql.connect();
-
-    // Check if the username already exists
+    // check if the username already exists
     const checkResult = await pool.request()
       .input('username', sql.VarChar, username)
       .query('SELECT * FROM Users WHERE username = @username');
@@ -35,30 +36,35 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: "Username already exists." });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-
-    // Insert the user into the database
+    // insert the user into the database
     const result = await pool.request()
       .input('username', sql.VarChar, username)
-      .input('password', sql.VarChar, hashedPassword) // Store hashed password
+      .input('password', sql.VarChar, hashedPassword)
       .query('INSERT INTO Users (username, password) VALUES (@username, @password); SELECT SCOPE_IDENTITY() AS id;');
 
     res.status(201).json({ message: "User registered successfully", id: result.recordset[0].id });
+
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ error: error.message || "Registration failed" });
   }
 });
 
+// user login
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
+    const pool = await sql.connect();  // database connection
+    const user = result.recordset[0];
+    const role = user.username.toLowerCase() === "admin" ? "admin" : "user"; // determine role based on username
+
+    // create JWT payload and sign token
+    const payload = { userId: user.userId, username: user.username, role };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+
     if (!username || !password) {
       return res.status(400).json({ error: "Username and password are required." });
     }
-
-    const pool = await sql.connect();
 
     // fetch user by username
     const result = await pool.request()
@@ -69,32 +75,24 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: "Invalid username or password." });
     }
 
-    const user = result.recordset[0];
-
-    // Compare the hashed password with the provided password
+    // compare the hashed password with the provided password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid username or password." });
     }
 
-    // Determine role based on username
-    const role = user.username.toLowerCase() === "admin" ? "admin" : "user";
-
-    // Create JWT payload and sign token
-    const payload = { userId: user.userId, username: user.username, role };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
-
     res.status(200).json({ message: "Logged in successfully", token, role });
+
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: error.message || "Login failed" });
   }
 });
 
+// fetch all users
 router.get('/data', async (req, res) => {
   try {
     const pool = await sql.connect();
-    // Query to fetch all users with their status (active or pending)
     const result = await pool.request().query(`
       SELECT 
         userId, 
@@ -103,34 +101,38 @@ router.get('/data', async (req, res) => {
       FROM Users
     `);
     res.json(result.recordset);
+
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ error: "Failed to fetch users" });
   }
 });
 
+// accept user registration
 router.post('/accept', async (req, res) => {
   try {
     const { id } = req.body;
-    const pool = await sql.connect();
+    const pool = await sql.connect(); // database connection
 
-    // Update the user's isActive status to 1
+    // update the users isActive status to 1
     await pool.request()
       .input('id', sql.Int, id)
       .query('UPDATE Users SET isActive = 1 WHERE userId = @id');
     res.status(200).json({ message: "User accepted successfully" });
+
   } catch (error) {
     console.error("Error accepting user:", error);
     res.status(500).json({ error: "Failed to accept user" });
   }
 });
 
+// reject user registration
 router.delete('/delete', async (req, res) => {
   try {
     const { id } = req.body;
-    const pool = await sql.connect();
+    const pool = await sql.connect(); // database connection
 
-    // Check if the user is an admin
+    // check if the user is an admin
     const userCheck = await pool.request()
       .input('id', sql.Int, id)
       .query('SELECT username FROM Users WHERE userId = @id');
@@ -144,34 +146,40 @@ router.delete('/delete', async (req, res) => {
       return res.status(403).json({ error: "Cannot delete admin user" });
     }
 
-    // Delete the user from the database
+    // delete the user from the database
     await pool.request()
       .input('id', sql.Int, id)
       .query('DELETE FROM Users WHERE userId = @id');
 
     res.status(200).json({ message: "User deleted successfully" });
+
   } catch (error) {
     console.error("Error deleting user:", error);
     res.status(500).json({ error: "Failed to delete user" });
   }
 });
 
-// saveLocation
+// save location to the database
 router.post('/saveLocation', async (req, res) => {
+
+  // check if the request has a valid authorization header
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).json({ error: "Unauthorized" });
   }
+
+  // split the token from the header and verify the second part (jwt token)
   const token = authHeader.split(" ")[1];
-  let payload;
+  let payload; // payload will contain the decoded jwt token information
   try {
     payload = jwt.verify(token, process.env.JWT_SECRET);
+
   } catch (err) {
     return res.status(401).json({ error: "Invalid token" });
   }
 
-  // Try to get userId from token payload; if missing, look it up from the Users table
-  let userID = payload.userId;
+  // try to get userID from token payload; if missing look it up from the Users table
+  let userID = payload.userId; // userID extracted from payload
   if (!userID) {
     try {
       const pool = await sql.connect();
@@ -191,9 +199,10 @@ router.post('/saveLocation', async (req, res) => {
     return res.status(400).json({ error: "User ID could not be determined." });
   }
 
+  // required fileds for saving location
   const { name, latitude, longitude, date, dateSaved } = req.body;
 
-  // Validate required fields
+  // validate required fields
   if (!name || latitude === undefined || longitude === undefined || !date ) {
     return res.status(400).json({ error: "Missing required fields" });
   }
@@ -211,9 +220,43 @@ router.post('/saveLocation', async (req, res) => {
         VALUES (@userID, @name, @latitude, @longitude, @date)
       `);
     res.status(200).json({ message: "Location saved successfully" });
+
   } catch (err) {
+    
     console.error(err);
     res.status(500).json({ error: "Failed to save location" });
+  }
+});
+
+// fetch saved locations from the database
+router.get('/savedLocations', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const token = authHeader.split(" ")[1];
+  let payload; // payload will contain the decoded jwt token information
+
+  try {
+    payload = jwt.verify(token, process.env.JWT_SECRET); // verify jwt token
+
+  } catch (err) {
+    return res.status(401).json({ error: "Invalid token" });
+  }
+
+  try {
+    const pool = await sql.connect(); // database connection
+    const result = await pool.request()
+      .input('userID', sql.Int, payload.userId)
+      .query('SELECT name FROM userLocations2 WHERE userID = @userID');
+
+    const locations = result.recordset.map(record => record.name);
+    res.status(200).json(locations);
+
+  } catch (error) {
+    console.error("Error fetching saved locations:", error);
+    res.status(500).json({ error: "Failed to fetch saved locations" });
   }
 });
 

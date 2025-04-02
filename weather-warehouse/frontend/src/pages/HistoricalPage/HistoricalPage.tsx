@@ -21,7 +21,7 @@ export function HistoricalPage() {
   const { data: geoData, error: geoError } = useGeolocationQuery(location);
   const { tableData } = useHistoricalData({ data: todayData, date });
   const { showAlert } = useAlert();
-  
+
   const handleLocationChange = (newLocation: string) => {
     setLocation(newLocation);
     localStorage.setItem("location", newLocation);
@@ -83,7 +83,7 @@ export function HistoricalPage() {
             </StyledItem>
           </Grid>
 
-          <Grid size={{ xs: 6, md: 4 }}>
+          <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
               {error ? <p>Error fetching data.</p> : <DataTable data={tableData} />}
             </StyledItem>

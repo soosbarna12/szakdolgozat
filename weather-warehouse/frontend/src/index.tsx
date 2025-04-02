@@ -5,6 +5,8 @@ import { App } from './App';
 import { AlertProvider } from './utils/AlertContext';
 import { createGlobalStyle } from 'styled-components';
 
+
+// css for hiding the scrollbar
 const GlobalStyle = createGlobalStyle`
   html {
     overflow-y: auto; /* Allow scrolling */
@@ -32,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
 root.render(
   <React.StrictMode>
     <GlobalStyle />
