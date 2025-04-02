@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid2";
-import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { ContentBox, StyledItem } from "../../stlyes/content.style";
+import { Box } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+
 import { Pages } from "../../types/page.type";
+import { FilterBar } from "../../components/FilterBar/FilterBar";
+import { useAlert } from "../../utils/AlertContext";
 import { DataMap } from "../../components/DataGrids/DataMap/DataMap";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
+import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
+
 import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
 import { useHistoricalData } from "../../hooks/useHistoricalData";
+import { useGeolocationQuery } from "../../hooks/useGeolocationQuery";
+
 import dayjs from "dayjs";
 import axios from "axios";
-import { useAlert } from "../../utils/AlertContext";
-import { useGeolocationQuery } from "../../hooks/useGeolocationQuery";
 
 
 export function HistoricalPage() {
@@ -22,15 +27,18 @@ export function HistoricalPage() {
   const { tableData } = useHistoricalData({ data: todayData, date });
   const { showAlert } = useAlert();
 
+  // handle location change
   const handleLocationChange = (newLocation: string) => {
     setLocation(newLocation);
     localStorage.setItem("location", newLocation);
   };
 
+  // handle date change
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
     setDate(dateValue);
   };
 
+  // handle saveing location
   const handleSaveLocation = async () => {
     if (!location) {
       showAlert("No location to save", "warning");
@@ -77,15 +85,42 @@ export function HistoricalPage() {
 
       <ContentBox>
         <Grid container spacing={2}>
+
           <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
-              {error ? <p>Error fetching data.</p> : <DataMap data={todayData} />}
+              {error ? (
+                <p>Error fetching historical data.</p>
+              ) : (
+                <DataMap data={todayData} />
+              )}
+            </StyledItem>
+          </Grid>
+
+          <Grid size={{ xs: 6, md: 4 }}>
+            <StyledItem sx={{ height: "400px" }}>
+              {error ? (
+                <p>Error fetching today's weather data.</p>
+              ) : (
+                <WeatherCard data={todayData} />
+              )}
+            </StyledItem>
+          </Grid>
+
+          <Grid size={{ xs: 6, md: 4 }}>
+            <StyledItem sx={{ height: "400px" }}>
+              <h4>Lorem ipsum</h4>
+              <Box>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque hic
+                dolorem numquam corrupti? Veritatis ex corporis qui ipsam doloribus
+                architecto nisi eum. Possimus a molestias maiores debitis deserunt
+                praesentium maxime.
+              </Box>
             </StyledItem>
           </Grid>
 
           <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
-              {error ? <p>Error fetching data.</p> : <DataTable data={tableData} />}
+              <DataTable data={tableData} />
             </StyledItem>
           </Grid>
 
@@ -94,6 +129,19 @@ export function HistoricalPage() {
               <DataChart data={tableData} />
             </StyledItem>
           </Grid>
+
+          <Grid size={{ xs: 6, md: 4 }}>
+            <StyledItem sx={{ height: "400px" }}>
+              <h4>Lorem ipsum</h4>
+              <Box>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque hic
+                dolorem numquam corrupti? Veritatis ex corporis qui ipsam doloribus
+                architecto nisi eum. Possimus a molestias maiores debitis deserunt
+                praesentium maxime.
+              </Box>
+            </StyledItem>
+          </Grid>
+
         </Grid>
       </ContentBox>
     </>

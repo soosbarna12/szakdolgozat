@@ -3,17 +3,20 @@ import { Box, Tooltip } from "@mui/material";
 import React from "react";
 import { StyledMenuButton } from '../../../../stlyes/button.style';
 import { ActionsMenu } from '../ActionsMenu/ActionsMenu';
+import { ActionsButtonProps } from './ActionsButton.type';
 
-interface ActionsButtonProps {
-  onSaveLocation?: () => void;
-}
 
 export function ActionsButton({ onSaveLocation }: ActionsButtonProps) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const isLoggedIn = !!localStorage.getItem("token");
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => { setAnchorElUser(event.currentTarget); };
   const handleCloseMenu = () => { setAnchorElUser(null); };
 
+  if (!isLoggedIn) {
+    return null;
+  }
+  
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open actions">
