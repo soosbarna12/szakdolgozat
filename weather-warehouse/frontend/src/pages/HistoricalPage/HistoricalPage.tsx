@@ -58,14 +58,15 @@ export function HistoricalPage() {
       return;
     }
 
-    // use the selected date or default to the current date if nothing is selected
-    const dateToSave = date ? date.toISOString() : new Date().toISOString();
+    // Adjust the date to include the local timezone offset
+    const selectedDate = date || dayjs(); // Use the selected date or the current date
+    const dateWithOffset = selectedDate.add(2, "hour").format("YYYY-MM-DDTHH:mm:ssZ"); // Add 2 hours and format with timezone offset
 
     try {
       const token = localStorage.getItem("token");
       await axios.post(
         "/user/saveLocation",
-        { name, latitude: lat, longitude: lon, date: dateToSave },
+        { name, latitude: lat, longitude: lon, date: dateWithOffset },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

@@ -71,65 +71,67 @@ export function LoginForm(props: Readonly<LoginFormProps & { onLoginSuccess?: ()
   return (
     <>
       <StyledDialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
 
-          <Typography variant="h5" sx={{ textAlign: 'left' }}>
-            Log In
-          </Typography>
+            <Typography variant="h5" sx={{ textAlign: 'left' }}>
+              Log In
+            </Typography>
 
-          <StyledTextField
-            name="username"
-            type="text"
-            placeholder="Username"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+            <StyledTextField
+              name="username"
+              type="text"
+              placeholder="Username"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
 
-          <StyledTextField
-            name="password"
-            type={showPassword ? 'text' : 'password'}
-            placeholder="Password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {renderShowPassword()}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
+            <StyledTextField
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {renderShowPassword()}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
 
-          <StyledButton variant="outlined" onClick={handleLogin}>
-            Log In
-          </StyledButton>
+            <StyledButton variant="outlined" onClick={handleLogin}>
+              Log In
+            </StyledButton>
 
-          <Link
-            component="button"
-            onClick={handleSignUpClick}
-            variant="body2"
-            sx={{ textAlign: 'center' }}
-          >
-            Sign up
-          </Link>
+            <Link
+              component="button"
+              onClick={handleSignUpClick}
+              variant="body2"
+              sx={{ textAlign: 'center' }}
+            >
+              Sign up
+            </Link>
 
-          <Link
-            component="button"
-            onClick={handleRecoveryClick}
-            variant="body2"
-            sx={{ textAlign: 'center' }}
-          >
-            Forgot Password?
-          </Link>
+            <Link
+              component="button"
+              onClick={handleRecoveryClick}
+              variant="body2"
+              sx={{ textAlign: 'center' }}
+            >
+              Forgot Password?
+            </Link>
 
-        </DialogContent>
+          </DialogContent>
+        </form>
       </StyledDialog>
       <SignUpForm open={openSignUp} onClose={() => setOpenSignUp(false)} />
       <PasswordRecoveryForm open={openRecovery} onClose={() => setOpenRecovery(false)} />
