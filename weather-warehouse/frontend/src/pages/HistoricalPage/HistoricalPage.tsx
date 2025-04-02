@@ -22,7 +22,7 @@ import axios from "axios";
 export function HistoricalPage() {
   const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
-  const { data: todayData, error, isLoading } = useTodayDataQuery(location);
+  const { data: todayData, error, isLoading } = useTodayDataQuery(location); // currently using the todays data query, because the historical is not available yet
   const { data: geoData, error: geoError } = useGeolocationQuery(location);
   const { tableData } = useHistoricalData({ data: todayData, date });
   const { showAlert } = useAlert();
@@ -58,11 +58,14 @@ export function HistoricalPage() {
       return;
     }
 
+    // use the selected date or default to the current date if nothing is selected
+    const dateToSave = date ? date.toISOString() : new Date().toISOString();
+
     try {
       const token = localStorage.getItem("token");
       await axios.post(
         "/user/saveLocation",
-        { name, latitude: lat, longitude: lon, date },
+        { name, latitude: lat, longitude: lon, date: dateToSave },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
