@@ -31,7 +31,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
     setLoggedIn(false);
     handleCloseMenu();
     window.location.reload(); // Refresh the page
-  };
+  }
 
   function handleCelsiusScale() {
     // ...

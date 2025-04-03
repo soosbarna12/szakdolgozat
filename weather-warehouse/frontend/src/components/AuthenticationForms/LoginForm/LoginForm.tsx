@@ -13,11 +13,14 @@ import { useLoginQuery } from '../../../hooks/useLoginQuery';
 
 export function LoginForm(props: Readonly<LoginFormProps>) {
   const { open, onClose, onLoginSuccess } = props;
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   const [showPassword, setShowPassword] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
   const [openRecovery, setOpenRecovery] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+
   const { isSuccess, refetch: refetchLoginQuery } = useLoginQuery(username, password);
 
 
@@ -45,7 +48,7 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
 
   function handleMouseDownPassword(event: React.MouseEvent) {
     event.preventDefault();
-  };
+  }
 
   function renderShowPassword() {
     return showPassword ? (
@@ -135,7 +138,11 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
           </DialogContent>
         </form>
       </StyledDialog>
-      <SignUpForm open={openSignUp} onClose={() => setOpenSignUp(false)} />
+      <SignUpForm
+        open={openSignUp}
+        onClose={() => setOpenSignUp(false)}
+        onRegisterSuccess={() => console.log('Registration successful')}
+      />
       <PasswordRecoveryForm open={openRecovery} onClose={() => setOpenRecovery(false)} />
     </>
   );

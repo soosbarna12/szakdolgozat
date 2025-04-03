@@ -1,46 +1,81 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DialogContent, IconButton, InputAdornment, Typography } from '@mui/material';
 import * as React from 'react';
-import axios from 'axios';
 import { SignUpFormProps } from './SignUpForm.type';
 import { StyledDialog } from '../../../stlyes/common.style';
 import { StyledTextField } from '../../../stlyes/inputField.style';
 import { StyledButton } from '../../../stlyes/button.style';
-import { useAlert } from '../../../utils/AlertContext';
+import { useEffect } from 'react';
+import { useSignUpQuery } from '../../../hooks/useSignUpQuery';
+
 
 export function SignUpForm(props: Readonly<SignUpFormProps>) {
+	const { open, onClose, onRegisterSuccess } = props;
+
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [confirmPassword, setConfirmPassword] = React.useState('');
 	const [securityQuestion, setSecurityQuestion] = React.useState('');
 	const [securityAnswer, setSecurityAnswer] = React.useState('');
+
 	const [showPassword, setShowPassword] = React.useState(false);
-	const { open, onClose } = props;
-	const { showAlert } = useAlert();
 
-	const handleClickShowPassword = () => setShowPassword((show) => !show);
-	const handleMouseDownPassword = (event: React.MouseEvent) => { event.preventDefault(); };
+	const { isSuccess, refetch: refetchRegisterQuery } = useSignUpQuery(username, password, securityQuestion, securityAnswer);
 
-	// handle user registration
-	const handleRegister = async () => {
-		if (password !== confirmPassword) {
-			showAlert("Passwords do not match", "error");
-			return;
+
+	useEffect(() => {
+		if (open) {
+			setUsername('');
+			setPassword('');
+			setConfirmPassword('');
+			setSecurityQuestion('');
+			setSecurityAnswer('');
+			setShowPassword(false);
 		}
-		try {
-			await axios.post('/user/register', {
-				username,
-				password,
-				securityQuestion,
-				securityAnswer,
-			});
-			showAlert("User registered successfully", "success");
+	}, [open]);
+
+	// useffectbe kell rakni, mert ha a login sikeres, akkor a useLoginQuery hookban a isSuccess true lesz, viszont a refretch meghívása után nem fog egyből az isSuccess frissülni
+	useEffect(() => {
+		if (isSuccess) {
+			onRegisterSuccess();
+			//window.location.reload(); // refresh the page
 			onClose();
-		} catch (error: any) {
-			console.error(error);
-			showAlert(error.response?.data?.error || "Registration failed", "error");
 		}
-	};
+	}, [isSuccess])
+
+
+
+	/*
+		// handle user registration
+		const handleRegister = async () => {
+			if (password !== confirmPassword) {
+				showAlert("Passwords do not match", "error");
+				return;
+			}
+			try {
+				await axios.post('/user/register', {
+					username,
+					password,
+					securityQuestion,
+					securityAnswer,
+				});
+				showAlert("User registered successfully", "success");
+				onClose();
+			} catch (error: any) {
+				console.error(error);
+				showAlert(error.response?.data?.error || "Registration failed", "error");
+			}
+		};
+		*/
+
+
+	function handleClickShowPassword() {
+		setShowPassword((show) => !show);
+	}
+
+	function handleMouseDownPassword(event: React.MouseEvent) {
+		event.preventDefault();
+	}
 
 	function renderShowPassword() {
 		return showPassword ? (
@@ -50,6 +85,11 @@ export function SignUpForm(props: Readonly<SignUpFormProps>) {
 		);
 	}
 
+	function handleRegister() {
+		refetchRegisterQuery(); // neccessary to use this query when clicking the login button
+	};
+
+	/*
 	// reset fields every time dialog opens
 	React.useEffect(() => {
 		if (open) {
@@ -61,6 +101,7 @@ export function SignUpForm(props: Readonly<SignUpFormProps>) {
 			setSecurityAnswer('');
 		}
 	}, [open]);
+	*/
 
 	return (
 		<StyledDialog open={open} onClose={onClose} maxWidth="xs" fullWidth>

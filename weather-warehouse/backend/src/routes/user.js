@@ -304,17 +304,21 @@ router.get('/savedLocations', async (req, res) => {
     console.log(err);
     return res.status(401).json({ error: "Invalid token" });
   }
-
+  
   console.log(payload);
 
   try {
     const pool = await sql.connect(); // database connection
     const result = await pool.request()
       .input('userID', sql.Int, payload.userId)
-      .query('SELECT name FROM userLocations2 WHERE userID = @userID');
+      .query('SELECT name, date, dateSaved FROM userLocations2 WHERE userID = @userID');
 
-    const locations = result.recordset.map(record => record.name);
-    res.status(200).json(locations);
+    const savedLocationsData = result.recordset.map(record => ({
+      name: record.name,
+      date: record.date,
+      dateSaved: record.dateSaved
+    }));
+    res.status(200).json(savedLocationsData);
 
   } catch (error) {
     console.error("Error fetching saved locations:", error);
