@@ -21,7 +21,6 @@ export function ForecastPage() {
       <FilterBar
         type={Pages.Forecast}
         location={location}
-        onLocationChange={handleLocationChange}
       />
       <ContentBox>
         <ForecastTileGroup />

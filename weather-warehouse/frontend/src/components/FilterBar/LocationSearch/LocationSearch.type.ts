@@ -3,5 +3,12 @@ import { Pages } from '../../../types/page.type';
 export interface LocationSearchProps {
   type: Pages;
   location: string;
-  onLocationChange: (newLocation: string) => void;
+}
+
+export interface LocationOption {
+  name: string;
+  state?: string;
+  country: string;
+  lat: number;
+  lon: number;
 }

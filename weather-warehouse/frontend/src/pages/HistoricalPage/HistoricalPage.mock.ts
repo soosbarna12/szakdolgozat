@@ -5,7 +5,7 @@ import MockAdapter from "axios-mock-adapter";
 const mock = new MockAdapter(axios, { delayResponse: 500 });
 
 // Mock the historical data API
-mock.onGet("/today/data").reply(200, {
+mock.onGet("/today/locationData").reply(200, {
   coord: { lat: 47.4979, lon: 19.0402 },
   main: {
     temp_max: 303.15,
@@ -18,7 +18,7 @@ mock.onGet("/today/data").reply(200, {
 });
 
 // Mock today's weather data API
-mock.onGet("/today/data").reply(200, {
+mock.onGet("/today/locationData").reply(200, {
   dt: 1696000000,
   main: {
     temp: 298.15,

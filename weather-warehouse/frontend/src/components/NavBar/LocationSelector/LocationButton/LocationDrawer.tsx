@@ -15,6 +15,10 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
     toggleLocationDrawer(false);
   }
 
+  function handleSelectLocatin() {
+    // query to get back the location, date, table, map and other components' data from database
+  }
+
   function renderLocations() {
     if (isLoading) {
       return [0, 1, 2].map((index) => (
@@ -28,6 +32,7 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
         </ListItem>
       ));
     }
+
     if (savedLocations?.length > 0) {
       return savedLocations.map(
         (location: { name: string; date: string; dateSaved: string }, index: number) => {
@@ -36,7 +41,7 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
 
           return (
             <ListItem key={index} disablePadding onClick={handleDrawerClose}>
-              <StyledButton fullWidth variant="text" color="primary" sx={{ height: "80px", boxShadow: 4, margin: 1 }}>
+              <StyledButton fullWidth variant="text" color="primary" sx={{ height: "80px", boxShadow: 4, margin: 1 }} onClick={handleSelectLocatin}>
                 <ListItemText
                   primary={location.name}
                   secondary={

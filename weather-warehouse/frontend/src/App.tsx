@@ -8,6 +8,7 @@ import { LOCAL_STORAGE_THEME_NAME } from "./consts/theme.const";
 import { TodayPage } from "./pages/TodayPage/TodayPage";
 import { darkTheme, lightTheme } from "./stlyes/theme.style";
 import { Theme } from "./types/theme.type";
+import { LocationProvider } from "./contexts/LocationContext";
 
 
 const queryClient = new QueryClient();
@@ -36,16 +37,18 @@ export function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
-        <NavBar isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
-        <Routes>
-          <Route path="/">
-            <Route index element={<TodayPage />} />
-            {renderRouteElements()}
-            <Route path="*" element={<TodayPage />} />
-          </Route>
-        </Routes>
-      </ThemeProvider >
+      <LocationProvider>
+        <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
+          <NavBar isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
+          <Routes>
+            <Route path="/">
+              <Route index element={<TodayPage />} />
+              {renderRouteElements()}
+              <Route path="*" element={<TodayPage />} />
+            </Route>
+          </Routes>
+        </ThemeProvider >
+      </LocationProvider>
     </QueryClientProvider>
   );
 }

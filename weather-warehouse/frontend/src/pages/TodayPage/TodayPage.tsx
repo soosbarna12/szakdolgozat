@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { Pages } from "../../types/page.type";
 import { ContentBox, StyledItem } from "../../stlyes/content.style";
@@ -7,23 +7,23 @@ import axios from "axios";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
 import { Skeleton } from "@mui/material";
 import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
+import { LocationContext } from "../../contexts/LocationContext";
 
 
 export function TodayPage() {
 
-  const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
-  const { data, error, isLoading } = useTodayDataQuery(location);
+  const { location } = useContext(LocationContext);
+  const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
 
 
   const handleLocationChange = (newLocation: string) => {
-    setLocation(newLocation);
     localStorage.setItem("location", newLocation);
   };
 
 
   return (
     <>
-      <FilterBar type={Pages.Today} location={location} onLocationChange={handleLocationChange} />
+      <FilterBar type={Pages.Today} location={location.name} />
       <ContentBox sx={{ display: "flex", justifyContent: "center" }}>
         {isLoading && (
           <Skeleton
@@ -35,9 +35,9 @@ export function TodayPage() {
           />
         )}
         {error && <p>Error fetching data.</p>}
-        {data &&
+        {todayData &&
           <StyledItem sx={{ height: "400px", width: "350px" }}>
-            <WeatherCard data={data} />
+            <WeatherCard data={todayData} />
           </StyledItem>
         }
       </ContentBox>

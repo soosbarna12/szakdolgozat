@@ -3,18 +3,15 @@ import { useAlert } from "../utils/AlertContext";
 import axios from "axios";
 
 
-export function useTodayDataQuery(location: string) {
+export function useTodayDataQuery(lat: number, lon: number) {
   const { showAlert } = useAlert();
   
   const { data, error, isLoading } = useQuery({
-    queryKey: ["todayWeatherData", location],
+    queryKey: ["todayWeatherData", lat, lon],
     queryFn: async () => {
-      if (!location) {
-        throw new Error("Location is required");
-      }
-
-      const response = await axios.get(`/today/data`, {
-        params: { location, lang: "en" },
+      const response = await axios.get(`/today/locationData`, {
+        //params: { location, lang: "en" },
+        params: { lat, lon, lang: "en" },
       });
 
       if (response.data?.cod === "404") {
@@ -23,7 +20,7 @@ export function useTodayDataQuery(location: string) {
 
       return response.data;
     },
-    enabled: !!location,
+    enabled: !!(lat && lon)
   });
 
   if (error) {

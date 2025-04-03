@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ContentBox, StyledItem } from "../../stlyes/content.style";
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -17,21 +17,16 @@ import { useGeolocationQuery } from "../../hooks/useGeolocationQuery";
 
 import dayjs from "dayjs";
 import axios from "axios";
+import { LocationContext } from "../../contexts/LocationContext";
 
 
 export function HistoricalPage() {
-  const [location, setLocation] = useState(() => localStorage.getItem("location") || "");
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
-  const { data: todayData, error, isLoading } = useTodayDataQuery(location); // currently using the todays data query, because the historical is not available yet
-  const { data: geoData, error: geoError } = useGeolocationQuery(location);
+  const { location } = useContext(LocationContext);
+  const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
+  const { data: geoData, error: geoError } = useGeolocationQuery(location.name);
   const { tableData } = useHistoricalData({ data: todayData, date });
   const { showAlert } = useAlert();
-
-  // handle location change
-  const handleLocationChange = (newLocation: string) => {
-    setLocation(newLocation);
-    localStorage.setItem("location", newLocation);
-  };
 
   // handle date change
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
@@ -81,9 +76,8 @@ export function HistoricalPage() {
     <>
       <FilterBar
         type={Pages.Historical}
-        location={location}
+        location={location.name}
         onDateChange={handleDateChange}
-        onLocationChange={handleLocationChange}
         onSaveLocation={handleSaveLocation}
       />
 

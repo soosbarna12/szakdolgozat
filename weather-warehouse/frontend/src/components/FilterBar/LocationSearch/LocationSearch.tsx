@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Autocomplete from '@mui/material/Autocomplete';
-import StyledTextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useDebounce } from "use-debounce";
-import axios from "axios";
-import { LocationSearchProps } from "./LocationSearch.type";
+import { LocationOption, LocationSearchProps } from "./LocationSearch.type";
 import { StyledAutocompleteDropdown, StyledLocationSearch } from "../../../stlyes/inputField.style";
+import { useGeolocationQuery } from "../../../hooks/useGeolocationQuery";
+import { LocationContext } from "../../../contexts/LocationContext";
 
 
 export function LocationSearch(props: Readonly<LocationSearchProps>) {
-  const { type, location, onLocationChange } = props;
+  const { type, location } = props;
   const [inputValue, setInputValue] = useState(location);
   const [debouncedValue] = useDebounce(inputValue, 500);
-  const [options, setOptions] = useState<Array<{ name: string; country: string; state?: string }>>([]);
+  const [options, setOptions] = useState<Array<LocationOption>>([]);
+  const { data: locationOptions, error, isLoading } = useGeolocationQuery(debouncedValue);
+  const { setLocation } = useContext(LocationContext);
 
 
   // Fetch location suggestions when debounced value changes
@@ -22,46 +24,41 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
       setOptions([]);
       return;
     }
-
-    const fetchSuggestions = async () => {
-      try {
-        const apiKey = "462394b96065d405cd9ca7b3ef92d634";
-        const limit = 5;
-        const response = await axios.get(
-          `https://api.openweathermap.org/geo/1.0/direct?q=${debouncedValue}&limit=${limit}&appid=${apiKey}`
-        );
-        const newResults = response.data.filter(
-          (loc: any, index: number, self: any[]) =>
-            index ===
-            self.findIndex(
-              (t) => t.name === loc.name && t.state === loc.state && t.country === loc.country
-            )
-        );
-        setOptions(newResults);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchSuggestions();
   }, [debouncedValue]);
+
+  useEffect(() => {
+    if (locationOptions?.length > 0) {
+      setOptions(locationOptions);
+    }
+  }, [locationOptions]);
+
+  function getOptionLabel(option: LocationOption) {
+    if (typeof option === "string") {
+      return option;
+    }
+    return `${option.name}${option.state ? `, ${option.state}` : ""}, ${option.country}`;
+  }
+
+  function handleOnChange(event: React.SyntheticEvent, newValue: LocationOption | null) {
+    if (newValue && typeof newValue !== "string") {
+      const selectedLocation = getOptionLabel(newValue)
+      setInputValue(selectedLocation);
+      setLocation({
+        name: selectedLocation,
+        lat: newValue.lat,
+        lon: newValue.lon,
+      });
+    }
+  }
+
 
   return (
     <Autocomplete
       options={options}
-      getOptionLabel={(option) =>
-        typeof option === "string"
-          ? option
-          : `${option.name}${option.state ? `, ${option.state}` : ""}, ${option.country}`
-      }
+      getOptionLabel={getOptionLabel}
       inputValue={inputValue}
       onInputChange={(event, newValue) => setInputValue(newValue)}
-      onChange={(event, newValue) => {
-        if (newValue && typeof newValue !== "string") {
-          const selectedLocation = `${newValue.name}${newValue.state ? `, ${newValue.state}` : ""}, ${newValue.country}`;
-          setInputValue(selectedLocation);
-          onLocationChange(selectedLocation);
-        }
-      }}
+      onChange={handleOnChange}
       PaperComponent={StyledAutocompleteDropdown}
       renderInput={(params) => (
         <StyledLocationSearch

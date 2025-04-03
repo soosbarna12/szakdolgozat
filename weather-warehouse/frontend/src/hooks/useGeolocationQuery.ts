@@ -1,27 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 
 
 export function useGeolocationQuery(location: string) {
     
-  return useQuery({
-    queryKey: ["geolocation", location],
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["location", location],
     queryFn: async () => {
-      if (!location) {
-        throw new Error("Location is required");
+      const response = await axios.get(`/geo/location`, {
+        params: { location }
+      })
+
+      if (!response?.data || response?.data?.length === 0) {
+        return []; // return empty array if no data found
       }
 
-      const apiKey = "462394b96065d405cd9ca7b3ef92d634";
-      const response = await axios.get(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${apiKey}`
+      // search for unique locations
+      const newResults = response.data.filter(
+        (loc: any, index: number, self: any[]) =>
+          index ===
+          self.findIndex(
+            (t) => t.name === loc.name && t.state === loc.state && t.country === loc.country
+          )
       );
-
-      if (!response.data || response.data.length === 0) {
-        throw new Error("Location not found");
-      }
-
-      return response.data[0]; // Return the first result
+      return newResults; 
     },
+
     enabled: !!location,
   });
+
+  return { data, error, isLoading };
 }

@@ -4,18 +4,20 @@ const router = express.Router();
 const apiKey = '462394b96065d405cd9ca7b3ef92d634';
 
 // fetch weather data by city name
-router.get('/data', async (req, res) => {
+router.get('/locationData', async (req, res) => {
   try {
-    const location = req.query.location; // get location from query params
+    const { lat, lon } = req.query;  // get latitude and longitude from query params
 
-    if(!location) {
-      throw res.status(400).json({ error: 'Location is required' }); // check if location is provided
+    if(!(lat && lon)) {
+      throw res.status(400).json({ error: 'Coordinates is required' }); // check if location is provided
     }
 
     const lang = req.query.lang || 'en'; // optinal language parameter, default to english
 
     // fetch weather data from openweathermap api
-    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&lang=${lang}`);
+    //const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&lang=${lang}`);
+    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=${lang}`);
+    console.log("_________________________________"); // log the response data for debugging
     console.log(response.data);
     res.send(response.data); // send the response data back to the client
 

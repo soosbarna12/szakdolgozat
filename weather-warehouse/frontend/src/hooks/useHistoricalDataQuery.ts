@@ -8,7 +8,7 @@ export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryPro
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["historicalWeatherData", location],
-    queryFn: async () => fetchWeatherData("/today/data", { location, lang: "en" }),
+    queryFn: async () => fetchWeatherData("/today/locationData", { location, lang: "en" }),
     enabled: !!location,
   });
 
