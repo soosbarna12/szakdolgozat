@@ -17,8 +17,7 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const { data: locationOptions, error, isLoading } = useGeolocationQuery(debouncedValue);
   const { setLocation } = useContext(LocationContext);
 
-
-  // Fetch location suggestions when debounced value changes
+  // fetch location suggestions when debounced value changes
   useEffect(() => {
     if (debouncedValue.trim() === "") {
       setOptions([]);
@@ -26,11 +25,13 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
     }
   }, [debouncedValue]);
 
+  // fetch autocomplete options
   useEffect(() => {
     if (locationOptions?.length > 0) {
       setOptions(locationOptions);
     }
   }, [locationOptions]);
+
 
   function getOptionLabel(option: LocationOption) {
     if (typeof option === "string") {
@@ -63,7 +64,8 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
       renderInput={(params) => (
         <StyledLocationSearch
           {...params}
-          placeholder="Location"
+          //placeholder="Location"
+          placeholder={location ? location : "Location"}
           sx={{ boxShadow: 4, width: type === "Historical" ? 250 : 400 }}
           variant="outlined"
           InputProps={{

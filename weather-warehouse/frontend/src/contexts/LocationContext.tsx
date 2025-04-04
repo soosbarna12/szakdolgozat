@@ -11,6 +11,8 @@ interface LocationContextType {
     setLocation: Dispatch<SetStateAction<Location>>;
 }
 
+
+
 export const LocationContext = createContext<LocationContextType>({
     location: { name: "", lat: 0, lon: 0 },
     setLocation: () => { },
@@ -22,6 +24,7 @@ interface LocationProviderProps {
 
 export const LocationProvider = ({ children }: LocationProviderProps) => {
     const [location, setLocation] = useState<Location>({ name: "", lat: 0, lon: 0 });
+
     return (
         <LocationContext.Provider value={{ location, setLocation }}>
             {children}
