@@ -40,6 +40,13 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
     return `${option.name}${option.state ? `, ${option.state}` : ""}, ${option.country}`;
   }
 
+  function handleAutocompleteMessage() {
+    if (isLoading || inputValue.trim() === "") {
+      return "Start typing to find a location";
+    }
+    return "No location found";
+  }
+
   function handleOnChange(event: React.SyntheticEvent, newValue: LocationOption | null) {
     if (newValue && typeof newValue !== "string") {
       const selectedLocation = getOptionLabel(newValue)
@@ -61,10 +68,10 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
       onInputChange={(event, newValue) => setInputValue(newValue)}
       onChange={handleOnChange}
       PaperComponent={StyledAutocompleteDropdown}
+      noOptionsText={handleAutocompleteMessage()}
       renderInput={(params) => (
         <StyledLocationSearch
           {...params}
-          //placeholder="Location"
           placeholder={location ? location : "Location"}
           sx={{ boxShadow: 4, width: type === "Historical" ? 250 : 400 }}
           variant="outlined"
