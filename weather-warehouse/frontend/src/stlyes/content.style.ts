@@ -68,16 +68,30 @@ export const StlyedLineChart = styled(LineChart)(({ theme }) => ({
 }));
 
 export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-	borderRadius: 10,
-	border: 0,
-	'& .MuiDataGrid-columnHeaders': {
-	  backgroundColor: theme.palette.primary.main,
-	  color: theme.palette.primary.contrastText,
-	},
-	'& .MuiDataGrid-row:hover': {
-	  backgroundColor: theme.palette.action.hover
-	},
-	'& .MuiDataGrid-columnHeader': {
-        backgroundColor: theme.palette.primary.dark,
-    }
+  borderRadius: 10,
+  border: 0,
+  overflow: "auto", // Allow scrollbars
+  '& .MuiDataGrid-columnHeaders': {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+  '& .MuiDataGrid-row:hover': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  '& .MuiDataGrid-columnHeader': {
+    backgroundColor: theme.palette.primary.dark,
+  },
+  // Override global scrollbar hiding
+  '&::-webkit-scrollbar': {
+    display: 'block', // Ensure scrollbar is visible
+    width: '8px',
+    height: '8px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: '4px',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: theme.palette.background.default,
+  },
 }));

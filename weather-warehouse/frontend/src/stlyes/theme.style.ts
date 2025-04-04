@@ -10,7 +10,7 @@ export const lightTheme = createTheme({
 		  styleOverrides: {
 			html: {
 				'& ::-webkit-scrollbar': {
-					display: 'none'
+					//display: 'none'
 				},
 			}
 		  }
