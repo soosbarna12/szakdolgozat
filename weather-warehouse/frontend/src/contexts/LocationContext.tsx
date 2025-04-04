@@ -1,4 +1,5 @@
 import React, { createContext, useState, ReactNode, Dispatch, SetStateAction, useEffect } from "react";
+import axios from "axios";
 
 
 export interface Location {
@@ -35,17 +36,33 @@ export const LocationProvider = ({ children }: LocationProviderProps) => {
 		}
 	});
 
-	// update location using geo if not alreasy set
-	useEffect(() => {
-		if (!location.lat && !location.lon && navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition((position) => {
-				const { latitude, longitude } = position.coords;
-				const updatedLocation = { ...location, lat: latitude, lon: longitude };
-				setLocation(updatedLocation);
-				localStorage.setItem("location", JSON.stringify(updatedLocation)); // Persist to localStorage
-			});
-		}
-	}, [location]);
+  // Update location using reverse geocoding if not already set
+  useEffect(() => {
+    if (!location.name && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            const response = await axios.get(`/today/reverse-geocode`, {
+              params: { lat: latitude, lon: longitude },
+            });
+
+            const cityName = response.data || "Unknown Location";
+            const updatedLocation = { name: cityName, lat: latitude, lon: longitude };
+
+            setLocation(updatedLocation);
+            localStorage.setItem("location", JSON.stringify(updatedLocation)); // Persist to localStorage
+						
+          } catch (error) {
+            console.error("Failed to fetch reverse geocoded location:", error);
+          }
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+        }
+      );
+    }
+  }, [location]);
 
 	useEffect(() => {
 		// Persist location to localStorage whenever it changes

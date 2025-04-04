@@ -1,4 +1,6 @@
+
 {
+	/*
 	"workbench.colorTheme": "Default Dark+",
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"typescript.updateImportsOnFileMove.enabled": "always",
@@ -14,7 +16,15 @@
 	//editor.formatOnSave": false,
 	"javascript.updateImportsOnFileMove.enabled": "always",
 
-	"editor.suggestSelection": "first",
-	"editor.inlineSuggest.enabled": true,
-	"github.copilot.inlineSuggest.enable": false
+
+	// coplilot settings
+	//"editor.suggestSelection": "first",
+	//"editor.inlineSuggest.enabled": true,
+	//"github.copilot.inlineSuggest.enable": false
+	*/
+
+	"[javascript]": {
+		"github.copilot.enable": "disabled"
+	}
 }
+

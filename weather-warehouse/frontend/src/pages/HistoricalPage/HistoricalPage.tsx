@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ContentBox, StyledItem } from "../../stlyes/content.style";
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -16,14 +16,15 @@ import { useHistoricalData } from "../../hooks/useHistoricalData";
 import { useGeolocationQuery } from "../../hooks/useGeolocationQuery";
 
 import dayjs from "dayjs";
-import axios from "axios";
+import axios from "axios"; 
 import { LocationContext } from "../../contexts/LocationContext";
 
 
 export function HistoricalPage() {
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
   const { location } = useContext(LocationContext);
-  const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
+  //const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
+  const { data: todayData, error, isLoading } = useTodayDataQuery(location.name); // currently using the todays data query, because the historical is not available yet
   const { data: geoData, error: geoError } = useGeolocationQuery(location.name);
   const { tableData } = useHistoricalData({ data: todayData, date });
   const { showAlert } = useAlert();
