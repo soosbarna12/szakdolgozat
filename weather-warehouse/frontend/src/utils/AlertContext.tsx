@@ -1,10 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { Snackbar, Alert } from "@mui/material";
-
-
-type AlertContextType = {
-  showAlert: (message: string, severity?: "error" | "info" | "success" | "warning") => void;
-};
+import { AlertContextType } from "../types/alertContext.type";
 
 
 export const AlertContext = createContext<AlertContextType>({

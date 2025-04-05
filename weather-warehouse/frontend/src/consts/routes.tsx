@@ -4,6 +4,7 @@ import { HistoricalPage } from '../pages/HistoricalPage/HistoricalPage';
 import { TodayPage } from '../pages/TodayPage/TodayPage';
 import { Pages } from '../types/page.type';
 import { AdminPage } from '../pages/AdminPage/AdminPage';
+import { ProtectedRoute } from '../components/ProtectedRoute';
 
 export const ROUTES = [
 	{
@@ -28,6 +29,6 @@ export const ROUTES = [
 		text: 'Admin',
 		path: '/admin',
 		id: 'Admin',
-		element: <AdminPage />
+		element: <ProtectedRoute><AdminPage /></ProtectedRoute>
 	}
 ];

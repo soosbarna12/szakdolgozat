@@ -156,6 +156,7 @@ router.get('/userData', async (req, res) => {
       SELECT 
         userId, 
         username, 
+        isAdmin,
         CASE WHEN isActive = 1 THEN 'active' ELSE 'pending' END AS status 
       FROM Users
     `);
@@ -188,7 +189,7 @@ router.post('/accept', async (req, res) => {
 // reject user registration
 router.delete('/delete', async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.query;
     const pool = await sql.connect(); // database connection
 
     // check if the user is an admin
@@ -257,10 +258,10 @@ router.post('/saveLocation', async (req, res) => {
     return res.status(400).json({ error: "User ID could not be determined." });
   }
 
-  const { name, latitude, longitude, date, dateSaved } = req.body; // destructure request body
+  const { name, lat, lon, date } = req.body; // destructure request body
 
   // validate required fields
-  if (!name || latitude === undefined || longitude === undefined || !date ) {
+  if (!name || lat === undefined || lon === undefined || !date ) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
@@ -269,8 +270,8 @@ router.post('/saveLocation', async (req, res) => {
     await pool.request()
       .input('userID', sql.Int, userID)
       .input('name', sql.VarChar, name)
-      .input('latitude', sql.Decimal(10, 8), latitude)
-      .input('longitude', sql.Decimal(11, 8), longitude)
+      .input('latitude', sql.Decimal(10, 8), lat)
+      .input('longitude', sql.Decimal(11, 8), lon)
       .input('date', sql.DateTime, date)
       .query(`
         INSERT INTO userLocations2 (userID, name, latitude, longitude, date) 

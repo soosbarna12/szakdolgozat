@@ -9,6 +9,9 @@ import { TodayPage } from "./pages/TodayPage/TodayPage";
 import { darkTheme, lightTheme } from "./stlyes/theme.style";
 import { Theme } from "./types/theme.type";
 import { LocationProvider } from "./contexts/LocationContext";
+import utc from "dayjs/plugin/utc";
+import dayjs from "dayjs";
+dayjs.extend(utc);
 
 
 const queryClient = new QueryClient();

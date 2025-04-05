@@ -1,6 +1,6 @@
 
 {
-	/*
+	
 	"workbench.colorTheme": "Default Dark+",
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"typescript.updateImportsOnFileMove.enabled": "always",
@@ -16,7 +16,7 @@
 	//editor.formatOnSave": false,
 	"javascript.updateImportsOnFileMove.enabled": "always",
 
-
+	/*
 	// coplilot settings
 	//"editor.suggestSelection": "first",
 	//"editor.inlineSuggest.enabled": true,
@@ -25,6 +25,11 @@
 
 	"[javascript]": {
 		"github.copilot.enable": "disabled"
+	},
+	/*
+	"[typescript]": {
+		"github.copilot.enable": "disabled"
 	}
+		*/
 }
 

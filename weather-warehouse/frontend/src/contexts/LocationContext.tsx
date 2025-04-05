@@ -8,14 +8,27 @@ export interface Location {
 	lon: number;
 }
 
+// historical page data
+export interface HistoricalPageData {
+	date: string;
+	maxTemp: number;
+	minTemp: number;
+	humidity: number;
+	location: string;
+}
+
 interface LocationContextType {
 	location: Location;
+	historicalPageData: HistoricalPageData[]; // add historicalData to the context type
 	setLocation: Dispatch<SetStateAction<Location>>;
+	setHistoricalPageData: Dispatch<SetStateAction<HistoricalPageData[]>>; // add setter for historicalData
 }
 
 export const LocationContext = createContext<LocationContextType>({
 	location: { name: "", lat: 0, lon: 0 },
 	setLocation: () => { },
+	historicalPageData: [], // initialize historicalData as an empty array
+	setHistoricalPageData: () => { },
 });
 
 interface LocationProviderProps {
@@ -35,8 +48,26 @@ export const LocationProvider = ({ children }: LocationProviderProps) => {
 			return { name: "", lat: 0, lon: 0 };
 		}
 	});
+	
+	const [historicalPageData, setHistoricalPageData] = useState<HistoricalPageData[]>(() => {
+    const storedData = localStorage.getItem("historicalPageData");
+    try {
+      return storedData ? JSON.parse(storedData) : [];
+    } catch (error) {
+      console.error("Failed to parse historical data from localStorage:", error);
+      return [];
+    }
+  });
+
+	//  historicalPageData to localStorage whenever it changes
+  useEffect(() => {
+    if (historicalPageData) {
+      localStorage.setItem("historicalPageData", JSON.stringify(historicalPageData));
+    }
+  }, [historicalPageData]);
 
   // Update location using reverse geocoding if not already set
+	// used in default user location, navigator geolocation gets back coordinates
   useEffect(() => {
     if (!location.name && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -69,6 +100,11 @@ export const LocationProvider = ({ children }: LocationProviderProps) => {
 		localStorage.setItem("location", JSON.stringify(location));
 	}, [location]);
 
+	// Persist historical data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("historicalPageData", JSON.stringify(historicalPageData));
+  }, [historicalPageData]);
+
 	/*
 	useEffect(() => {
 		if (navigator.geolocation) {
@@ -82,8 +118,8 @@ export const LocationProvider = ({ children }: LocationProviderProps) => {
 
 
 	return (
-		<LocationContext.Provider value={{ location, setLocation }}>
-			{children}
-		</LocationContext.Provider>
+		<LocationContext.Provider value={{ location, setLocation, historicalPageData, setHistoricalPageData }}>
+      {children}
+    </LocationContext.Provider>
 	);
 };

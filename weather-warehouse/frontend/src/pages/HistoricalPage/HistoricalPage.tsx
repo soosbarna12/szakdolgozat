@@ -13,65 +13,47 @@ import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard"
 
 import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
 import { useHistoricalData } from "../../hooks/useHistoricalData";
-import { useGeolocationQuery } from "../../hooks/useGeolocationQuery";
 
 import dayjs from "dayjs";
-import axios from "axios"; 
 import { LocationContext } from "../../contexts/LocationContext";
+import { useSaveLocationQuery } from "../../hooks/useSaveLocationQuery";
 
 
 export function HistoricalPage() {
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
   const { location } = useContext(LocationContext);
+  const { historicalPageData, setHistoricalPageData } = useContext(LocationContext);
   //const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
-  const { data: todayData, error, isLoading } = useTodayDataQuery(location.name); // currently using the todays data query, because the historical is not available yet
-  const { data: geoData, error: geoError } = useGeolocationQuery(location.name);
+  const { data: todayData, error } = useTodayDataQuery(location.name); // currently using the todays data query, because the historical is not available yet
+  //onst { data: geoData, error: geoError } = useGeolocationQuery(location.name);
   const { tableData } = useHistoricalData({ data: todayData, date });
-  const { showAlert } = useAlert();
+  const { refetch: refetchSaveLocationQuery } = useSaveLocationQuery(todayData, date);
 
   // handle date change
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
     setDate(dateValue);
   };
 
-  // handle saveing location
   const handleSaveLocation = async () => {
-    if (!location) {
-      showAlert("No location to save", "warning");
-      return;
+    refetchSaveLocationQuery();
+  }
+
+  // Sync tableData with historicalPageData
+  useEffect(() => {
+    if (tableData && tableData.length > 0) {
+      setHistoricalPageData((prevData) => {
+        const newData = tableData.filter(
+          (newRecord) =>
+            !prevData.some(
+              (existingRecord) =>
+                existingRecord.date === newRecord.date &&
+                existingRecord.location === newRecord.location
+            )
+        );
+        return [...prevData, ...newData];
+      });
     }
-
-    if (!todayData || !todayData.coord) {
-      showAlert("Geolocation data is missing for the selected location", "error");
-      return;
-    }
-
-    const { lat, lon } = todayData.coord;
-    const name = todayData.name;
-
-    if (!name || lat === undefined || lon === undefined) {
-      showAlert("Missing required location data (name, latitude, or longitude)", "error");
-      return;
-    }
-
-    // Adjust the date to include the local timezone offset
-    const selectedDate = date || dayjs(); // Use the selected date or the current date
-    const dateWithOffset = selectedDate.add(2, "hour").format("YYYY-MM-DDTHH:mm:ssZ"); // Add 2 hours and format with timezone offset
-
-    try {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        "/user/saveLocation",
-        { name, latitude: lat, longitude: lon, date: dateWithOffset },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      showAlert("Location saved successfully", "success");
-    } catch (error) {
-      console.error(error);
-      showAlert("Failed to save location", "error");
-    }
-  };
+  }, [tableData, setHistoricalPageData]);
 
   return (
     <>
@@ -119,13 +101,13 @@ export function HistoricalPage() {
 
           <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
-              <DataTable data={tableData} />
+              <DataTable data={historicalPageData} />
             </StyledItem>
           </Grid>
 
           <Grid size={{ xs: 6, md: 8 }}>
             <StyledItem sx={{ height: "400px" }}>
-              <DataChart data={tableData} />
+              <DataChart data={historicalPageData} />
             </StyledItem>
           </Grid>
 
