@@ -72,7 +72,7 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
 
 
   return (
-    <Typography align="left">
+    <>
       <Typography variant="h6">{getFormattedTime(data.dt)}</Typography>
       <Typography variant="h5" fontWeight="700">
         {data.name}, {data.sys.country}
@@ -98,6 +98,6 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
         <Typography>Pressure: {data.main.pressure} hPa</Typography>
         <Typography>Wind: {data.wind.speed} m/s</Typography>
       </Box>
-    </Typography>
+    </>
   );
 }

@@ -5,7 +5,7 @@ import { StyledDialog } from '../../../stlyes/common.style';
 import { StyledTextField } from '../../../stlyes/inputField.style';
 import { StyledButton } from '../../../stlyes/button.style';
 import { useAlert } from '../../../utils/AlertContext';
-import axios from 'axios';
+import axios from '../../../utils/axiosConfig';
 
 export function PasswordRecoveryForm({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [username, setUsername] = useState('');

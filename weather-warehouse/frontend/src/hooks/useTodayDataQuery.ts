@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../utils/AlertContext";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 
 
 //export function useTodayDataQuery(lat: number, lon: number) {

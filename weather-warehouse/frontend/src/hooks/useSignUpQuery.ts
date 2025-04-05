@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
+import { useEffect } from "react";
 
 
 export function useSignUpQuery(username: string, password: string, securityQuestion: string, securityAnswer: string) {
     const { showAlert } = useAlert();
     
     const { data: registerData, error, isLoading, isSuccess, refetch } = useQuery({
-      queryKey: ["register"],
+      queryKey: ["register", username],
       queryFn: async () => {
         const response = await axios.post(`/user/register`, {
             username,
@@ -16,8 +17,6 @@ export function useSignUpQuery(username: string, password: string, securityQuest
             securityAnswer,
           });
 
-        // store token (role is included in the token, getIsAdmin function will decode the token and check if the user is admin)
-        localStorage.setItem('token', response.data.token);
         return response.data;
       },
         refetchOnWindowFocus: false,
@@ -29,9 +28,11 @@ export function useSignUpQuery(username: string, password: string, securityQuest
       showAlert("User registered successfully", "success");
     }
 
-    if (error) {
-      showAlert("Registration failed", "error");
-    }
+    useEffect(() => {
+      if (error) {
+        showAlert("Registration failed", "error");
+      }
+    }, [error]);
   
     return { registerData, error, isLoading, isSuccess, refetch };
   }

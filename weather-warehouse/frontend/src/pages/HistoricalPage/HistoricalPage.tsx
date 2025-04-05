@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid2";
 
 import { Pages } from "../../types/page.type";
 import { FilterBar } from "../../components/FilterBar/FilterBar";
-import { useAlert } from "../../utils/AlertContext";
 import { DataMap } from "../../components/DataGrids/DataMap/DataMap";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import { DataChart } from "../../components/DataGrids/DataChart/DataChart";

@@ -114,14 +114,14 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   function renderLoggedInMenuItems() {
     if (loggedIn) {
       return (
-        <>
+        <div>
           <StyledMenuItem onClick={handleCloseMenu}>
             <Typography sx={{ textAlign: "center" }}>Profile</Typography>
           </StyledMenuItem>
           <StyledMenuItem onClick={handleLogout}>
             <Typography sx={{ textAlign: "center" }}>Log Out</Typography>
           </StyledMenuItem>
-        </>
+        </div>
       )
     }
   }

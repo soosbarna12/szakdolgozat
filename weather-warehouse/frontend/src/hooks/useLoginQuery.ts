@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
+import { useEffect } from "react";
 
 
 export function useLoginQuery(username: string, password: string) {
@@ -23,13 +24,16 @@ export function useLoginQuery(username: string, password: string) {
         enabled: false, // Disable automatic refetching, we will call refetch() manually -> to use this query when clicking the login button
     });
 
-    if (isSuccess) {
-      showAlert("Logged in successfully", "success");
-    }
+    useEffect(() => {
+      if (isSuccess) {
+        showAlert("Logged in successfully", "success");
+      }
 
-    if (error) {
-      showAlert("Login failed", "error");
-    }
+
+      if (error) {
+        showAlert("Login failed", "error");
+      }
+    }, [isSuccess, error]);
   
     return { loginData, error, isLoading, isSuccess, refetch };
   }

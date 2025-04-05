@@ -73,7 +73,7 @@ router.get("/reverse-geocode", async (req, res) => {
     const response = await axios.get(
       `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${apiKey}`
     );
-    const cityName = response.data?.[0]?.name || "";
+    const cityName = response.data?.[0]?.name || "Unknown location"; // get city name from response data
     res.send(cityName);
 
   } catch (error) {

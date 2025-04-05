@@ -4,7 +4,6 @@ import React from "react";
 import { StyledButton, StyledIconButton } from '../../../../stlyes/button.style';
 import { LocationDrawerProps } from "./LocationDrawer.type";
 import { useSavedLocationQuery } from '../../../../hooks/useSavedLocationsQuery';
-import { StyledItem } from '../../../../stlyes/content.style';
 
 
 export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
@@ -13,10 +12,6 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
 
   function handleDrawerClose() {
     toggleLocationDrawer(false);
-  }
-
-  function handleSelectLocatin() {
-    // query to get back the location, date, table, map and other components' data from database
   }
 
   function renderLocations() {
@@ -41,7 +36,7 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
 
           return (
             <ListItem key={index} disablePadding onClick={handleDrawerClose}>
-              <StyledButton fullWidth variant="text" color="primary" sx={{ height: "80px", boxShadow: 4, margin: 1 }} onClick={handleSelectLocatin}>
+              <StyledButton fullWidth variant="text" color="primary" sx={{ height: "80px", boxShadow: 4, margin: 1 }} >
                 <ListItemText
                   primary={location.name}
                   secondary={

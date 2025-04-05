@@ -1,5 +1,6 @@
-import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import axios from "../../utils/axiosConfig";
+
 
 // Create a mock adapter instance
 const mock = new MockAdapter(axios, { delayResponse: 500 });
