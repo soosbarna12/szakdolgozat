@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
+import { useEffect } from "react";
 
 
 export function useUserDefaultLocationQuery(lat: number | undefined, lon: number | undefined) {
@@ -18,9 +19,11 @@ export function useUserDefaultLocationQuery(lat: number | undefined, lon: number
     enabled: !!(lat && lon)
   });
 
-  if (error) {
-    showAlert("Failed to fetch reverse geocoded location:", "error");
-  }
+  useEffect(() => {
+    if (error) {
+      showAlert("Failed to fetch reverse geocoded location:", "error");
+    }
+  }, [error]);
 
   return { data, error, isLoading };
 }

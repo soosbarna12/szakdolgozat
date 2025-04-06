@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+
 export function useMapCoordinates(data: any) {
   const [coords, setCoords] = useState<[number, number]>([51.505, -0.09]);
 

@@ -6,7 +6,6 @@ import { ROUTES } from "../consts/routes";
 import { TodayPage } from "../pages/TodayPage/TodayPage";
 
 
-
 export function BaseComponent() {
   const [coords, setCoords] = useState<GeolocationCoordinates>();
   const { setLocation } = useContext(LocationContext);
@@ -42,7 +41,6 @@ export function BaseComponent() {
       <Route key={id} path={path} element={element} />
     ));
   }
-
 
   return (
     <>

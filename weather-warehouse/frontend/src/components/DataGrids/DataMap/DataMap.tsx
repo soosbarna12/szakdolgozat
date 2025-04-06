@@ -1,7 +1,6 @@
 import React from "react";
 import { Skeleton } from "@mui/material";
-import { Box } from "@mui/material";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { TileLayer } from "react-leaflet";
 import { DataMapProps } from "./DataMap.type";
 import { StyledMapContainer } from "../../../stlyes/content.style";
 import "leaflet/dist/leaflet.css";
@@ -33,11 +32,6 @@ export function DataMap({ data }: Readonly<DataMapProps>) {
       </StyledMapContainer >
     )
   }
-
-
-
-
-
 
   return renderContent();
 }

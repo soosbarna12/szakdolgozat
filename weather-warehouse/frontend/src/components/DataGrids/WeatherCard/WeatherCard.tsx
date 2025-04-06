@@ -1,17 +1,9 @@
 import React from "react";
 import { Skeleton } from "@mui/material";
-import { StyledItem } from "../../../stlyes/content.style";
 import { WiDaySunny, WiCloud, WiRain, WiSnow, WiThunderstorm, WiFog } from "react-icons/wi";
-import { Box, Container, Typography, useTheme } from "@mui/material";
-import Grid from "@mui/material/Grid2";
+import { Box, Typography, useTheme } from "@mui/material";
 import { WeatherCardProps } from "./WeatherCard.type";
-
-
-const toTitleCase = (str: string) =>
-  str
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
+import { convertKelvinToCelsius, convertTitleCase } from "../../../utils/dataConverters";
 
 
 export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
@@ -30,7 +22,7 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
     );
   }
 
-  const getWeatherIcon = (weatherMain: string) => {
+  function getWeatherIcon(weatherMain: string) {
     switch (weatherMain) {
       case "Clear":
         return <WiDaySunny size={"120px"} />;
@@ -56,9 +48,9 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
       default:
         return null;
     }
-  };
+  }
 
-  const getFormattedTime = (unixTimestamp: number) => {
+  function getFormattedTime(unixTimestamp: number) {
     const date = new Date(unixTimestamp * 1000);
     return date.toLocaleDateString("default", {
       weekday: "long",
@@ -68,11 +60,8 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
     });
   };
 
-  const convertKelvinToCelsius = (kelvin: number) => Math.floor(kelvin - 273.15);
-
-
   return (
-    <>
+    <Box sx={{ textAlign: "left" }}>
       <Typography variant="h6">{getFormattedTime(data.dt)}</Typography>
       <Typography variant="h5" fontWeight="700">
         {data.name}, {data.sys.country}
@@ -86,7 +75,7 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
       </Box>
       {data.weather && data.weather.length > 0 && (
         <Typography variant="h6" fontStyle="italic">
-          {toTitleCase(data.weather[0].description)}
+          {convertTitleCase(data.weather[0].description)}
         </Typography>
       )}
       <Box>
@@ -98,6 +87,6 @@ export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
         <Typography>Pressure: {data.main.pressure} hPa</Typography>
         <Typography>Wind: {data.wind.speed} m/s</Typography>
       </Box>
-    </>
+    </Box>
   );
 }

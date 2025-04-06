@@ -6,6 +6,7 @@ import { DateFilter } from "./DateFilter/DateFilter";
 import { FilterBarProps } from "./FitlerBar.type";
 import { LocationSearch } from "./LocationSearch/LocationSearch";
 
+
 export function FilterBar(props: Readonly<FilterBarProps>) {
   const { type, location, onDateChange, onSaveLocation } = props;
 

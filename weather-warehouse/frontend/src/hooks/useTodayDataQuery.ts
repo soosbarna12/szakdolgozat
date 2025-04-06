@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
+import { useEffect } from "react";
 
 
 //export function useTodayDataQuery(lat: number, lon: number) {
@@ -26,9 +27,11 @@ export function useTodayDataQuery(locationName: string) {
     enabled: !!(locationName)
   });
 
-  if (error) {
-    showAlert("Error fetching today's weather data", "error");
-  }
+  useEffect(() => {
+    if (error) {
+      showAlert("Error fetching today's weather data", "error");
+    }
+  }, [error]);
 
   return { data, error, isLoading };
 }

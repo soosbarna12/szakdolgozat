@@ -10,29 +10,38 @@ export function ActionsButton({ onSaveLocation }: ActionsButtonProps) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const isLoggedIn = !!localStorage.getItem("token");
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => { setAnchorElUser(event.currentTarget); };
-  const handleCloseMenu = () => { setAnchorElUser(null); };
+  function handleOpenUserMenu(event: React.MouseEvent<HTMLElement>) {
+    setAnchorElUser(event.currentTarget);
+  };
 
-  if (!isLoggedIn) {
-    return null;
+  function handleCloseMenu() {
+    setAnchorElUser(null);
+  };
+
+  function renderContent() {
+    if (!isLoggedIn) {
+      return null;
+    }
+
+    return (
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="Open actions">
+          <StyledMenuButton
+            onClick={handleOpenUserMenu}
+            endIcon={<KeyboardArrowDownIcon />}
+            sx={{ boxShadow: 4 }}
+          >
+            Actions
+          </StyledMenuButton>
+        </Tooltip>
+        <ActionsMenu
+          handleCloseMenu={handleCloseMenu}
+          anchorElUser={anchorElUser}
+          onSaveLocation={onSaveLocation}
+        />
+      </Box>
+    );
   }
-  
-  return (
-    <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title="Open actions">
-        <StyledMenuButton
-          onClick={handleOpenUserMenu}
-          endIcon={<KeyboardArrowDownIcon />}
-          sx={{ boxShadow: 4 }}
-        >
-          Actions
-        </StyledMenuButton>
-      </Tooltip>
-      <ActionsMenu
-        handleCloseMenu={handleCloseMenu}
-        anchorElUser={anchorElUser}
-        onSaveLocation={onSaveLocation}
-      />
-    </Box>
-  );
+
+  return renderContent();
 }

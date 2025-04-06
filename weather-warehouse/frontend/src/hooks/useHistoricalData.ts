@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { UseHistoricalDataProps } from "../pages/HistoricalPage/HistoricalPage.type";
 import { HistoricalDataTable } from "../types/historicalDataTable.type";
-import { kelvinToCelsius } from "../utils/dataConverters";
+import { convertKelvinToCelsius } from "../utils/dataConverters";
 
 
 export function useHistoricalData(props: Readonly<UseHistoricalDataProps>) {
@@ -14,8 +14,8 @@ export function useHistoricalData(props: Readonly<UseHistoricalDataProps>) {
       
       const newRecord = {
         date: selectedDate ? selectedDate.format("YYYY-MM-DD") : currentDate,
-        maxTemp: kelvinToCelsius(data.main.temp_max),
-        minTemp: kelvinToCelsius(data.main.temp_min),
+        maxTemp: convertKelvinToCelsius(data.main.temp_max),
+        minTemp: convertKelvinToCelsius(data.main.temp_min),
         humidity: data.main.humidity,
         location: [data.name, data.state, data.sys?.country].filter(Boolean).join(", "),
       };

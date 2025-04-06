@@ -1,14 +1,11 @@
 import React from "react";
 import { Skeleton } from "@mui/material";
-import { ResponsiveContainer, LineChart, Tooltip, CartesianGrid, XAxis, YAxis, Legend, Line } from "recharts";
+import { ResponsiveContainer, Tooltip, CartesianGrid, XAxis, YAxis, Legend, Line } from "recharts";
 import { StlyedLineChart } from "../../../stlyes/content.style";
 import { HistoricalDataTable } from "../../../types/historicalDataTable.type";
-import { render } from "@testing-library/react";
 
 
 export function DataChart({ data }: { data: HistoricalDataTable[] }) {
-
-
   function renderContent() {
     if (!data || data.length === 0) {
       return (

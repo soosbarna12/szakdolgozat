@@ -11,17 +11,13 @@ import { useSignUpQuery } from '../../../hooks/useSignUpQuery';
 
 export function SignUpForm(props: Readonly<SignUpFormProps>) {
 	const { open, onClose, onRegisterSuccess } = props;
-
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [confirmPassword, setConfirmPassword] = React.useState('');
 	const [securityQuestion, setSecurityQuestion] = React.useState('');
 	const [securityAnswer, setSecurityAnswer] = React.useState('');
-
 	const [showPassword, setShowPassword] = React.useState(false);
-
 	const { isSuccess, refetch: refetchRegisterQuery } = useSignUpQuery(username, password, securityQuestion, securityAnswer);
-
 
 	useEffect(() => {
 		if (open) {

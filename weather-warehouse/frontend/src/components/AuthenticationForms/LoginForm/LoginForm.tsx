@@ -13,16 +13,12 @@ import { useLoginQuery } from '../../../hooks/useLoginQuery';
 
 export function LoginForm(props: Readonly<LoginFormProps>) {
   const { open, onClose, onLoginSuccess } = props;
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const [showPassword, setShowPassword] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
   const [openRecovery, setOpenRecovery] = useState(false);
-
   const { isSuccess, refetch: refetchLoginQuery } = useLoginQuery(username, password);
-
 
   useEffect(() => {
     if (open) {
@@ -71,7 +67,6 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
     onClose();
     setOpenRecovery(true);
   };
-
 
   return (
     <>

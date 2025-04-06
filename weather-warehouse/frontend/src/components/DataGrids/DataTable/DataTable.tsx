@@ -1,12 +1,13 @@
 import React from "react";
 import { Skeleton } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import { StyledDataGrid } from "../../../stlyes/content.style";
 import { dataTableColumns } from "../../../consts/dataTable.conts";
+import { HistoricalDataTable } from "../../../types/historicalDataTable.type";
 
 
-export function DataTable({ data }: { data: Array<{ date: string; maxTemp: number; minTemp: number; humidity: number; location: string }> }) {
+// historicaldata type vagy historicaldatatable type
+export function DataTable({ data }: { data: HistoricalDataTable[] }) {
   const rows = data.map((item, index) => ({
     id: index,
     date: item.date,

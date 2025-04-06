@@ -1,6 +1,6 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { Box, Divider, MenuItem, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { StyledToggleButton, StyledToggleButtonGroup } from '../../../../stlyes/button.style';
 import { StyledMenu, StyledMenuItem } from '../../../../stlyes/common.style';
@@ -9,7 +9,6 @@ import { TemperatureScale } from '../../../../types/temperatureScale.type';
 import { Theme } from '../../../../types/theme.type';
 import { ProfileMenuProps } from './ProfileMenu.type';
 import { LoginForm } from '../../../AuthenticationForms/LoginForm/LoginForm';
-import { render } from '@testing-library/react';
 
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
@@ -141,7 +140,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         {renderLoggedOutMenuItem()}
         {renderLoggedInMenuItems()}
 
-        <Divider />
+        <Divider style={{ margin: "10px" }} />
 
         {renderTemperatureScaleToggle()}
         {renderLanguageToggle()}

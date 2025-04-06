@@ -49,8 +49,6 @@ router.get('/locationData', async (req, res) => {
 
     // fetch weather data from OpenWeatherMap API using city name
     const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&lang=${lang}`);
-    console.log("_________________________________"); // log the response data for debugging
-    console.log(response.data);
     res.send(response.data); // send the response data back to the client
 
   } catch (error) {

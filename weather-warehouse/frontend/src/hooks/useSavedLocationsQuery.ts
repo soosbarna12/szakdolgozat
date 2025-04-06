@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
+import { useEffect } from "react";
 
 
 export function useSavedLocationQuery(open: boolean) {
@@ -15,12 +16,17 @@ export function useSavedLocationQuery(open: boolean) {
     enabled: open,
   });
 
-  if (error) {
-    showAlert("Error fetching saved locations", "error");
-  }
-  if (isSuccess) {
-    showAlert("Saved locations successfully", "success");
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      showAlert("Saved locations successfully", "success");
+    }
+  }, [isSuccess]);
+  
+  useEffect(() => {
+    if (error) {
+      showAlert("Error fetching saved locations", "error");
+    }
+  }, [error]);
 
   return { savedLocations, error, isLoading };
 }

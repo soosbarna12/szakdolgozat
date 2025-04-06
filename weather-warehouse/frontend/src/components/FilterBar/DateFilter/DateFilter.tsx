@@ -15,7 +15,6 @@ export function DateFilter({ onDateChange }: DateFilterProps) {
     onDateChange?.(date);
   };
 
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <StyledDatePicker

@@ -18,7 +18,6 @@ export function PasswordRecoveryForm({ open, onClose }: { open: boolean; onClose
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event: React.MouseEvent) => { event.preventDefault(); };
 
-
   const handleRecoverPassword = async () => {
     try {
       await axios.post('/user/recoverPassword', {

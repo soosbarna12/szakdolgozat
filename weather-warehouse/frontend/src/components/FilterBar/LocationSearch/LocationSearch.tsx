@@ -59,7 +59,6 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
     }
   }
 
-
   return (
     <Autocomplete
       options={options}
