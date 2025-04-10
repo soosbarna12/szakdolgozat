@@ -4,6 +4,10 @@ const router = express.Router();
 const sql = require("mssql");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
+const validate = require('validate.js');
+const authGuard = require("../middleware/authGuard");
+const { userRegisterConstraints, userRecoveryConstraints, userLoginConstraints, userAcceptConstraints, userDeleteConstraints, userSaveLocationConstraints } = require('../authentication/validationConstraints');
+
 
 const SALT_ROUNDS = 10; // number of salt rounds for hashing
 
@@ -12,17 +16,10 @@ router.post('/register', async (req, res) => {
   try {
     const { username, password, securityQuestion, securityAnswer } = req.body;
 
-    // validate input
-    if (!username || !password || !securityQuestion || !securityAnswer) {
-      return res.status(400).json({ error: "All fields are required (username, password, security question, and answer)." });
-    }
-
-    // validate password strength
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    if (!passwordRegex.test(password)) {
-      return res.status(400).json({
-        error: "Password requirements: At least 8 characters, one uppercase letter, one lowercase letter, and one digit."
-      });
+    const validationResult = validate(req.body, userRegisterConstraints)
+    if (validationResult) {
+      console.log(validationResult);
+      return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
     const pool = await sql.connect();
@@ -61,8 +58,10 @@ router.post('/recoverPassword', async (req, res) => {
   try {
     const { username, securityAnswer, newPassword } = req.body;
 
-    if (!username || !securityAnswer || !newPassword) {
-      return res.status(400).json({ error: "All fields are required (username, security answer, and new password)." });
+    const validationResult = validate(req.body, userRecoveryConstraints)
+    if (validationResult) {
+      console.log(validationResult);
+      return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
     const pool = await sql.connect();
@@ -105,8 +104,11 @@ router.post('/recoverPassword', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-    if (!username || !password) {
-      return res.status(400).json({ error: "Username and password are required." });
+
+    const validationResult = validate(req.body, userLoginConstraints)
+    if (validationResult) {
+      console.log(validationResult);
+      return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
     const pool = await sql.connect();
@@ -172,6 +174,13 @@ router.get('/userData', async (req, res) => {
 router.post('/accept', async (req, res) => {
   try {
     const { id } = req.body;
+
+    const validationResult = validate(req.body, userAcceptConstraints)
+    if (validationResult) {
+      console.log(validationResult);
+      return res.status(400).json({ error: validationResult?? "ID required" });
+    }
+
     const pool = await sql.connect();
 
     // Update the user's isActive status to 1
@@ -190,6 +199,13 @@ router.post('/accept', async (req, res) => {
 router.delete('/delete', async (req, res) => {
   try {
     const { id } = req.query;
+
+    const validationResult = validate(req.body, userDeleteConstraints)
+    if (validationResult) {
+      console.log(validationResult);
+      return res.status(400).json({ error: validationResult?? "ID required" });
+    }
+
     const pool = await sql.connect(); // database connection
 
     // check if the user is an admin
@@ -220,22 +236,16 @@ router.delete('/delete', async (req, res) => {
 });
 
 // save location to the database
-router.post('/saveLocation', async (req, res) => {
-  // check if the request has a valid JWT token
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ error: "Unauthorized" });
+router.post('/saveLocation', authGuard, async (req, res) => {
+  const { name, lat, lon, date } = req.body; // destructure request body
+  const payload = req.payload; // get the payload from the request
+
+  const validationResult = validate(req.body, userSaveLocationConstraints)
+  if (validationResult) {
+    console.log(validationResult);
+    return res.status(400).json({ error: validationResult?? "All fields are required" });
   }
 
-  const token = authHeader.split(" ")[1]; // extract jwt token from header
-  let payload; // payload to store decoded JWT
-
-  try {
-    payload = jwt.verify(token, process.env.JWT_SECRET);
-
-  } catch (err) {
-    return res.status(401).json({ error: "Invalid token" });
-  }
 
   // try to get userId from token payload; if missing, look it up from the Users table
   let userID = payload.userId;
@@ -256,13 +266,6 @@ router.post('/saveLocation', async (req, res) => {
 
   if (!userID) {
     return res.status(400).json({ error: "User ID could not be determined." });
-  }
-
-  const { name, lat, lon, date } = req.body; // destructure request body
-
-  // validate required fields
-  if (!name || lat === undefined || lon === undefined || !date ) {
-    return res.status(400).json({ error: "Missing required fields" });
   }
 
   try {
@@ -287,31 +290,14 @@ router.post('/saveLocation', async (req, res) => {
 });
 
 // fetch saved locations from the database
-router.get('/savedLocations', async (req, res) => {
-  console.log(req.headers);
-  const authHeader = req.headers.authorization; // get the authorization header from the request
-  console.log(req.headers);
-  if (!authHeader) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  const token = authHeader.split(" ")[1]; // extract jwt token from header
-  let payload; // payload to store decoded JWT
-
-  try {
-    payload = jwt.verify(token, process.env.JWT_SECRET); // verify jwt token
-
-  } catch (err) {
-    console.log(err);
-    return res.status(401).json({ error: "Invalid token" });
-  }
-  
-  console.log(payload);
+router.get('/savedLocations', authGuard, async (req, res) => {
+  const payload = req.payload; // get the payload from the request
+  const userID = payload.userId; // get userId from the payload
 
   try {
     const pool = await sql.connect(); // database connection
     const result = await pool.request()
-      .input('userID', sql.Int, payload.userId)
+      .input('userID', sql.Int, userID)
       .query('SELECT name, date, dateSaved FROM userLocations2 WHERE userID = @userID');
 
     const savedLocationsData = result.recordset.map(record => ({
@@ -319,6 +305,7 @@ router.get('/savedLocations', async (req, res) => {
       date: record.date,
       dateSaved: record.dateSaved
     }));
+    
     res.status(200).json(savedLocationsData);
 
   } catch (error) {
