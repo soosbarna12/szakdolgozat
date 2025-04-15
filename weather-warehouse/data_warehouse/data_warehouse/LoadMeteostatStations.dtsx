@@ -11,8 +11,8 @@
   DTS:LocaleID="1038"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="14"
-  DTS:VersionGUID="{7CCD3741-3399-4038-87B4-E1902C9CE863}">
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{62C71B48-67D7-44E1-9B6E-D563D8ECD0DD}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -171,7 +171,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=.;User ID=;Initial Catalog=dw_test_2;Provider=MSOLEDBSQL.1;Persist Security Info=False;Integrated Security=SSPI;Initial File Name=;Server SPN=;Authentication=;Access Token=;Application Name=SSIS-Package1-{830B535E-AE1F-4FAF-8A0E-2146DCC0403A}LocalHost.dw_test_2;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=.;Initial Catalog=weather-warehouse;Provider=MSOLEDBSQL.1;Persist Security Info=False;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package1-{830B535E-AE1F-4FAF-8A0E-2146DCC0403A}LocalHost.dw_test_2;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -769,7 +769,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[dbo].[Meteostat_Stations]</property>
+                  name="OpenRowset">[dbo].[StagingStations]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -791,7 +791,7 @@
                   dataType="System.Int32"
                   description="Specifies the mode used to access the database."
                   name="AccessMode"
-                  typeConverter="AccessMode">0</property>
+                  typeConverter="AccessMode">3</property>
                 <property
                   dataType="System.Boolean"
                   description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
@@ -799,11 +799,11 @@
                 <property
                   dataType="System.Boolean"
                   description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepNulls">false</property>
+                  name="FastLoadKeepNulls">true</property>
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions"></property>
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
@@ -1033,6 +1033,10 @@
           Id="Package\Data Flow Task\Flat File Source"
           TopLeft="372,174" />
         <NodeLayout
+          Size="158,42"
+          Id="Package\Data Flow Task\Derived Column"
+          TopLeft="371,268" />
+        <NodeLayout
           Size="177,42"
           Id="Package\Data Flow Task\OLE DB Destination"
           TopLeft="360,454" />
@@ -1040,6 +1044,28 @@
           Size="161,42"
           Id="Package\Data Flow Task\Data Conversion"
           TopLeft="370,360" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Derived Column Output]"
+          TopLeft="450.25,310">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Data Conversion Output]"
           TopLeft="449.5,402">
@@ -1062,10 +1088,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="158,42"
-          Id="Package\Data Flow Task\Derived Column"
-          TopLeft="371,268" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Flat File Source Output]"
           TopLeft="450,216">
@@ -1080,28 +1102,6 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,44.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Derived Column Output]"
-          TopLeft="450.25,310">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,50"
-              Start="0,0"
-              End="0,42.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,42.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
