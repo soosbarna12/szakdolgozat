@@ -10,23 +10,25 @@ import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
 import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
 
-import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
 import { useHistoricalData } from "../../hooks/useHistoricalData";
 
 import dayjs from "dayjs";
-import { LocationContext } from "../../contexts/LocationContext";
+import { TodayContext } from "../../contexts/TodayContext/TodayContext";
 import { useSaveLocationQuery } from "../../hooks/useSaveLocationQuery";
+import { useHistoricalDataQuery } from "../../hooks/useHistoricalDataQuery";
+import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
 
 
 export function HistoricalPage() {
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
-  const { location } = useContext(LocationContext);
-  const { historicalPageData, setHistoricalPageData } = useContext(LocationContext);
+  const { location } = useContext(TodayContext);
+  const { historicalPageData, setHistoricalPageData } = useContext(HistoricalContext);
   //const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
-  const { data: todayData, error } = useTodayDataQuery(location.name); // currently using the todays data query, because the historical is not available yet
+  //const { data: todayData, error } = useTodayDataQuery(location.name); // currently using the todays data query, because the historical is not available yet
+  const { data: historicalData, error } = useHistoricalDataQuery({ location: location.name, date });
   //onst { data: geoData, error: geoError } = useGeolocationQuery(location.name);
-  const { tableData } = useHistoricalData({ data: todayData, date });
-  const { refetch: refetchSaveLocationQuery } = useSaveLocationQuery(todayData, date);
+  const { tableData } = useHistoricalData({ data: historicalData, date });
+  const { refetch: refetchSaveLocationQuery } = useSaveLocationQuery(historicalData, date);
 
   // handle date change
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
@@ -71,7 +73,7 @@ export function HistoricalPage() {
               {error ? (
                 <p>Error fetching historical data.</p>
               ) : (
-                <DataMap data={todayData} />
+                <DataMap data={historicalData} />
               )}
             </StyledItem>
           </Grid>
@@ -81,7 +83,7 @@ export function HistoricalPage() {
               {error ? (
                 <p>Error fetching today's weather data.</p>
               ) : (
-                <WeatherCard data={todayData} />
+                <WeatherCard data={historicalData} />
               )}
             </StyledItem>
           </Grid>

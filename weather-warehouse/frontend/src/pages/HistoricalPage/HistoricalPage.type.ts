@@ -9,7 +9,7 @@ export interface DataMapProps {
 
 export interface UseHistoricalDataQueryProps {
   location: string;
-  date: dayjs.Dayjs | null; // for future use
+  date: dayjs.Dayjs | null;
 }
 
 export interface UseHistoricalDataProps {

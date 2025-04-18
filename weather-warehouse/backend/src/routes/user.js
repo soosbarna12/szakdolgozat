@@ -277,7 +277,7 @@ router.post('/saveLocation', authGuard, async (req, res) => {
       .input('longitude', sql.Decimal(11, 8), lon)
       .input('date', sql.DateTime, date)
       .query(`
-        INSERT INTO userLocations2 (userID, name, latitude, longitude, date) 
+        INSERT INTO userLocations (userID, name, latitude, longitude, date) 
         VALUES (@userID, @name, @latitude, @longitude, @date)
       `);
     res.status(200).json({ message: "Location saved successfully" });
@@ -298,7 +298,7 @@ router.get('/savedLocations', authGuard, async (req, res) => {
     const pool = await sql.connect(); // database connection
     const result = await pool.request()
       .input('userID', sql.Int, userID)
-      .query('SELECT name, date, dateSaved FROM userLocations2 WHERE userID = @userID');
+      .query('SELECT name, date, dateSaved FROM userLocations WHERE userID = @userID');
 
     const savedLocationsData = result.recordset.map(record => ({
       name: record.name,

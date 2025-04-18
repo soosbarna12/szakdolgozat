@@ -81,3 +81,9 @@ export const userSaveLocationConstraints = {
     presence: true
   },
 };
+
+export const historicalLocationConstraints = {
+  location: {
+    presence: true
+  }
+};

@@ -8,7 +8,8 @@ import { Theme } from "./types/theme.type";
 import utc from "dayjs/plugin/utc";
 import dayjs from "dayjs";
 import { BaseComponent } from "./components/BaseComponent";
-import { LocationProvider } from "./contexts/LocationContext";
+import { HistoricalLocationProvider } from "./contexts/HistoricalContext/HistoricalContext";
+import { TodayLocationProvider } from "./contexts/TodayContext/TodayContext";
 dayjs.extend(utc);
 
 
@@ -34,12 +35,14 @@ export function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LocationProvider>
-        <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
-          <NavBar isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
-          <BaseComponent />
-        </ThemeProvider >
-      </LocationProvider>
+      <HistoricalLocationProvider>
+        <TodayLocationProvider>
+          <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
+            <NavBar isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
+            <BaseComponent />
+          </ThemeProvider >
+        </TodayLocationProvider>
+      </HistoricalLocationProvider>
     </QueryClientProvider>
   );
 }

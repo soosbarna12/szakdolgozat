@@ -5,16 +5,20 @@ import { ActionsButton } from "./Actions/ActionsButton/ActionsButton";
 import { DateFilter } from "./DateFilter/DateFilter";
 import { FilterBarProps } from "./FitlerBar.type";
 import { LocationSearch } from "./LocationSearch/LocationSearch";
+import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
+import { TodayContext } from "../../contexts/TodayContext/TodayContext";
 
 
 export function FilterBar(props: Readonly<FilterBarProps>) {
-  const { type, location, onDateChange, onSaveLocation } = props;
+  const { type, onDateChange, onSaveLocation } = props;
+  const { location: historicalLocation, setLocation: historicalSetLocation } = React.useContext(HistoricalContext);
+  const { location: todayLocation, setLocation: todaySetLocation } = React.useContext(TodayContext);
 
   function renderFilterBar() {
     if (type === Pages.Historical) {
       return (
         <>
-          <LocationSearch type={Pages.Historical} location={location} />
+          <LocationSearch type={Pages.Historical} location={historicalLocation} setLocation={historicalSetLocation} />
           <DateFilter onDateChange={onDateChange} />
           <ActionsButton onSaveLocation={onSaveLocation} />
         </>
@@ -22,7 +26,7 @@ export function FilterBar(props: Readonly<FilterBarProps>) {
     }
 
     return (
-      <LocationSearch type={type} location={location} />
+      <LocationSearch type={type} location={todayLocation} setLocation={todaySetLocation} />
     );
   }
 

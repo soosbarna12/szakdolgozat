@@ -1,32 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useUserDefaultLocationQuery } from "../hooks/useUserDefaultLocationQuery";
-import { LocationContext } from "../contexts/LocationContext";
+import { TodayContext } from "../contexts/TodayContext/TodayContext";
 import { ROUTES } from "../consts/routes";
 import { TodayPage } from "../pages/TodayPage/TodayPage";
 
 
 export function BaseComponent() {
   const [coords, setCoords] = useState<GeolocationCoordinates>();
-  const { setLocation } = useContext(LocationContext);
-  const { data: userDefaultLocationName } = useUserDefaultLocationQuery(coords?.latitude, coords?.longitude);
+  const { location, setLocation } = useContext(TodayContext);
+  const { data } = useUserDefaultLocationQuery(coords?.latitude, coords?.longitude);
 
   //
   useEffect(() => {
-    if (userDefaultLocationName && coords) {
+    if (data && coords) {
       setLocation({
-        name: userDefaultLocationName,
+        name: data.name,
+        country: data.country,
         lat: coords.latitude,
         lon: coords.longitude,
       });
     }
 
-  }, [userDefaultLocationName]);
+  }, [data]);
 
 
   // get user's default location
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && !location?.name) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           setCoords(position.coords);

@@ -4,11 +4,11 @@ import ForecastTileGroup from "../../components/DataGrids/ForecastTileGroup/Fore
 import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { ContentBox } from "../../stlyes/content.style";
 import { Pages } from "../../types/page.type";
-import { LocationContext } from "../../contexts/LocationContext";
+import { TodayContext } from "../../contexts/TodayContext/TodayContext";
 
 
 export function ForecastPage() {
-  const { location } = useContext(LocationContext);
+  const { location } = useContext(TodayContext);
 
   return (
     <>

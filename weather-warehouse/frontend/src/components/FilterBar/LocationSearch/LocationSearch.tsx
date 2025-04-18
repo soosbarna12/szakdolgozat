@@ -6,73 +6,96 @@ import { useDebounce } from "use-debounce";
 import { LocationOption, LocationSearchProps } from "./LocationSearch.type";
 import { StyledAutocompleteDropdown, StyledLocationSearch } from "../../../stlyes/inputField.style";
 import { useGeolocationQuery } from "../../../hooks/useGeolocationQuery";
-import { LocationContext } from "../../../contexts/LocationContext";
-
+import { useHistoricalLocations } from "../../../hooks/useHistoricalLocations";
+import { Pages } from "../../../types/page.type";
 
 export function LocationSearch(props: Readonly<LocationSearchProps>) {
-  const { type, location } = props;
-  const [inputValue, setInputValue] = useState(location);
+  const { type: pageType, location, setLocation } = props;
+  const isTodayPage = pageType === Pages.Today;
+  const [inputValue, setInputValue] = useState(getOptionLabel(location as LocationOption));
+  const [selectedValue, setSelectedValue] = useState<LocationOption | null>(null);
   const [debouncedValue] = useDebounce(inputValue, 500);
   const [options, setOptions] = useState<Array<LocationOption>>([]);
-  const { data: locationOptions, error, isLoading } = useGeolocationQuery(debouncedValue);
-  const { setLocation } = useContext(LocationContext);
+  const todayLocationOptions = useGeolocationQuery(debouncedValue, pageType);
+  const historicalLocations = useHistoricalLocations(debouncedValue, pageType);
+  const { data, error, isLoading } = pageType === Pages.Today ? todayLocationOptions : historicalLocations;
+
+  console.log("LocationSearch data: ", location);
 
   // fetch location suggestions when debounced value changes
   useEffect(() => {
-    if (debouncedValue.trim() === "") {
+    if (debouncedValue.trim() === "" || selectedValue?.name === debouncedValue) {
       setOptions([]);
       return;
     }
-  }, [debouncedValue]);
+  }, [debouncedValue, selectedValue]);
 
   // fetch autocomplete options
   useEffect(() => {
-    if (locationOptions?.length > 0) {
-      setOptions(locationOptions);
+    if (data?.length > 0) {
+      setOptions(data);
     }
-  }, [locationOptions]);
+  }, [JSON.stringify(data)]);
 
+  useEffect(() => {
+    const optionLabel = getOptionLabel(location as LocationOption);
+    if (inputValue !== optionLabel) {
+      setInputValue(optionLabel);
+    }
+  }, [location]);
 
   function getOptionLabel(option: LocationOption) {
-    if (typeof option === "string") {
-      return option;
+    if (!option.name || !option.country) {
+      return "";
     }
-    return `${option.name}${option.state ? `, ${option.state}` : ""}, ${option.country}`;
+    if (option?.state) {
+      return `${option.name}, ${option.state}, ${option.country}`;
+    }
+    return `${option.name}, ${option.country}`;
   }
 
   function handleAutocompleteMessage() {
-    if (isLoading || inputValue.trim() === "") {
+    if (isLoading) {
+      return "Loading locations...";
+    }
+    if (error) {
+      return "Failed to load locations";
+    }
+    if (inputValue.trim() === "") {
       return "Start typing to find a location";
     }
     return "No location found";
   }
 
   function handleOnChange(event: React.SyntheticEvent, newValue: LocationOption | null) {
-    if (newValue && typeof newValue !== "string") {
-      const selectedLocation = getOptionLabel(newValue)
-      setInputValue(selectedLocation);
-      setLocation({
-        name: selectedLocation,
-        lat: newValue.lat,
-        lon: newValue.lon,
-      });
+    if (newValue) {
+      setSelectedValue(newValue);
+      setInputValue(getOptionLabel(newValue)); // option label format [city name, country]
+      setLocation({ name: newValue.name, country: newValue.country, state: newValue.state, lat: 0, lon: 0 });
     }
   }
+
+  function handleInputChange(event: React.SyntheticEvent, newValue: string, reason: string) {
+    if (reason === "input") {
+      setInputValue(newValue);
+    }
+  }
+
 
   return (
     <Autocomplete
       options={options}
       getOptionLabel={getOptionLabel}
       inputValue={inputValue}
-      onInputChange={(event, newValue) => setInputValue(newValue)}
+      onInputChange={handleInputChange}
       onChange={handleOnChange}
       PaperComponent={StyledAutocompleteDropdown}
       noOptionsText={handleAutocompleteMessage()}
       renderInput={(params) => (
         <StyledLocationSearch
           {...params}
-          placeholder={location ? location : "Location"}
-          sx={{ boxShadow: 4, width: type === "Historical" ? 250 : 400 }}
+          placeholder={pageType === Pages.Today ? location.name : "Location"}
+          sx={{ boxShadow: 4, width: pageType === "Historical" ? 250 : 400 }}
           variant="outlined"
           InputProps={{
             ...params.InputProps,

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "../utils/axiosConfig";
+import { Pages } from "../types/page.type";
 
 
 /*
@@ -34,7 +35,7 @@ export function useGeolocationQuery(location: string) {
 }
 */
 
-export function useGeolocationQuery(locationName: string) {
+export function useGeolocationQuery(locationName: string, type: Pages) {
   const { data, error, isLoading } = useQuery({
     queryKey: ["locationName", locationName],
     queryFn: async () => {
@@ -61,6 +62,7 @@ export function useGeolocationQuery(locationName: string) {
               (t) => t.name === loc.name && t.state === loc.state && t.country === loc.country
             )
         );
+        console.log("Unique results:", uniqueResults); // Log the unique results for debugging
 
         return uniqueResults;
       } catch (error) {
@@ -68,7 +70,7 @@ export function useGeolocationQuery(locationName: string) {
         throw new Error("Failed to fetch geolocation data");
       }
     },
-    enabled: !!locationName.trim(), // Only run the query if a valid city name is provided
+    enabled: (locationName.length !== 0 && type === Pages.Today),
     refetchOnWindowFocus: false, // Prevent refetching when the window regains focus
   });
 
