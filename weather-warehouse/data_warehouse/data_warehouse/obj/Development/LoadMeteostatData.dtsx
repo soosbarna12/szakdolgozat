@@ -1,0 +1,1070 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2025 10:23:40 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-QM8DV7B"
+  DTS:CreatorName="DESKTOP-QM8DV7B\Barna"
+  DTS:DTSID="{7F4F50FB-9088-4A61-ABE7-BB0377ADC492}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1038"
+  DTS:ObjectName="LoadMeteostatData"
+  DTS:PackageType="5"
+  DTS:VersionBuild="26"
+  DTS:VersionGUID="{1552CB6C-3381-48FD-AA43-A0C045D2E707}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{85492C6E-6D3A-425A-B9E5-F169D91A4D34}"
+      DTS:ObjectName="Flat File Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1038"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="65001"
+          DTS:ConnectionString="D:\Documents\OE\Szakdolgozat\meteostat_bulk_data\meteostat_bulk_data\meteostat_stations.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="name"
+              DTS:DTSID="{FE0811A7-3025-47B4-ADB5-E9DB72B4D658}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="country"
+              DTS:DTSID="{884201CC-BE07-42CC-BBCE-B794A7EBD115}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="region"
+              DTS:DTSID="{842DF96F-DD42-43F9-8F9C-53D81A7BA71B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="wmo"
+              DTS:DTSID="{AE914F43-5FD0-40F6-8382-92DD279C7DBC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="icao"
+              DTS:DTSID="{74C4E9EA-8AA9-4066-99F8-7609F4EDB24E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="latitude"
+              DTS:DTSID="{CCDE20CC-8CF2-4763-9E3F-D6EB7D7E4A1C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="longitude"
+              DTS:DTSID="{61A9F85C-B9D1-42A9-9FC3-8D592A6695B4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="elevation"
+              DTS:DTSID="{E9E5F5A8-D592-407B-8EB9-F9E2FE1681DE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="timezone"
+              DTS:DTSID="{9CF57A11-5914-4724-8731-1DA0C05CBB9E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="hourly_start"
+              DTS:DTSID="{56DBFA9B-0E8F-4F7E-9030-21907064BE25}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="hourly_end"
+              DTS:DTSID="{CE479600-A0F1-4AA7-913D-63198EAAF61E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="daily_start"
+              DTS:DTSID="{9ED5AD96-AE53-413E-9A78-628CE49E8307}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="daily_end"
+              DTS:DTSID="{297F90A6-0D81-443E-9FD6-8F9AF87E8306}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="monthly_start"
+              DTS:DTSID="{6DCC3FDA-A7E8-4860-A357-770667E4E076}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="monthly_end"
+              DTS:DTSID="{F5C6D20F-5C6F-494A-83E1-1257B5FA8A54}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.dw_test_2]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5D0DAFEC-B572-4046-803C-AFB83AC73CD3}"
+      DTS:ObjectName="LocalHost.dw_test_2">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;User ID=;Initial Catalog=dw_test_2;Provider=MSOLEDBSQL.1;Persist Security Info=False;Integrated Security=SSPI;Initial File Name=;Server SPN=;Authentication=;Access Token=;Application Name=SSIS-LoadMeteostatData-{5D0DAFEC-B572-4046-803C-AFB83AC73CD3}LocalHost.dw_test_2;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load data from station locations"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{F5D3248B-A7EE-4AFC-A874-A2D1A2CE90B7}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load data from station locations"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load data from station locations\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Stg_MeteostatStation]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">65001</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load data from station locations\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.dw_test_2]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.dw_test_2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[name]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="name"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[name]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[name]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[country]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="country"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[country]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[country]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[region]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="region"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[region]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[region]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[wmo]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="wmo"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[wmo]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[wmo]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[icao]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="icao"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[icao]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[icao]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[latitude]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="latitude"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[latitude]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[latitude]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[longitude]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="longitude"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[longitude]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[longitude]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[elevation]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="elevation"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[elevation]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[elevation]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[timezone]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="timezone"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[timezone]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[timezone]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[hourly_start]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="hourly_start"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[hourly_start]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[hourly_start]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[hourly_end]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="hourly_end"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[hourly_end]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[hourly_end]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[daily_start]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="daily_start"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[daily_start]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[daily_start]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[daily_end]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="daily_end"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[daily_end]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[daily_end]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[monthly_start]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="monthly_start"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[monthly_start]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[monthly_start]" />
+                    <inputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[monthly_end]"
+                      cachedCodepage="65001"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="monthly_end"
+                      externalMetadataColumnId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[monthly_end]"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[monthly_end]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[country]"
+                      dataType="wstr"
+                      length="100"
+                      name="country" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[region]"
+                      dataType="wstr"
+                      length="100"
+                      name="region" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[wmo]"
+                      dataType="wstr"
+                      length="50"
+                      name="wmo" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[icao]"
+                      dataType="wstr"
+                      length="50"
+                      name="icao" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[latitude]"
+                      dataType="wstr"
+                      length="50"
+                      name="latitude" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[longitude]"
+                      dataType="wstr"
+                      length="50"
+                      name="longitude" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[elevation]"
+                      dataType="wstr"
+                      length="50"
+                      name="elevation" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[timezone]"
+                      dataType="wstr"
+                      length="100"
+                      name="timezone" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[hourly_start]"
+                      dataType="wstr"
+                      length="50"
+                      name="hourly_start" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[hourly_end]"
+                      dataType="wstr"
+                      length="50"
+                      name="hourly_end" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[daily_start]"
+                      dataType="wstr"
+                      length="50"
+                      name="daily_start" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[daily_end]"
+                      dataType="wstr"
+                      length="50"
+                      name="daily_end" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[monthly_start]"
+                      dataType="wstr"
+                      length="50"
+                      name="monthly_start" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[monthly_end]"
+                      dataType="wstr"
+                      length="50"
+                      name="monthly_end" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load data from station locations\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load data from station locations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load data from station locations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load data from station locations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load data from station locations\Station Locations CSV"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="1038"
+              name="Station Locations CSV"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load data from station locations\Station Locations CSV.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[name]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[name]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[name]"
+                      name="name"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[country]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[country]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[country]"
+                      name="country"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[region]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[region]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[region]"
+                      name="region"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[wmo]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[wmo]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[wmo]"
+                      name="wmo"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[icao]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[icao]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[icao]"
+                      name="icao"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[latitude]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[latitude]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[latitude]"
+                      name="latitude"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[longitude]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[longitude]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[longitude]"
+                      name="longitude"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[elevation]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[elevation]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[elevation]"
+                      name="elevation"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[timezone]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[timezone]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[timezone]"
+                      name="timezone"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[hourly_start]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[hourly_start]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[hourly_start]"
+                      name="hourly_start"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[hourly_end]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[hourly_end]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[hourly_end]"
+                      name="hourly_end"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[daily_start]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[daily_start]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[daily_start]"
+                      name="daily_start"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[daily_end]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[daily_end]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[daily_end]"
+                      name="daily_end"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[monthly_start]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[monthly_start]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[monthly_start]"
+                      name="monthly_start"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[monthly_end]"
+                      codePage="65001"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[monthly_end]"
+                      length="50"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].Columns[monthly_end]"
+                      name="monthly_end"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[name]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[country]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="country" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[region]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="region" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[wmo]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="wmo" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[icao]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="icao" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[latitude]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="latitude" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[longitude]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="longitude" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[elevation]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="elevation" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[timezone]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="timezone" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[hourly_start]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="hourly_start" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[hourly_end]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="hourly_end" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[daily_start]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="daily_start" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[daily_end]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="daily_end" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[monthly_start]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="monthly_start" />
+                    <externalMetadataColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output].ExternalColumns[monthly_end]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="monthly_end" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1250"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load data from station locations.Paths[Flat File Source Output]"
+              endId="Package\Load data from station locations\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Flat File Source Output"
+              startId="Package\Load data from station locations\Station Locations CSV.Outputs[Flat File Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="235,42"
+          Id="Package\Load data from station locations"
+          TopLeft="311,217" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load data from station locations">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="189,42"
+          Id="Package\Load data from station locations\Station Locations CSV"
+          TopLeft="368,183" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Load data from station locations\OLE DB Destination"
+          TopLeft="378,290" />
+        <EdgeLayout
+          Id="Package\Load data from station locations.Paths[Flat File Source Output]"
+          TopLeft="464.5,225">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,65"
+              Start="0,0"
+              End="0,57.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load data from station locations\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

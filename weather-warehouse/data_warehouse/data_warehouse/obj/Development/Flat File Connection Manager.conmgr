@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="Flat File Connection Manager"
+  DTS:DTSID="{498A051F-AA96-4151-9A61-63786C75601A}"
+  DTS:CreationName="FLATFILE">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:Format="Delimited"
+      DTS:LocaleID="1038"
+      DTS:Unicode="True"
+      DTS:HeaderRowDelimiter="_x000D__x000A_"
+      DTS:ColumnNamesInFirstDataRow="True"
+      DTS:RowDelimiter=""
+      DTS:TextQualifier="_x003C_none_x003E_"
+      DTS:CodePage="65001"
+      DTS:ConnectionString="D:\Documents\OE\Szakdolgozat\meteostat_bulk_data\meteostat_bulk_data\meteostat_stations_edited.csv">
+      <DTS:FlatFileColumns>
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x003B_"
+          DTS:DataType="303"
+          DTS:TextQualified="True"
+          DTS:ObjectName="name"
+          DTS:DTSID="{DCFB9A66-5BAD-4B5A-A0E3-C78E3E4FCFE0}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x003B_"
+          DTS:DataType="303"
+          DTS:TextQualified="True"
+          DTS:ObjectName="country"
+          DTS:DTSID="{87C43981-5D24-4D99-B47B-5A1F13C81737}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x003B_"
+          DTS:DataType="303"
+          DTS:TextQualified="True"
+          DTS:ObjectName="region"
+          DTS:DTSID="{49A34C49-2ED4-44D8-BB0D-293DC5951900}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x003B_"
+          DTS:DataType="303"
+          DTS:TextQualified="True"
+          DTS:ObjectName="wmo"
+          DTS:DTSID="{F5764571-4359-4C3E-A9E6-D4626EF01316}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x003B_"
+          DTS:DataType="303"
+          DTS:TextQualified="True"
+          DTS:ObjectName="icao"
+          DTS:DTSID="{1E05D1B2-64A0-43C1-B976-1A1B971F8720}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x003B_"
+          DTS:DataType="303"
+          DTS:TextQualified="True"
+          DTS:ObjectName="latitude"
+          DTS:DTSID="{3036ED14-5044-4CD0-84CF-27FD6368FFF9}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x003B_"
+          DTS:DataType="303"
+          DTS:TextQualified="True"
+          DTS:ObjectName="longitude"
+          DTS:DTSID="{9F52D686-DE83-49E8-A6D1-2B4C4A9271FC}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x000D__x000A_"
+          DTS:DataType="303"
+          DTS:TextQualified="True"
+          DTS:ObjectName="elevation"
+          DTS:DTSID="{CC4E7420-D829-4B3B-9886-042B25C2E55D}"
+          DTS:CreationName="" />
+      </DTS:FlatFileColumns>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

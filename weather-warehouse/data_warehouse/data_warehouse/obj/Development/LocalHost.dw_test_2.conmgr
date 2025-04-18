@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LocalHost.dw_test_2"
+  DTS:DTSID="{11D97ECA-8117-4917-980E-C568DEFFA693}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=.;Initial Catalog=weather-warehouse;Provider=MSOLEDBSQL.1;Persist Security Info=False;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package1-{11D97ECA-8117-4917-980E-C568DEFFA693}LocalHost.dw_test_2;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
