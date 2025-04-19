@@ -87,3 +87,12 @@ export const historicalLocationConstraints = {
     presence: true
   }
 };
+
+export const historicalDataConstraints = {
+  location: {
+    presence: true
+  },
+  date: {
+    presence: true
+  }
+};

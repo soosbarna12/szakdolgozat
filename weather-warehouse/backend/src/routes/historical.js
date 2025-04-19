@@ -2,38 +2,59 @@ const express = require("express");
 const router = express.Router();
 const validate = require('validate.js');
 const sql = require("mssql");
-const { historicalLocationConstraints } = require('../authentication/validationConstraints');
+const { historicalDataConstraints, historicalLocationConstraints } = require('../authentication/validationConstraints');
 
 
 // use todays weather data as the past weather data is not available yet
-router.get('/historicalData', async (req, res) => {
+router.post('/historicalData', async (req, res) => {
   try {
-    const { locationName } = req.query; // get city name from query params
+    const { location, date } = req.body;
 
-    if (!locationName) {
-      return res.status(400).json({ error: 'Location name is required' }); // check if city name is provided
+    const validationResult = validate(req.body, historicalDataConstraints)
+    if (validationResult) {
+      console.log(validationResult);
+      return res.status(400).json({ error: validationResult?? "Location and date required" });
     }
 
-    const lang = req.query.lang || 'en'; // optional language parameter, default to English
+    const pool = await sql.connect();
+    const result = await pool.request()
+    .input('location', sql.NVarChar, location.name)
+    .input('country', sql.NVarChar, location.country)
+    .input('date', sql.Date, date)
+    .query(`SELECT 
+            f.WeatherID,
+            d.FullDate,
+            l.CityName,
+            l.CountryCode,
+            f.Temperature,
+            f.MinTemperature,
+            f.MaxTemperature,
+            f.Humidity,
+            f.WindSpeed,
+            f.Precipitation,
+            f.Pressure,
+            f.CloudCover,
+            f.Source,
+            f.ObservationTime
+        FROM FactWeather f
+        JOIN DimDate d ON f.DateKey = d.DateKey
+        JOIN DimLocation l ON f.LocationKey = l.LocationKey
+        WHERE l.CityName = @location 
+        AND l.CountryCode = @country 
+        AND d.FullDate = @date;`
+      );
 
-    // Split locationName into city and country (if provided)
-    const [city, country] = locationName.split(',').map((part) => part.trim());
+    const historicalData = result.recordset;
 
-    // Construct the query parameter for the API
-    const query = country ? `${city},${country}` : city;
+    console.log("Query result:", result.recordset);    
+    console.log(historicalData);
 
-    // fetch weather data from OpenWeatherMap API using city name
-    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&lang=${lang}`);
-    res.send(response.data); // send the response data back to the client
+
+    res.status(200).json(historicalData);
 
   } catch (error) {
-    console.error(error);
-    if (error.response && error.response.status === 404) {
-      res.status(404).json({ error: 'City not found' });
-    } else {
-      console.log(locationName);
-      res.status(500).json({ error: 'Something went wrong' });
-    }
+    console.error("Error fetching historical data.", error);
+    res.status(500).json({ error: 'Failed to fetch historical data' });
   }
 });
 
@@ -66,6 +87,40 @@ router.get('/historicalLocations', async (req, res) => {
   } catch (error) {
     console.error("Error fetching historical locations.", error);
     res.status(500).json({ error: 'Failed to fetch historical locations' });
+  }
+});
+
+// get stored dates from the historical database
+router.get('/historicalDates', async (req, res) => {
+  try {
+    const { location } = req.query;
+
+    const validationResult = validate(req.query, historicalLocationConstraints)
+    if (validationResult) {
+      console.log(validationResult);
+      return res.status(400).json({ error: validationResult?? "Location required" });
+    }
+
+    const pool = await sql.connect();
+
+    const result = await pool.request()
+    .input('location', sql.NVarChar, location)
+    .query(`SELECT DISTINCT d.FullDate AS date FROM DimDate d
+      JOIN FactWeather f ON d.DateKey = f.DateKey
+      JOIN DimLocation l ON f.LocationKey = l.LocationKey
+      WHERE l.CityName = @location;`)
+      //WHERE l.CityName = @location AND l.CountryCode = @InputCountryCode ORDER BY d.FullDate;`)
+    const dates = result.recordset;
+
+    //console.log("Query result:", result.recordset);    
+    //console.log(result);
+    console.log(dates);
+
+    res.status(200).json(dates);
+
+  } catch (error) {
+    console.error("Error fetching historical dates.", error);
+    res.status(500).json({ error: 'Failed to fetch historical dates' });
   }
 });
 

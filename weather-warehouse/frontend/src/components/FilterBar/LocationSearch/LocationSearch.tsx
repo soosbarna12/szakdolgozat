@@ -20,7 +20,7 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const historicalLocations = useHistoricalLocations(debouncedValue, pageType);
   const { data, error, isLoading } = pageType === Pages.Today ? todayLocationOptions : historicalLocations;
 
-  console.log("LocationSearch data: ", location);
+  //console.log("LocationSearch data: ", location);
 
   // fetch location suggestions when debounced value changes
   useEffect(() => {
@@ -78,9 +78,13 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
   function handleInputChange(event: React.SyntheticEvent, newValue: string, reason: string) {
     if (reason === "input") {
       setInputValue(newValue);
+
+      // set locationcontext to null if input is empty -> datepicker resets
+      if (newValue.trim() === "") {
+        setLocation({ name: "", lat: 0, lon: 0 });
+      }
     }
   }
-
 
   return (
     <Autocomplete
@@ -95,7 +99,7 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
         <StyledLocationSearch
           {...params}
           placeholder={pageType === Pages.Today ? location.name : "Location"}
-          sx={{ boxShadow: 4, width: pageType === "Historical" ? 250 : 400 }}
+          sx={{ boxShadow: 4, width: pageType === "Historical" ? 300 : 400 }}
           variant="outlined"
           InputProps={{
             ...params.InputProps,

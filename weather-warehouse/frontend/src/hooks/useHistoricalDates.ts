@@ -1,0 +1,34 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "../utils/axiosConfig";
+import { useAlert } from "../utils/AlertContext";
+import { useEffect } from "react";
+import { Pages } from "../types/page.type";
+import dayjs from "dayjs";
+
+export function useHistoricalDates(location: string) {
+  const { showAlert } = useAlert();
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["historicalDates", location],
+    queryFn: async () => {
+      const response = await axios.get(`/historical/historicalDates`, {
+        params: { location },
+      });
+      
+      // format the dates to YYYY-MM-DD for debugging
+      //return response.data.map((date: string) => dayjs(date).format("YYYY-MM-DD"));
+      return response.data.map((date: any) => dayjs(date.date).format("YYYY-MM-DD"));
+    },
+    
+    enabled: !!(location), // Only fetch if location is provided
+    refetchOnWindowFocus: false, // Prevent refetching when the window regains focus
+  });
+
+  useEffect(() => {
+    if (error) {
+      showAlert("Error fetching historical dates", "error");
+    }
+  }, [error]);
+
+  return { data: data || [], error, isLoading };
+}

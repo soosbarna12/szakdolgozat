@@ -11,8 +11,9 @@ export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryPro
   const { data, error, isLoading } = useQuery({
     queryKey: ["historicalWeatherData", location, date],
     queryFn: async () => {
-      const response = await axios.get(`/historical/historicalData`, {
-        params: { location, date },
+      const response = await axios.post(`/historical/historicalData`, {
+        location,
+        date
       });
 
       return response.data;

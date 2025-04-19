@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
 
     const validationResult = validate(req.body, userRegisterConstraints)
     if (validationResult) {
-      console.log(validationResult);
+      //console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
@@ -60,7 +60,7 @@ router.post('/recoverPassword', async (req, res) => {
 
     const validationResult = validate(req.body, userRecoveryConstraints)
     if (validationResult) {
-      console.log(validationResult);
+      //console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
@@ -107,7 +107,7 @@ router.post('/login', async (req, res) => {
 
     const validationResult = validate(req.body, userLoginConstraints)
     if (validationResult) {
-      console.log(validationResult);
+      //console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
