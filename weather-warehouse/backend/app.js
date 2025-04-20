@@ -34,7 +34,7 @@ const geo = require("./src/routes/geo");
     console.log("sql connecting......")
     let pool = await sql.connect(sqlConfig);
     let result = await pool.request().query('select * from Users');
-    console.log(result);
+    //console.log(result);
   } catch (err) {
     console.log(err);
   }

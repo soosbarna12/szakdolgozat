@@ -6,17 +6,7 @@ import { dataTableColumns } from "../../../consts/dataTable.conts";
 import { HistoricalDataTable } from "../../../types/historicalDataTable.type";
 
 
-// historicaldata type vagy historicaldatatable type
 export function DataTable({ data }: { data: HistoricalDataTable[] }) {
-  const rows = data.map((item, index) => ({
-    id: index,
-    date: item.date,
-    location: item.location,
-    maxTemp: item.maxTemp,
-    minTemp: item.minTemp,
-    humidity: item.humidity,
-  }));
-
   function renderContent() {
     if (!data || data.length === 0) {
       return (
@@ -32,7 +22,8 @@ export function DataTable({ data }: { data: HistoricalDataTable[] }) {
     return (
       <Box sx={{ width: "100%", height: 400 }}>
         <StyledDataGrid
-          rows={rows}
+          rows={data}
+          getRowId={(row) => row.date + row.cityName + row.countryCode}
           columns={dataTableColumns}
           hideFooterPagination
           hideFooterSelectedRowCount

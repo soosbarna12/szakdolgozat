@@ -71,7 +71,7 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
     if (newValue) {
       setSelectedValue(newValue);
       setInputValue(getOptionLabel(newValue)); // option label format [city name, country]
-      setLocation({ name: newValue.name, country: newValue.country, state: newValue.state, lat: 0, lon: 0 });
+      setLocation({ name: newValue.name, country: newValue.country, state: newValue.state, lat: newValue.lat, lon: newValue.lon });
     }
   }
 

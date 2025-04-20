@@ -124,7 +124,7 @@ router.post('/login', async (req, res) => {
 
     const user = result.recordset[0];
 
-    console.log(user);
+    //console.log(user);
 
     // compare the hashed password with the provided password
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -139,8 +139,8 @@ router.post('/login', async (req, res) => {
     const payload = { userId: user.userID, username: user.username, role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" });
 
-    console.log(payload);
-    console.log(token);
+    //console.log(payload);
+    //console.log(token);
 
     res.status(200).json({ message: "Logged in successfully", token, role });
 
@@ -237,7 +237,7 @@ router.delete('/delete', async (req, res) => {
 
 // save location to the database
 router.post('/saveLocation', authGuard, async (req, res) => {
-  const { name, lat, lon, date } = req.body; // destructure request body
+  const { cityName, date, countryCode } = req.body; // destructure request body
   const payload = req.payload; // get the payload from the request
 
   const validationResult = validate(req.body, userSaveLocationConstraints)
@@ -246,23 +246,7 @@ router.post('/saveLocation', authGuard, async (req, res) => {
     return res.status(400).json({ error: validationResult?? "All fields are required" });
   }
 
-
-  // try to get userId from token payload; if missing, look it up from the Users table
-  let userID = payload.userId;
-  if (!userID) {
-    try {
-      const pool = await sql.connect(); // database connection
-      const result = await pool.request()
-        .input('username', sql.VarChar, payload.username)
-        .query('SELECT userId FROM Users WHERE username = @username');
-      if (result.recordset.length > 0) {
-        userID = result.recordset[0].userId;
-      }
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Failed to determine user ID" });
-    }
-  }
+  const userID = payload.userId;
 
   if (!userID) {
     return res.status(400).json({ error: "User ID could not be determined." });
@@ -272,13 +256,12 @@ router.post('/saveLocation', authGuard, async (req, res) => {
     const pool = await sql.connect(); // database connection
     await pool.request()
       .input('userID', sql.Int, userID)
-      .input('name', sql.VarChar, name)
-      .input('latitude', sql.Decimal(10, 8), lat)
-      .input('longitude', sql.Decimal(11, 8), lon)
+      .input('cityName', sql.VarChar, cityName)
+      .input('countryCode', sql.VarChar, countryCode)
       .input('date', sql.DateTime, date)
       .query(`
-        INSERT INTO userLocations (userID, name, latitude, longitude, date) 
-        VALUES (@userID, @name, @latitude, @longitude, @date)
+        INSERT INTO userLocations (userID, cityName, countryCode, date) 
+        VALUES (@userID, @cityName, @countryCode, @date)
       `);
     res.status(200).json({ message: "Location saved successfully" });
 

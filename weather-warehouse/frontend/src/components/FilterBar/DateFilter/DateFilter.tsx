@@ -1,6 +1,6 @@
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { StyledDatePicker } from "../../../stlyes/inputField.style";
 import { DateFilterProps } from "./DateFilter.type";
 import { useState } from "react";
@@ -12,12 +12,16 @@ import { LOCAL_STORAGE_SELECTED_DATE_NAME } from "../../../consts/historicalDate
 
 export function DateFilter({ onDateChange }: DateFilterProps) {
 
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(() => {
-    const storedDate = localStorage.getItem(LOCAL_STORAGE_SELECTED_DATE_NAME);
-    return storedDate ? dayjs(storedDate) : null;
-  });
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(getStoredDate());
   const { location } = useContext(HistoricalContext);
   const { data: historicalDates, isLoading } = useHistoricalDates(location.name);
+  const isInitialized = useRef(false);
+  const previousLocation = useRef(location.name);
+
+  function getStoredDate() {
+    const storedDate = localStorage.getItem(LOCAL_STORAGE_SELECTED_DATE_NAME);
+    return storedDate ? dayjs(storedDate) : null
+  }
 
   const handleDateChange = (date: Dayjs | null) => {
     setSelectedDate(date);
@@ -26,11 +30,14 @@ export function DateFilter({ onDateChange }: DateFilterProps) {
 
   // reset datepicker when location changes
   useEffect(() => {
-    if (!location.name) {
+    if (isInitialized.current && location.name !== previousLocation.current) {
       setSelectedDate(null);
       onDateChange?.(null);
+    } else {
+      isInitialized.current = true;
     }
-  }, [location, onDateChange]);
+    previousLocation.current = location.name;
+  }, [location.name]);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_SELECTED_DATE_NAME, selectedDate?.format("YYYY-MM-DD") ?? "");

@@ -46,8 +46,8 @@ router.post('/historicalData', async (req, res) => {
 
     const historicalData = result.recordset;
 
-    console.log("Query result:", result.recordset);    
-    console.log(historicalData);
+    console.log("-historical query result-", result.recordset);    
+    console.log("-historical historicalData- ", historicalData);
 
 
     res.status(200).json(historicalData);
@@ -74,13 +74,13 @@ router.get('/historicalLocations', async (req, res) => {
 
     const result = await pool.request()
     .input('location', sql.NVarChar, location)
-    .query("SELECT DISTINCT CityName AS name, CountryCode AS country FROM DimLocation WHERE CityName LIKE '%' + @location + '%'");
+    .query("SELECT DISTINCT CityName AS name, CountryCode AS country, Latitude AS lat, Longitude AS lon FROM DimLocation WHERE CityName LIKE '%' + @location + '%'");
 
     const locations = result.recordset;
 
-    console.log("Query result:", result.recordset);    
-    console.log(result);
-    console.log(locations);
+    //console.log("Query result:", result.recordset);    
+    //console.log(result);
+    //console.log(locations);
 
     res.status(200).json(locations);
 
@@ -114,7 +114,7 @@ router.get('/historicalDates', async (req, res) => {
 
     //console.log("Query result:", result.recordset);    
     //console.log(result);
-    console.log(dates);
+    //console.log(dates);
 
     res.status(200).json(dates);
 

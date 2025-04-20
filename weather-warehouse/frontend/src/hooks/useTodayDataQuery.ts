@@ -23,6 +23,7 @@ export function useTodayDataQuery(locationName: string) {
         throw new Error("City not found");
       }
 
+      console.log("|useTodayDataQuery|response", response.data);
       return response.data;
     },
     //enabled: !!(lat && lon)

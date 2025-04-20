@@ -3,7 +3,7 @@ import React from "react";
 import { StyledMenu, StyledMenuItem } from "../../../../stlyes/common.style";
 import { ActionsMenuProps } from "./ActionsMenu.type";
 
-const ActionsMenuItems = ["Save", "Edit", "Duplicate", "Archive", "More"];
+const ActionsMenuItems = ["Save", "Edit"];
 
 export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
   const { anchorElUser, handleCloseMenu, onSaveLocation } = props;

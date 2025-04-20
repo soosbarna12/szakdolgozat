@@ -3,6 +3,7 @@ import { UseHistoricalDataQueryProps } from "../pages/HistoricalPage/HistoricalP
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
 import { useEffect } from "react";
+import { convertServerHistoricalData } from "../utils/dataConverters";
 
 export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryProps>) {
   const { showAlert } = useAlert();
@@ -16,7 +17,7 @@ export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryPro
         date
       });
 
-      return response.data;
+      return convertServerHistoricalData(response.data)?.[0] ?? {};
     },
     enabled: !!(location && date),
   });
