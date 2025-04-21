@@ -6,4 +6,6 @@ export interface FilterBarProps {
   location: string;
   onDateChange?: (dateValue: Dayjs | null) => void;
   onSaveLocation?: () => void;
+  onResetLocation?: () => void;
+
 }

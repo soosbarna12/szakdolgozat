@@ -237,8 +237,8 @@ router.delete('/delete', async (req, res) => {
 
 // save location to the database
 router.post('/saveLocation', authGuard, async (req, res) => {
-  const { cityName, date, countryCode } = req.body; // destructure request body
-  const payload = req.payload; // get the payload from the request
+  const { historicalPageData } = req.body;
+  const payload = req.payload;
 
   const validationResult = validate(req.body, userSaveLocationConstraints)
   if (validationResult) {
@@ -248,32 +248,33 @@ router.post('/saveLocation', authGuard, async (req, res) => {
 
   const userID = payload.userId;
 
-  if (!userID) {
-    return res.status(400).json({ error: "User ID could not be determined." });
+  if (!userID ||  historicalPageData.length === 0) {
+    return res.status(400).json({ error: "User ID and location data could not be determined." });
   }
 
   try {
-    const pool = await sql.connect(); // database connection
-    await pool.request()
+    const pool = await sql.connect();
+
+    const locationData = JSON.stringify(historicalPageData);
+
+      await pool.request()
       .input('userID', sql.Int, userID)
-      .input('cityName', sql.VarChar, cityName)
-      .input('countryCode', sql.VarChar, countryCode)
-      .input('date', sql.DateTime, date)
+      .input('locationData', sql.NVarChar, locationData)
       .query(`
-        INSERT INTO userLocations (userID, cityName, countryCode, date) 
-        VALUES (@userID, @cityName, @countryCode, @date)
+        INSERT INTO userLocations (userID, locationData) 
+        VALUES (@userID, @locationData)
       `);
-    res.status(200).json({ message: "Location saved successfully" });
+
+      res.status(200).json({ message: "Location saved successfully" });
 
   } catch (err) {
-    
     console.error(err);
     res.status(500).json({ error: "Failed to save location" });
   }
 });
 
 // fetch saved locations from the database
-router.get('/savedLocations', authGuard, async (req, res) => {
+router.get('/fetchSavedLocations', authGuard, async (req, res) => {
   const payload = req.payload; // get the payload from the request
   const userID = payload.userId; // get userId from the payload
 
@@ -281,15 +282,17 @@ router.get('/savedLocations', authGuard, async (req, res) => {
     const pool = await sql.connect(); // database connection
     const result = await pool.request()
       .input('userID', sql.Int, userID)
-      .query('SELECT name, date, dateSaved FROM userLocations WHERE userID = @userID');
+      .query('SELECT locationData, dateSaved FROM userLocations WHERE userID = @userID');
 
-    const savedLocationsData = result.recordset.map(record => ({
-      name: record.name,
-      date: record.date,
-      dateSaved: record.dateSaved
-    }));
-    
-    res.status(200).json(savedLocationsData);
+      console.log(result.recordset);
+
+      const savedLocations =  result.recordset.map(userLocation => {
+        const parsedLocationData = JSON.parse(userLocation.locationData);
+        return { locationData: parsedLocationData, dateSaved: userLocation.dateSaved };
+      }
+    );
+
+    res.status(200).json(savedLocations);
 
   } catch (error) {
     console.error("Error fetching saved locations:", error);

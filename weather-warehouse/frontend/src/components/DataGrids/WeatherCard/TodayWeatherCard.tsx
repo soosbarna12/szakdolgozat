@@ -2,11 +2,11 @@ import React from "react";
 import { Skeleton } from "@mui/material";
 import { WiDaySunny, WiCloud, WiRain, WiSnow, WiThunderstorm, WiFog } from "react-icons/wi";
 import { Box, Typography, useTheme } from "@mui/material";
-import { WeatherCardProps } from "./WeatherCard.type";
+import { TodayWeatherCardProps } from "./TodayWeatherCard.type";
 import { convertKelvinToCelsius, convertTitleCase } from "../../../utils/dataConverters";
 
 
-export function WeatherCard({ data }: Readonly<WeatherCardProps>) {
+export function TodayWeatherCard({ data }: Readonly<TodayWeatherCardProps>) {
 
   const theme = useTheme();
 

@@ -8,7 +8,6 @@ import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { DataMap } from "../../components/DataGrids/DataMap/DataMap";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
-import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
 
 
 import dayjs from "dayjs";
@@ -16,30 +15,26 @@ import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalCo
 import { useHistoricalDataQuery } from "../../hooks/useHistoricalDataQuery";
 import { useHistoricalTableData } from "../../hooks/useHistoricalTableData";
 import { useSaveLocationQuery } from "../../hooks/useSaveLocationQuery";
+import { HistoricalWeatherCard } from "../../components/DataGrids/WeatherCard/HistoricalWeatherCard";
 
 
 export function HistoricalPage() {
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
 
   // stores the current location
-  const { location } = useContext(HistoricalContext);
+  const { location, setLocation } = useContext(HistoricalContext);
 
   // raw weather data from database by location and date
   const { data: historicalData, error } = useHistoricalDataQuery({ location: location, date: date?.format("YYYY-MM-DD") });
 
   // processed historicalData for the DataTable component
-  const { historicalPageData } = useHistoricalTableData({ data: historicalData, date });
+  const { historicalPageData, setHistoricalPageData } = useHistoricalTableData({ data: historicalData, date });
 
 
-  const { refetch: refetchSaveLocationQuery } = useSaveLocationQuery(historicalData, date);
+  const { refetch: refetchSaveLocationQuery } = useSaveLocationQuery(historicalPageData);
   //const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
   //const { data: todayData, error } = useTodayDataQuery(location.name); // currently using the todays data query, because the historical is not available yet
   //onst { data: geoData, error: geoError } = useGeolocationQuery(location.name);
-
-
-  console.log("|historicalData", historicalData);
-  console.log("|historicalPageData", historicalPageData);
-  console.log("|tableData", historicalPageData);
 
   // handle date change
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
@@ -50,11 +45,20 @@ export function HistoricalPage() {
     refetchSaveLocationQuery();
   }
 
-  useEffect(() => {
-    if (location) {
-      console.log("-Location changed:", location);
+  const handleResetLocation = async () => {
+    setLocation({ name: "", lat: 0, lon: 0 });
+    setDate(null);
+    setHistoricalPageData([]);
+  }
+
+  function handleDataMapInput() {
+    if (location.name === "") {
+      return { lat: historicalPageData?.at(-1)?.lat ?? 0, lon: historicalPageData?.at(-1)?.lon ?? 0 };
+    } else {
+      return location;
     }
-  }, [location]);
+  }
+
 
   return (
     <>
@@ -63,6 +67,7 @@ export function HistoricalPage() {
         location={location.name}
         onDateChange={handleDateChange}
         onSaveLocation={handleSaveLocation}
+        onResetLocation={handleResetLocation}
       />
 
       <ContentBox>
@@ -73,7 +78,7 @@ export function HistoricalPage() {
               {error ? (
                 <p>Error fetching historical data.</p>
               ) : (
-                <DataMap data={location} />
+                <DataMap data={handleDataMapInput()} />
               )}
             </StyledItem>
           </Grid>
@@ -83,7 +88,7 @@ export function HistoricalPage() {
               {error ? (
                 <p>Error fetching today's weather data.</p>
               ) : (
-                null // weather card for historical data, brand new component please;
+                <HistoricalWeatherCard data={historicalPageData.at(-1)} />
               )}
             </StyledItem>
           </Grid>

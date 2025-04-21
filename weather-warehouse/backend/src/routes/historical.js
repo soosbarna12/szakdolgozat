@@ -23,6 +23,8 @@ router.post('/historicalData', async (req, res) => {
     .input('date', sql.Date, date)
     .query(`SELECT 
             f.WeatherID,
+            f.LocationKey,
+            f.DateKey,
             d.FullDate,
             l.CityName,
             l.CountryCode,
@@ -46,10 +48,6 @@ router.post('/historicalData', async (req, res) => {
 
     const historicalData = result.recordset;
 
-    console.log("-historical query result-", result.recordset);    
-    console.log("-historical historicalData- ", historicalData);
-
-
     res.status(200).json(historicalData);
 
   } catch (error) {
@@ -57,7 +55,6 @@ router.post('/historicalData', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch historical data' });
   }
 });
-
 
 // get stored locations from the historical database
 router.get('/historicalLocations', async (req, res) => {
@@ -77,10 +74,6 @@ router.get('/historicalLocations', async (req, res) => {
     .query("SELECT DISTINCT CityName AS name, CountryCode AS country, Latitude AS lat, Longitude AS lon FROM DimLocation WHERE CityName LIKE '%' + @location + '%'");
 
     const locations = result.recordset;
-
-    //console.log("Query result:", result.recordset);    
-    //console.log(result);
-    //console.log(locations);
 
     res.status(200).json(locations);
 

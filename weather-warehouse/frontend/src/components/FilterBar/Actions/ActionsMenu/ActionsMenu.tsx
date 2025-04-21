@@ -3,15 +3,16 @@ import React from "react";
 import { StyledMenu, StyledMenuItem } from "../../../../stlyes/common.style";
 import { ActionsMenuProps } from "./ActionsMenu.type";
 
-const ActionsMenuItems = ["Save", "Edit"];
-
 export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
-  const { anchorElUser, handleCloseMenu, onSaveLocation } = props;
+  const { anchorElUser, handleCloseMenu, onSaveLocation, onResetLocation } = props;
 
-  function handleItemClick(item: string) {
-    if (item === "Save" && onSaveLocation) {
-      onSaveLocation();
-    }
+  function handleSaveClick() {
+    onSaveLocation?.();
+    handleCloseMenu(null as any);
+  };
+
+  function handleResetClick() {
+    onResetLocation?.();
     handleCloseMenu(null as any);
   };
 
@@ -27,11 +28,12 @@ export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
       open={Boolean(anchorElUser)}
       onClose={handleCloseMenu}
     >
-      {ActionsMenuItems.map((item) => (
-        <StyledMenuItem key={item} onClick={() => handleItemClick(item)}>
-          <Typography sx={{ textAlign: "center" }}>{item}</Typography>
-        </StyledMenuItem>
-      ))}
+      <StyledMenuItem key={"save"} onClick={handleSaveClick}>
+        <Typography sx={{ textAlign: "center" }}>Save</Typography>
+      </StyledMenuItem>
+      <StyledMenuItem key={"reset"} onClick={handleResetClick}>
+        <Typography sx={{ textAlign: "center" }}>Reset</Typography>
+      </StyledMenuItem>
     </StyledMenu>
   );
 }

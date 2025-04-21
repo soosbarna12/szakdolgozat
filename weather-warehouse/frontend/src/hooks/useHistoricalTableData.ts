@@ -9,7 +9,6 @@ export function useHistoricalTableData(props: Readonly<UseHistoricalDataProps>) 
   const { data: newRecord } = props;
 
   useEffect(() => {
-    console.log("-hook-useHistoricalTableData", newRecord);
 
     if (newRecord) {
 
@@ -24,5 +23,5 @@ export function useHistoricalTableData(props: Readonly<UseHistoricalDataProps>) 
     }
   }, [newRecord]);
 
-  return { historicalPageData };
+  return { historicalPageData, setHistoricalPageData };
 }

@@ -1,22 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
-import dayjs from "dayjs";
-import { HistoricalData } from "../types/historicalData.type";
 import { HistoricalDataTable } from "../types/historicalDataTable.type";
 
 
-export function useSaveLocationQuery(historicalData: HistoricalDataTable | undefined, date: dayjs.Dayjs | null) {
+export function useSaveLocationQuery(historicalPageData: HistoricalDataTable[] | undefined) {
   const { showAlert } = useAlert();
   
-  const selectedDate = date || dayjs(); // Use the selected date or the current date
-  const dateWithOffset = selectedDate.utc().format("YYYY-MM-DDTHH:mm:ssZ"); // convert to UTC format
-
-  const { data: saveLocations, error, isLoading, isSuccess, refetch } = useQuery({
+  const { data, error, isLoading, isSuccess, refetch } = useQuery({
     queryKey: ["saveLocation"],
     queryFn: async () => {
-      const response = await axios.post(`/user/saveLocation`, {cityName: historicalData?.cityName, date: dateWithOffset,
-        countryCode: historicalData?.countryCode});
+      const response = await axios.post(`/user/saveLocation`, {historicalPageData});
       return response.data;
     },
     refetchOnWindowFocus: false,
@@ -25,5 +19,5 @@ export function useSaveLocationQuery(historicalData: HistoricalDataTable | undef
   });
 
 
-  return { saveLocations, error, isLoading, refetch };
+  return { data, error, isLoading, refetch };
 }

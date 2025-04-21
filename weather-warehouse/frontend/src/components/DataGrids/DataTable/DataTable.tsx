@@ -14,7 +14,7 @@ export function DataTable({ data }: { data: HistoricalDataTable[] }) {
           variant="rectangular"
           animation="wave"
           width="100%"
-          height={400}
+          height={367}
           sx={{ borderRadius: '10px' }}
         />
       );

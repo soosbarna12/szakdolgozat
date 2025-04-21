@@ -5,7 +5,7 @@ import { HistoricalContextType, HistoricalLocationData, HistoricalPageData, Hist
 export const HistoricalContext = createContext<HistoricalContextType>({
   location: { name: "", lat: 0, lon: 0 },
   setLocation: () => { },
-  historicalPageData: [] as any, // initialize historicalData as an empty array
+  historicalPageData: [] as any,
   setHistoricalPageData: () => { },
 });
 

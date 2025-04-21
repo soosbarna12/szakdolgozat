@@ -17,7 +17,7 @@ export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryPro
         date
       });
 
-      return convertServerHistoricalData(response.data)?.[0] ?? {};
+      return convertServerHistoricalData(response.data, location)?.[0] ?? {};
     },
     enabled: !!(location && date),
   });

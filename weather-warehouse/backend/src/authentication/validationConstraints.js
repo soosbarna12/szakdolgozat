@@ -68,13 +68,7 @@ export const userDeleteConstraints = {
 };
 
 export const userSaveLocationConstraints = {
-  cityName: {
-    presence: true
-  },
-  date: {
-    presence: true
-  },
-  countryCode: {
+  historicalPageData: {
     presence: true
   }
 };

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { Pages } from "../../types/page.type";
 import { ContentBox, StyledItem } from "../../stlyes/content.style";
-import { WeatherCard } from "../../components/DataGrids/WeatherCard/WeatherCard";
+import { TodayWeatherCard } from "../../components/DataGrids/WeatherCard/TodayWeatherCard";
 import { Skeleton } from "@mui/material";
 import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
 import { TodayContext } from "../../contexts/TodayContext/TodayContext";
@@ -39,7 +39,7 @@ export function TodayPage() {
     if (todayData) {
       return (
         <StyledItem sx={{ height: "400px", width: "350px" }}>
-          <WeatherCard data={todayData} />
+          <TodayWeatherCard data={todayData} />
         </StyledItem>
       );
     }

@@ -1,17 +1,27 @@
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import { Box, Drawer, List, ListItem, ListItemText, Skeleton, Toolbar, Tooltip, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { StyledButton, StyledIconButton } from '../../../../stlyes/button.style';
 import { LocationDrawerProps } from "./LocationDrawer.type";
 import { useSavedLocationQuery } from '../../../../hooks/useSavedLocationsQuery';
+import dayjs from 'dayjs';
+import { HistoricalContext } from '../../../../contexts/HistoricalContext/HistoricalContext';
 
 
 export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
   const { toggleLocationDrawer, open } = props;
   const { savedLocations, isLoading } = useSavedLocationQuery(open)
+  const { historicalPageData, setHistoricalPageData, setLocation } = useContext(HistoricalContext);
+
 
   function handleDrawerClose() {
     toggleLocationDrawer(false);
+  }
+
+  function handleOpenSavedLocation(index: number) {
+    if (!savedLocations) return;
+    setHistoricalPageData(savedLocations[index].locationData);
+    setLocation({ name: "", lat: 0, lon: 0 });
   }
 
   function renderLocations() {
@@ -28,31 +38,29 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
       ));
     }
 
-    if (savedLocations?.length > 0) {
-      return savedLocations.map(
-        (location: { name: string; date: string; dateSaved: string }, index: number) => {
-          const filteredDate = new Date(location.date).toLocaleDateString();
-          const savedDate = new Date(location.dateSaved).toLocaleDateString();
-
-          return (
-            <ListItem key={index} disablePadding onClick={handleDrawerClose}>
-              <StyledButton fullWidth variant="text" color="primary" sx={{ height: "80px", boxShadow: 4, margin: 1 }} >
-                <ListItemText
-                  primary={location.name}
-                  secondary={
-                    <>
-                      <div>Filtered Date: {filteredDate}</div>
-                      <div>Saved Date: {savedDate}</div>
-                    </>}
-                />
-              </StyledButton>
-            </ListItem>
-          );
-        }
-      );
+    if (savedLocations && savedLocations?.length > 0) {
+      return savedLocations.map((arrayElement, index) => {
+        console.log(arrayElement)
+        return (
+          <ListItem key={index} disablePadding onClick={() => handleOpenSavedLocation(index)} >
+            <StyledButton fullWidth variant="text" color="primary" sx={{ height: "80px", boxShadow: 4, margin: 1 }} >
+              <ListItemText
+                primary={arrayElement?.locationData?.at(-1)?.cityName}
+                secondary={
+                  <>
+                    <div>Filtered Date: {arrayElement?.locationData?.at(-1)?.date}</div>
+                    <div>Saved Date: {dayjs(arrayElement.dateSaved).format("YYYY-MM-DD")}</div>
+                  </>}
+              />
+            </StyledButton>
+          </ListItem >
+        )
+      });
     }
+
     return <Typography>No saved locations found.</Typography>
   }
+
 
   return (
     <Drawer
