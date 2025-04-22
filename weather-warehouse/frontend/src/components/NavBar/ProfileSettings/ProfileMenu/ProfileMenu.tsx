@@ -18,6 +18,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   const [openLogin, setOpenLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const { temperatureScale, setTemperatureScale } = useContext(HistoricalContext);
+  const { setLocation, setHistoricalPageData } = useContext(HistoricalContext);
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem("token"));
@@ -29,6 +30,8 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setLocation({ name: "", lat: 0, lon: 0 });
+    setHistoricalPageData([]);
     setLoggedIn(false);
     handleCloseMenu();
     window.location.reload();
