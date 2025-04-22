@@ -2,14 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
 import { useEffect } from "react";
-import { HistoricalPageData } from "../contexts/HistoricalContext/HistoricalContext.type";
 import { SavedUserLocation } from "../types/historicalDataTable.type";
 
 
 export function useSavedLocationQuery(open: boolean) {
   const { showAlert } = useAlert();
   
-  const { data: savedLocations, error, isLoading, isSuccess } = useQuery({
+  const { data: savedLocations, error, isLoading, isSuccess, refetch } = useQuery({
     queryKey: ["fetchSavedLocations", open],
     queryFn: async () => {
       const response = await axios.get(`/user/fetchSavedLocations`);
@@ -30,5 +29,5 @@ export function useSavedLocationQuery(open: boolean) {
     }
   }, [error]);
 
-  return { savedLocations, error, isLoading };
+  return { savedLocations, error, isLoading, refetch };
 }

@@ -274,28 +274,21 @@ router.post('/saveLocation', authGuard, async (req, res) => {
 });
 
 // delete location to the database
-router.post('/deleteLocation', authGuard, async (req, res) => {
-  const userLocationID = req.body;
+router.delete('/deleteLocation', authGuard, async (req, res) => {
+  const { userLocationID } = req.query;
   const payload = req.payload;
 
-  const validationResult = validate(req.body, userDeleteLocationConstraints)
-  if (validationResult) {
-    console.log(validationResult);
-    return res.status(400).json({ error: validationResult?? "All fields are required" });
-  }
+  console.log("userLocationID", userLocationID);
 
   const userID = payload.userId;
 
-  if (!userID ||  userLocationID.length === 0) {
+  if (!userID || !userLocationID) {
     return res.status(400).json({ error: "User ID and location ID could not be determined." });
   }
 
   try {
     const pool = await sql.connect();
-
-    const locationData = JSON.stringify(historicalPageData);
-
-      await pool.request()
+    await pool.request()
       .input('userID', sql.Int, userID)
       .input('userLocationID', sql.Int, userLocationID)
       .query(`
@@ -303,8 +296,7 @@ router.post('/deleteLocation', authGuard, async (req, res) => {
         WHERE userID = @userID AND userLocationID = @userLocationID
       `);
 
-      res.status(200).json({ message: "Location deleted successfully" });
-
+    res.status(200).json({ message: "Location deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to delete location" });

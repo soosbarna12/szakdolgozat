@@ -12,7 +12,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
   const { toggleLocationDrawer, open } = props;
-  const { savedLocations, isLoading } = useSavedLocationQuery(open)
+  const { savedLocations, isLoading, refetch } = useSavedLocationQuery(open);
+  const { mutateAsync: deleteLocation } = useDeleteLocationQuery();
   const { historicalPageData, setHistoricalPageData, setLocation } = useContext(HistoricalContext);
 
 
@@ -26,8 +27,9 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
     setLocation({ name: "", lat: 0, lon: 0 });
   }
 
-  function handleDeleteLocation(event: React.MouseEvent<HTMLElement>) {
+  function handleDeleteLocation(userLocationID: number, event: React.MouseEvent<HTMLElement>) {
     event.stopPropagation();
+    deleteLocation(userLocationID).then(() => { refetch() });
   }
 
   function renderLocations() {
@@ -58,13 +60,13 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
                   </>}
               />
               <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={handleDeleteLocation}
-              sx={{ marginLeft: 1 }}
-            >
-              <DeleteIcon />
-            </IconButton>
+                edge="end"
+                aria-label="delete"
+                onClick={(event) => handleDeleteLocation(arrayElement.userLocationID, event)}
+                sx={{ marginLeft: 1 }}
+              >
+                <DeleteIcon />
+              </IconButton>
             </StyledButton>
           </ListItem >
         )
