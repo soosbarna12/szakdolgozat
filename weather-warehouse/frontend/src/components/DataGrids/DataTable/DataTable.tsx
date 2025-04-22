@@ -2,11 +2,11 @@ import React from "react";
 import { Skeleton } from "@mui/material";
 import { Box } from "@mui/material";
 import { StyledDataGrid } from "../../../stlyes/content.style";
-import { dataTableColumns } from "../../../consts/dataTable.conts";
 import { HistoricalDataTable } from "../../../types/historicalDataTable.type";
+import { GridColDef } from "@mui/x-data-grid";
 
 
-export function DataTable({ data }: { data: HistoricalDataTable[] }) {
+export function DataTable({ data, columns }: { data: HistoricalDataTable[], columns: GridColDef[] }) {
   function renderContent() {
     if (!data || data.length === 0) {
       return (
@@ -24,7 +24,7 @@ export function DataTable({ data }: { data: HistoricalDataTable[] }) {
         <StyledDataGrid
           rows={data}
           getRowId={(row) => row.date + row.cityName + row.countryCode}
-          columns={dataTableColumns}
+          columns={columns}
           hideFooterPagination
           hideFooterSelectedRowCount
         />

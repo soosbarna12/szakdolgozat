@@ -1,21 +1,13 @@
-import React, { useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { Box, Button, Paper, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { useAlert } from '../../utils/AlertContext';
 import { ContentBox } from '../../stlyes/content.style';
-import axios from '../../utils/axiosConfig';
 import { useAcceptUserMutation } from '../../hooks/useAcceptUserMutation';
-import { JwtPayload } from '../../types/jwtPayload';
 import { User } from '../../types/userData.type';
 import { useDeleteUserMutation } from '../../hooks/useDeleteUserMutation';
 import { useFetchUsersQuery } from '../../hooks/useFetchUsersQuery';
 
 
 export function AdminPage() {
-  const navigate = useNavigate();
-  const { showAlert } = useAlert();
   const { mutateAsync: acceptUserMutatue } = useAcceptUserMutation();
   const { mutateAsync: deleteUserMutatue } = useDeleteUserMutation();
   const { data: users, error, isLoading, refetch } = useFetchUsersQuery();

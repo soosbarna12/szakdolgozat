@@ -1,11 +1,11 @@
 import React from "react";
 import { Skeleton } from "@mui/material";
-import { ResponsiveContainer, Tooltip, CartesianGrid, XAxis, YAxis, Legend, Line } from "recharts";
+import { ResponsiveContainer, Tooltip, CartesianGrid, XAxis, YAxis, Legend, Line, AreaChart, Area } from "recharts";
 import { StlyedLineChart } from "../../../stlyes/content.style";
 import { HistoricalDataTable } from "../../../types/historicalDataTable.type";
 
 
-export function DataChart({ data }: { data: HistoricalDataTable[] }) {
+export function PrecipitationDataChart({ data }: { data: HistoricalDataTable[] }) {
   function renderContent() {
     if (!data || data.length === 0) {
       return (
@@ -20,15 +20,14 @@ export function DataChart({ data }: { data: HistoricalDataTable[] }) {
     }
     return (
       <ResponsiveContainer width="100%" height="100%">
-        < StlyedLineChart data={data} >
+        < AreaChart data={data} >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="maxTemp" stroke="#8884d8" name="Maximum Temperature (°C)" />
-          <Line type="monotone" dataKey="minTemp" stroke="#82ca9d" name="Minimum Temperature (°C)" />
-        </StlyedLineChart >
+          <Area type="monotone" dataKey="precipitation" stroke="#8884d8" name="Precipitation (mm/s)" />
+        </AreaChart >
       </ResponsiveContainer>
     )
   }

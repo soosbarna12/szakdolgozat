@@ -73,6 +73,12 @@ export const userSaveLocationConstraints = {
   }
 };
 
+export const userDeleteLocationConstraints = {
+  userLocationID: {
+    presence: true
+  }
+};
+
 export const historicalLocationConstraints = {
   location: {
     presence: true

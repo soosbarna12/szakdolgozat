@@ -2,7 +2,6 @@ import { Box, Paper, styled, TableCell } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid";
 import { MapContainer } from 'react-leaflet';
 import { LineChart } from 'recharts';
-import { App } from '../App';
 
 
 export const ContentBox = styled(Box)`

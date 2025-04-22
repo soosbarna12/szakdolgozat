@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ContentBox, StyledItem } from "../../stlyes/content.style";
-import { Box, Table } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 import { Pages } from "../../types/page.type";
@@ -16,6 +15,9 @@ import { useHistoricalDataQuery } from "../../hooks/useHistoricalDataQuery";
 import { useHistoricalTableData } from "../../hooks/useHistoricalTableData";
 import { useSaveLocationQuery } from "../../hooks/useSaveLocationQuery";
 import { HistoricalWeatherCard } from "../../components/DataGrids/WeatherCard/HistoricalWeatherCard";
+import { allHistoricalDataTableColumns } from "../../consts/dataTable.conts";
+import { PrecipitationDataChart } from "../../components/DataGrids/DataChart/PrecipitationDataChart";
+import { WindPressureCombinedChart } from "../../components/DataGrids/DataChart/WindPressureCombinedChart";
 
 
 export function HistoricalPage() {
@@ -45,6 +47,10 @@ export function HistoricalPage() {
     refetchSaveLocationQuery();
   }
 
+  const handleExportLocation = () => {
+
+  };
+
   const handleResetLocation = async () => {
     setLocation({ name: "", lat: 0, lon: 0 });
     setDate(null);
@@ -67,6 +73,7 @@ export function HistoricalPage() {
         location={location.name}
         onDateChange={handleDateChange}
         onSaveLocation={handleSaveLocation}
+        onExportLocation={handleExportLocation}
         onResetLocation={handleResetLocation}
       />
 
@@ -86,46 +93,40 @@ export function HistoricalPage() {
           <Grid size={{ xs: 6, md: 4 }}>
             <StyledItem sx={{ height: "400px" }}>
               {error ? (
-                <p>Error fetching today's weather data.</p>
+                <p>Error fetching historical weather data.</p>
               ) : (
                 <HistoricalWeatherCard data={historicalPageData.at(-1)} />
               )}
             </StyledItem>
           </Grid>
 
-          <Grid size={{ xs: 6, md: 4 }}>
+          <Grid size={{ xs: 6, md: 12 }}>
             <StyledItem sx={{ height: "400px" }}>
-              <h4>Lorem ipsum</h4>
-              <Box>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque hic
-                dolorem numquam corrupti? Veritatis ex corporis qui ipsam doloribus
-                architecto nisi eum. Possimus a molestias maiores debitis deserunt
-                praesentium maxime.
-              </Box>
+              <DataTable data={historicalPageData} columns={allHistoricalDataTableColumns} />
             </StyledItem>
           </Grid>
 
-          <Grid size={{ xs: 6, md: 8 }}>
+          {/*<Grid size={{ xs: 6, md: 6 }}>
             <StyledItem sx={{ height: "400px" }}>
-              <DataTable data={historicalPageData} />
+              <DataTable data={historicalPageData} columns={tempHistoricalDataTableColumns} />
             </StyledItem>
-          </Grid>
+          </Grid>*/}
 
-          <Grid size={{ xs: 6, md: 8 }}>
+          <Grid size={{ xs: 6, md: 6 }}>
             <StyledItem sx={{ height: "400px" }}>
               <DataChart data={historicalPageData} />
             </StyledItem>
           </Grid>
 
-          <Grid size={{ xs: 6, md: 4 }}>
+          <Grid size={{ xs: 6, md: 6 }}>
             <StyledItem sx={{ height: "400px" }}>
-              <h4>Lorem ipsum</h4>
-              <Box>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque hic
-                dolorem numquam corrupti? Veritatis ex corporis qui ipsam doloribus
-                architecto nisi eum. Possimus a molestias maiores debitis deserunt
-                praesentium maxime.
-              </Box>
+              <PrecipitationDataChart data={historicalPageData} />
+            </StyledItem>
+          </Grid>
+
+          <Grid size={{ xs: 6, md: 6 }}>
+            <StyledItem sx={{ height: "400px" }}>
+              <WindPressureCombinedChart data={historicalPageData} />
             </StyledItem>
           </Grid>
 
@@ -134,3 +135,4 @@ export function HistoricalPage() {
     </>
   );
 }
+

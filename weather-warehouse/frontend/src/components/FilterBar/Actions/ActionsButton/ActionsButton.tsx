@@ -6,7 +6,7 @@ import { ActionsMenu } from '../ActionsMenu/ActionsMenu';
 import { ActionsButtonProps } from './ActionsButton.type';
 
 
-export function ActionsButton({ onSaveLocation, onResetLocation }: ActionsButtonProps) {
+export function ActionsButton({ onSaveLocation, onExportLocation, onResetLocation }: ActionsButtonProps) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const isLoggedIn = !!localStorage.getItem("token");
 
@@ -38,6 +38,7 @@ export function ActionsButton({ onSaveLocation, onResetLocation }: ActionsButton
           handleCloseMenu={handleCloseMenu}
           anchorElUser={anchorElUser}
           onSaveLocation={onSaveLocation}
+          onExportLocation={onExportLocation}
           onResetLocation={onResetLocation}
         />
       </Box>

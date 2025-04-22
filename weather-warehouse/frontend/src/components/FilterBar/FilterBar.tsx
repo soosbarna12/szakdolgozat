@@ -10,7 +10,7 @@ import { TodayContext } from "../../contexts/TodayContext/TodayContext";
 
 
 export function FilterBar(props: Readonly<FilterBarProps>) {
-  const { type, onDateChange, onSaveLocation, onResetLocation } = props;
+  const { type, onDateChange, onExportLocation, onSaveLocation, onResetLocation } = props;
   const { location: historicalLocation, setLocation: historicalSetLocation } = React.useContext(HistoricalContext);
   const { location: todayLocation, setLocation: todaySetLocation } = React.useContext(TodayContext);
 
@@ -20,7 +20,7 @@ export function FilterBar(props: Readonly<FilterBarProps>) {
         <>
           <LocationSearch type={Pages.Historical} location={historicalLocation} setLocation={historicalSetLocation} />
           <DateFilter onDateChange={onDateChange} />
-          <ActionsButton onSaveLocation={onSaveLocation} onResetLocation={onResetLocation} />
+          <ActionsButton onSaveLocation={onSaveLocation} onExportLocation={onExportLocation} onResetLocation={onResetLocation} />
         </>
       );
     }

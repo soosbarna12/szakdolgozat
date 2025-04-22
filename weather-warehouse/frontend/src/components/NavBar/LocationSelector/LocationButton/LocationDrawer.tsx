@@ -1,11 +1,13 @@
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import { Box, Drawer, List, ListItem, ListItemText, Skeleton, Toolbar, Tooltip, Typography } from "@mui/material";
+import { Box, Drawer, IconButton, List, ListItem, ListItemText, Skeleton, Toolbar, Tooltip, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { StyledButton, StyledIconButton } from '../../../../stlyes/button.style';
 import { LocationDrawerProps } from "./LocationDrawer.type";
 import { useSavedLocationQuery } from '../../../../hooks/useSavedLocationsQuery';
 import dayjs from 'dayjs';
 import { HistoricalContext } from '../../../../contexts/HistoricalContext/HistoricalContext';
+import { useDeleteLocationQuery } from '../../../../hooks/useDeleteLocationQuery';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
@@ -24,6 +26,10 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
     setLocation({ name: "", lat: 0, lon: 0 });
   }
 
+  function handleDeleteLocation(event: React.MouseEvent<HTMLElement>) {
+    event.stopPropagation();
+  }
+
   function renderLocations() {
     if (isLoading) {
       return [0, 1, 2].map((index) => (
@@ -40,7 +46,6 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
 
     if (savedLocations && savedLocations?.length > 0) {
       return savedLocations.map((arrayElement, index) => {
-        console.log(arrayElement)
         return (
           <ListItem key={index} disablePadding onClick={() => handleOpenSavedLocation(index)} >
             <StyledButton fullWidth variant="text" color="primary" sx={{ height: "80px", boxShadow: 4, margin: 1 }} >
@@ -52,6 +57,14 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
                     <div>Saved Date: {dayjs(arrayElement.dateSaved).format("YYYY-MM-DD")}</div>
                   </>}
               />
+              <IconButton
+              edge="end"
+              aria-label="delete"
+              onClick={handleDeleteLocation}
+              sx={{ marginLeft: 1 }}
+            >
+              <DeleteIcon />
+            </IconButton>
             </StyledButton>
           </ListItem >
         )

@@ -4,10 +4,15 @@ import { StyledMenu, StyledMenuItem } from "../../../../stlyes/common.style";
 import { ActionsMenuProps } from "./ActionsMenu.type";
 
 export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
-  const { anchorElUser, handleCloseMenu, onSaveLocation, onResetLocation } = props;
+  const { anchorElUser, handleCloseMenu, onSaveLocation, onExportLocation, onResetLocation } = props;
 
   function handleSaveClick() {
     onSaveLocation?.();
+    handleCloseMenu(null as any);
+  };
+
+  function handleExportClick() {
+    onExportLocation?.();
     handleCloseMenu(null as any);
   };
 
@@ -30,6 +35,9 @@ export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
     >
       <StyledMenuItem key={"save"} onClick={handleSaveClick}>
         <Typography sx={{ textAlign: "center" }}>Save</Typography>
+      </StyledMenuItem>
+      <StyledMenuItem key={"export"} onClick={handleExportClick}>
+        <Typography sx={{ textAlign: "center" }}>Export</Typography>
       </StyledMenuItem>
       <StyledMenuItem key={"reset"} onClick={handleResetClick}>
         <Typography sx={{ textAlign: "center" }}>Reset</Typography>

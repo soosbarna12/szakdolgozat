@@ -43,7 +43,6 @@ export function HistoricalWeatherCard({ data }: Readonly<HistoricalWeatherCardPr
         <Typography>
           Precipitation: {data.precipitation || 0} mm/h
         </Typography>
-        <Typography>Humidity: {data.humidity}%</Typography>
         <Typography>Pressure: {data.pressure} hPa</Typography>
         <Typography>Wind: {data.windSpeed} m/s</Typography>
       </Box>

@@ -21,7 +21,6 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   }, [anchorElUser]);
 
   async function handleLoginClick() {
-    // Open login form to obtain a valid token
     setOpenLogin(true);
   }
 
@@ -29,7 +28,7 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
     localStorage.removeItem("token");
     setLoggedIn(false);
     handleCloseMenu();
-    window.location.reload(); // Refresh the page
+    window.location.reload();
   }
 
   function handleCelsiusScale() {
@@ -63,17 +62,6 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         <StyledToggleButtonGroup onClick={handleCloseMenu}>
           <StyledToggleButton value={TemperatureScale.Celsius} onClick={handleCelsiusScale}>°C</StyledToggleButton>
           <StyledToggleButton value={TemperatureScale.Fahrenheit} onClick={handleFahrenheitScale}>°F</StyledToggleButton>
-        </StyledToggleButtonGroup>
-      </Box>
-    );
-  }
-
-  function renderLanguageToggle() {
-    return (
-      <Box sx={{ marginTop: "6px" }}>
-        <StyledToggleButtonGroup onClick={handleCloseMenu}>
-          <StyledToggleButton value={Language.English}> EN </StyledToggleButton>
-          <StyledToggleButton value={Language.Hungarian}> HU </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
     );
@@ -114,9 +102,6 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
     if (loggedIn) {
       return (
         <div>
-          <StyledMenuItem onClick={handleCloseMenu}>
-            <Typography sx={{ textAlign: "center" }}>Profile</Typography>
-          </StyledMenuItem>
           <StyledMenuItem onClick={handleLogout}>
             <Typography sx={{ textAlign: "center" }}>Log Out</Typography>
           </StyledMenuItem>
@@ -143,7 +128,6 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
         <Divider style={{ margin: "10px" }} />
 
         {renderTemperatureScaleToggle()}
-        {renderLanguageToggle()}
         {renderThemeToggle()}
 
       </StyledMenu>

@@ -273,23 +273,62 @@ router.post('/saveLocation', authGuard, async (req, res) => {
   }
 });
 
+// delete location to the database
+router.post('/deleteLocation', authGuard, async (req, res) => {
+  const userLocationID = req.body;
+  const payload = req.payload;
+
+  const validationResult = validate(req.body, userDeleteLocationConstraints)
+  if (validationResult) {
+    console.log(validationResult);
+    return res.status(400).json({ error: validationResult?? "All fields are required" });
+  }
+
+  const userID = payload.userId;
+
+  if (!userID ||  userLocationID.length === 0) {
+    return res.status(400).json({ error: "User ID and location ID could not be determined." });
+  }
+
+  try {
+    const pool = await sql.connect();
+
+    const locationData = JSON.stringify(historicalPageData);
+
+      await pool.request()
+      .input('userID', sql.Int, userID)
+      .input('userLocationID', sql.Int, userLocationID)
+      .query(`
+        DELETE FROM userLocations
+        WHERE userID = @userID AND userLocationID = @userLocationID
+      `);
+
+      res.status(200).json({ message: "Location deleted successfully" });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete location" });
+  }
+});
+
 // fetch saved locations from the database
 router.get('/fetchSavedLocations', authGuard, async (req, res) => {
   const payload = req.payload; // get the payload from the request
   const userID = payload.userId; // get userId from the payload
 
   try {
-    const pool = await sql.connect(); // database connection
+    const pool = await sql.connect();
     const result = await pool.request()
       .input('userID', sql.Int, userID)
-      .query('SELECT locationData, dateSaved FROM userLocations WHERE userID = @userID');
+      .query('SELECT userLocationID, locationData, dateSaved FROM userLocations WHERE userID = @userID');
 
-      console.log(result.recordset);
+      //console.log(result.recordset);
 
       const savedLocations =  result.recordset.map(userLocation => {
         const parsedLocationData = JSON.parse(userLocation.locationData);
-        return { locationData: parsedLocationData, dateSaved: userLocation.dateSaved };
+        return { locationData: parsedLocationData, dateSaved: userLocation.dateSaved, userLocationID: userLocation.userLocationID };
       }
+      
     );
 
     res.status(200).json(savedLocations);

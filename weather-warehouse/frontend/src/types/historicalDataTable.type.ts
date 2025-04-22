@@ -39,4 +39,5 @@ export interface ServerHistoricalData {
 export interface SavedUserLocation {
     locationData: HistoricalDataTable[];
     dateSaved: string;
+    userLocationID: number;
 }
