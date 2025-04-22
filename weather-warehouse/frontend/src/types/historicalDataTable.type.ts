@@ -8,13 +8,14 @@ export interface HistoricalDataTable {
     date: string,
     cityName: string,
     countryCode: string,
-    maxTemp: number | string | null,
-    minTemp: number | string | null,
-    humidity: number | string | null,
-    windSpeed: number | string | null,
-    precipitation: number | string | null,
-    pressure: number | string | null,
-    cloudCover: number | string | null,
+    temp: number | string,
+    maxTemp: number | string,
+    minTemp: number | string,
+    humidity: number | string,
+    windSpeed: number | string,
+    precipitation: number | string,
+    pressure: number | string,
+    cloudCover: number | string,
 }
 
 export interface ServerHistoricalData {

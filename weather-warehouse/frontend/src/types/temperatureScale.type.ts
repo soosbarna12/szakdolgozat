@@ -1,4 +1,5 @@
 export enum TemperatureScale {
 	Celsius = 'celsius',
-	Fahrenheit = 'fahrenheit'
+	Fahrenheit = 'fahrenheit',
+	Kelvin = 'kelvin',
 }

@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Skeleton } from "@mui/material";
 import { Box, Typography, useTheme } from "@mui/material";
 import { convertKelvinToCelsius, convertTitleCase } from "../../../utils/dataConverters";
 import { HistoricalWeatherCardProps } from "./HistoricalWeatherCard.type";
 import dayjs from "dayjs";
+import { temperatureScaleChanger } from "../../../utils/temperatureScaleChanger";
+import { TemperatureScale } from "../../../types/temperatureScale.type";
+import { LOCAL_STORAGE_TEMPERATURE_SCALE } from "../../../consts/temperatureScale.const";
+import { HistoricalContext } from "../../../contexts/HistoricalContext/HistoricalContext";
 
 
 export function HistoricalWeatherCard({ data }: Readonly<HistoricalWeatherCardProps>) {
 
   const theme = useTheme();
+  const { temperatureScale, setTemperatureScale } = useContext(HistoricalContext);
+  const temperatureScaleLabel = (temperatureScale === TemperatureScale.Celsius ? "°C" : "°F");
 
   if (!data) {
     return (
@@ -35,8 +41,8 @@ export function HistoricalWeatherCard({ data }: Readonly<HistoricalWeatherCardPr
       <Box sx={{ display: "flex", alignItems: "center", m: 0, p: 0 }} color={theme.palette.primary.dark}>
 
         <Typography variant="h2" sx={{ ml: 1, m: 0 }}>
-          {data.minTemp}
-          <span style={{ fontSize: "0.5em", verticalAlign: "super" }}> °C</span>
+          {temperatureScaleChanger(TemperatureScale.Celsius, temperatureScale, data.temp)}
+          <span style={{ fontSize: "0.5em", verticalAlign: "super" }}>{temperatureScaleLabel}</span>
         </Typography>
       </Box>
       <Box>

@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const validate = require('validate.js');
 const authGuard = require("../middleware/authGuard");
-const { userRegisterConstraints, userRecoveryConstraints, userLoginConstraints, userAcceptConstraints, userDeleteConstraints, userSaveLocationConstraints } = require('../authentication/validationConstraints');
+const { userRegisterConstraints, userRecoveryConstraints, userLoginConstraints, userAcceptConstraints, userDeleteConstraints, userSaveLocationConstraints, userDeleteLocationConstraints } = require('../authentication/validationConstraints');
 
 
 const SALT_ROUNDS = 10; // number of salt rounds for hashing
@@ -278,7 +278,11 @@ router.delete('/deleteLocation', authGuard, async (req, res) => {
   const { userLocationID } = req.query;
   const payload = req.payload;
 
-  console.log("userLocationID", userLocationID);
+  const validationResult = validate(req.query, userDeleteLocationConstraints)
+  if (validationResult) {
+    console.log(validationResult);
+    return res.status(400).json({ error: validationResult?? "All fields are required" });
+  }
 
   const userID = payload.userId;
 

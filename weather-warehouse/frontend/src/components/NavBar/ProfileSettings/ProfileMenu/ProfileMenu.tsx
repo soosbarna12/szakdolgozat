@@ -1,7 +1,7 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { Box, Divider, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyledToggleButton, StyledToggleButtonGroup } from '../../../../stlyes/button.style';
 import { StyledMenu, StyledMenuItem } from '../../../../stlyes/common.style';
 import { Language } from '../../../../types/language.type';
@@ -9,12 +9,15 @@ import { TemperatureScale } from '../../../../types/temperatureScale.type';
 import { Theme } from '../../../../types/theme.type';
 import { ProfileMenuProps } from './ProfileMenu.type';
 import { LoginForm } from '../../../AuthenticationForms/LoginForm/LoginForm';
+import { LOCAL_STORAGE_TEMPERATURE_SCALE } from '../../../../consts/temperatureScale.const';
+import { HistoricalContext } from '../../../../contexts/HistoricalContext/HistoricalContext';
 
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   const { anchorElUser, isLightTheme, handleSetLightTheme, handleCloseMenu } = props;
   const [openLogin, setOpenLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
+  const { temperatureScale, setTemperatureScale } = useContext(HistoricalContext);
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem("token"));
@@ -32,11 +35,11 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   }
 
   function handleCelsiusScale() {
-    // ...
+    setTemperatureScale(TemperatureScale.Celsius);
   }
 
   function handleFahrenheitScale() {
-    // ...
+    setTemperatureScale(TemperatureScale.Fahrenheit);
   }
 
   function handleLightModeIconClick() {
@@ -59,9 +62,19 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   function renderTemperatureScaleToggle() {
     return (
       <Box>
-        <StyledToggleButtonGroup onClick={handleCloseMenu}>
-          <StyledToggleButton value={TemperatureScale.Celsius} onClick={handleCelsiusScale}>°C</StyledToggleButton>
-          <StyledToggleButton value={TemperatureScale.Fahrenheit} onClick={handleFahrenheitScale}>°F</StyledToggleButton>
+        <StyledToggleButtonGroup>
+          <StyledToggleButton
+            value={TemperatureScale.Celsius}
+            onClick={handleCelsiusScale}
+            disabled={temperatureScale === TemperatureScale.Celsius}>
+            °C
+          </StyledToggleButton>
+          <StyledToggleButton
+            value={TemperatureScale.Fahrenheit}
+            onClick={handleFahrenheitScale}
+            disabled={temperatureScale === TemperatureScale.Fahrenheit}>
+            °F
+          </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
     );

@@ -1,5 +1,7 @@
 import React, { createContext, useState, ReactNode, Dispatch, SetStateAction, useEffect } from "react";
 import { HistoricalContextType, HistoricalLocationData, HistoricalPageData, HistoricalProviderProps } from "./HistoricalContext.type";
+import { TemperatureScale } from "../../types/temperatureScale.type";
+import { LOCAL_STORAGE_TEMPERATURE_SCALE } from "../../consts/temperatureScale.const";
 
 
 export const HistoricalContext = createContext<HistoricalContextType>({
@@ -7,6 +9,8 @@ export const HistoricalContext = createContext<HistoricalContextType>({
   setLocation: () => { },
   historicalPageData: [] as any,
   setHistoricalPageData: () => { },
+  temperatureScale: TemperatureScale.Celsius,
+  setTemperatureScale: () => { },
 });
 
 export const HistoricalLocationProvider = ({ children }: HistoricalProviderProps) => {
@@ -31,22 +35,33 @@ export const HistoricalLocationProvider = ({ children }: HistoricalProviderProps
     }
   });
 
-  //  historicalPageData to localStorage whenever it changes
+  const [temperatureScale, setTemperatureScale] = useState<TemperatureScale>(() => {
+    const storedTemperatureScale = localStorage.getItem(LOCAL_STORAGE_TEMPERATURE_SCALE);
+    try {
+      return storedTemperatureScale ? JSON.parse(storedTemperatureScale) : TemperatureScale.Celsius;
+    } catch (error) {
+      return TemperatureScale.Celsius;
+    }
+  });
+
+
   useEffect(() => {
     if (historicalPageData) {
       localStorage.setItem("historicalPageData", JSON.stringify(historicalPageData));
     }
   }, [historicalPageData]);
 
-
   useEffect(() => {
-    // Persist location to localStorage whenever it changes
     localStorage.setItem("historicalLocation", JSON.stringify(location));
   }, [location]);
 
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_TEMPERATURE_SCALE, JSON.stringify(temperatureScale));
+  }, [temperatureScale]);
+
 
   return (
-    <HistoricalContext.Provider value={{ location, setLocation, historicalPageData, setHistoricalPageData }}>
+    <HistoricalContext.Provider value={{ location, setLocation, historicalPageData, setHistoricalPageData, temperatureScale, setTemperatureScale }}>
       {children}
     </HistoricalContext.Provider>
   );

@@ -39,7 +39,7 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
           <Skeleton
             variant="rectangular"
             width="100%"
-            height={80}
+            height={100}
             sx={{ borderRadius: "20px" }}
           />
         </ListItem>
@@ -50,7 +50,7 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
       return savedLocations.map((arrayElement, index) => {
         return (
           <ListItem key={index} disablePadding onClick={() => handleOpenSavedLocation(index)} >
-            <StyledButton fullWidth variant="text" color="primary" sx={{ height: "80px", boxShadow: 4, margin: 1 }} >
+            <StyledButton fullWidth variant="text" color="primary" sx={{ height: "100px", boxShadow: 4, margin: 1 }} >
               <ListItemText
                 primary={arrayElement?.locationData?.at(-1)?.cityName}
                 secondary={

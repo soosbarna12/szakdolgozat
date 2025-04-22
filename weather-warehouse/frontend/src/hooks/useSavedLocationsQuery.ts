@@ -16,12 +16,6 @@ export function useSavedLocationQuery(open: boolean) {
     },
     enabled: open,
   });
-
-  useEffect(() => {
-    if (isSuccess) {
-      showAlert("Saved locations successfully", "success");
-    }
-  }, [isSuccess]);
   
   useEffect(() => {
     if (error) {

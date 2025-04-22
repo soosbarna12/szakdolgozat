@@ -10,6 +10,8 @@ import dayjs from "dayjs";
 import { BaseComponent } from "./components/BaseComponent";
 import { HistoricalLocationProvider } from "./contexts/HistoricalContext/HistoricalContext";
 import { TodayLocationProvider } from "./contexts/TodayContext/TodayContext";
+import { LOCAL_STORAGE_TEMPERATURE_SCALE } from "./consts/temperatureScale.const";
+import { TemperatureScale } from "./types/temperatureScale.type";
 dayjs.extend(utc);
 
 
@@ -26,6 +28,10 @@ export function App() {
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_THEME_NAME, isLightTheme ? Theme.Light : Theme.Dark);
   }, [isLightTheme]);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_TEMPERATURE_SCALE, TemperatureScale.Celsius);
+  }, []);
 
 
   function handleSetLightTheme(isLightTheme: boolean) {

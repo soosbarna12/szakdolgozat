@@ -1,10 +1,12 @@
 import { Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { StyledMenu, StyledMenuItem } from "../../../../stlyes/common.style";
 import { ActionsMenuProps } from "./ActionsMenu.type";
+import { HistoricalContext } from "../../../../contexts/HistoricalContext/HistoricalContext";
 
 export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
   const { anchorElUser, handleCloseMenu, onSaveLocation, onExportLocation, onResetLocation } = props;
+  const { historicalPageData } = useContext(HistoricalContext);
 
   function handleSaveClick() {
     onSaveLocation?.();
@@ -21,6 +23,7 @@ export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
     handleCloseMenu(null as any);
   };
 
+
   return (
     <StyledMenu
       PaperProps={{ sx: { width: "120px" } }}
@@ -33,13 +36,13 @@ export function ActionsMenu(props: Readonly<ActionsMenuProps>) {
       open={Boolean(anchorElUser)}
       onClose={handleCloseMenu}
     >
-      <StyledMenuItem key={"save"} onClick={handleSaveClick}>
+      <StyledMenuItem key={"save"} onClick={handleSaveClick} disabled={historicalPageData?.length === 0}>
         <Typography sx={{ textAlign: "center" }}>Save</Typography>
       </StyledMenuItem>
-      <StyledMenuItem key={"export"} onClick={handleExportClick}>
+      <StyledMenuItem key={"export"} onClick={handleExportClick} disabled={historicalPageData?.length === 0}>
         <Typography sx={{ textAlign: "center" }}>Export</Typography>
       </StyledMenuItem>
-      <StyledMenuItem key={"reset"} onClick={handleResetClick}>
+      <StyledMenuItem key={"reset"} onClick={handleResetClick} disabled={historicalPageData?.length === 0}>
         <Typography sx={{ textAlign: "center" }}>Reset</Typography>
       </StyledMenuItem>
     </StyledMenu>

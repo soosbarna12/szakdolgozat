@@ -17,6 +17,8 @@ export function DateFilter({ onDateChange }: DateFilterProps) {
   const { data: historicalDates, isLoading } = useHistoricalDates(location.name);
   const isInitialized = useRef(false);
   const previousLocation = useRef(location.name);
+  const datePickerLoadingPlaceholder = isLoading ? "Loading..." : "Date";
+  const datePickerPlaceholder = selectedDate ? selectedDate.format("YYYY-MM-DD") : datePickerLoadingPlaceholder;
 
   function getStoredDate() {
     const storedDate = localStorage.getItem(LOCAL_STORAGE_SELECTED_DATE_NAME);
@@ -60,9 +62,7 @@ export function DateFilter({ onDateChange }: DateFilterProps) {
         slotProps={{
           textField: {
             size: 'small',
-            placeholder: selectedDate
-              ? selectedDate.format("YYYY-MM-DD")
-              : "Date",
+            placeholder: datePickerPlaceholder
           },
           popper: { sx: { ".MuiPaper-root": { borderRadius: "20px" } } },
         }}

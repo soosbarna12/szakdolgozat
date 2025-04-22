@@ -9,11 +9,7 @@ export function useHistoricalTableData(props: Readonly<UseHistoricalDataProps>) 
   const { data: newRecord } = props;
 
   useEffect(() => {
-
     if (newRecord) {
-
-      console.log("--hook-newRecord", newRecord);
-
       setHistoricalPageData((prev) => {
         const isDuplicate = prev.some((record) => record.date === newRecord.date
         && record.cityName === newRecord.cityName

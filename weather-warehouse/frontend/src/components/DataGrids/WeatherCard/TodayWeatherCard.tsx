@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Skeleton } from "@mui/material";
 import { WiDaySunny, WiCloud, WiRain, WiSnow, WiThunderstorm, WiFog } from "react-icons/wi";
 import { Box, Typography, useTheme } from "@mui/material";
 import { TodayWeatherCardProps } from "./TodayWeatherCard.type";
 import { convertKelvinToCelsius, convertTitleCase } from "../../../utils/dataConverters";
+import { HistoricalContext } from "../../../contexts/HistoricalContext/HistoricalContext";
+import { TemperatureScale } from "../../../types/temperatureScale.type";
+import { temperatureScaleChanger } from "../../../utils/temperatureScaleChanger";
 
 
 export function TodayWeatherCard({ data }: Readonly<TodayWeatherCardProps>) {
 
   const theme = useTheme();
+  const { temperatureScale, setTemperatureScale } = useContext(HistoricalContext);
+  const temperatureScaleLabel = (temperatureScale === TemperatureScale.Celsius ? "°C" : "°F");
 
   if (!data) {
     return (
@@ -69,8 +74,8 @@ export function TodayWeatherCard({ data }: Readonly<TodayWeatherCardProps>) {
       <Box sx={{ display: "flex", alignItems: "center", m: 0, p: 0 }} color={theme.palette.primary.dark}>
         <Box sx={{ m: 0, p: 0 }}>{getWeatherIcon(data.weather[0].main)}</Box>
         <Typography variant="h2" sx={{ ml: 1, m: 0 }}>
-          {convertKelvinToCelsius(data.main.temp)}
-          <span style={{ fontSize: "0.5em", verticalAlign: "super" }}> °C</span>
+          {temperatureScaleChanger(TemperatureScale.Kelvin, temperatureScale, data.main.temp)}
+          <span style={{ fontSize: "0.5em", verticalAlign: "super" }}> {temperatureScaleLabel}</span>
         </Typography>
       </Box>
       {data.weather && data.weather.length > 0 && (
@@ -79,7 +84,7 @@ export function TodayWeatherCard({ data }: Readonly<TodayWeatherCardProps>) {
         </Typography>
       )}
       <Box>
-        <Typography>Feels Like: {convertKelvinToCelsius(data.main.feels_like)} °C</Typography>
+        <Typography>Feels Like: {temperatureScaleChanger(TemperatureScale.Kelvin, temperatureScale, data.main.feels_like)} {temperatureScaleLabel}</Typography>
         <Typography>
           Precipitation: {data.rain?.["1h"] || data.rain?.["3h"] || data.snow?.["1h"] || data.snow?.["3h"] || 0} mm/h
         </Typography>

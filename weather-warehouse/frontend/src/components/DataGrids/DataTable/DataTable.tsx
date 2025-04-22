@@ -23,6 +23,8 @@ export function DataTable({ data, columns }: { data: HistoricalDataTable[], colu
       <Box sx={{ width: "100%", height: 400 }}>
         <StyledDataGrid
           rows={data}
+
+
           getRowId={(row) => row.date + row.cityName + row.countryCode}
           columns={columns}
           hideFooterPagination

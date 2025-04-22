@@ -15,40 +15,38 @@ import { useHistoricalDataQuery } from "../../hooks/useHistoricalDataQuery";
 import { useHistoricalTableData } from "../../hooks/useHistoricalTableData";
 import { useSaveLocationQuery } from "../../hooks/useSaveLocationQuery";
 import { HistoricalWeatherCard } from "../../components/DataGrids/WeatherCard/HistoricalWeatherCard";
-import { allHistoricalDataTableColumns } from "../../consts/dataTable.conts";
 import { PrecipitationDataChart } from "../../components/DataGrids/DataChart/PrecipitationDataChart";
 import { WindPressureCombinedChart } from "../../components/DataGrids/DataChart/WindPressureCombinedChart";
+import { exportCSV } from "../../utils/exportCSV";
+import { getAllHistoricalDataTableColumns } from "../../consts/dataTable.conts";
 
 
 export function HistoricalPage() {
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
 
   // stores the current location
-  const { location, setLocation } = useContext(HistoricalContext);
+  const { location, setLocation, temperatureScale } = useContext(HistoricalContext);
 
   // raw weather data from database by location and date
   const { data: historicalData, error } = useHistoricalDataQuery({ location: location, date: date?.format("YYYY-MM-DD") });
 
   // processed historicalData for the DataTable component
   const { historicalPageData, setHistoricalPageData } = useHistoricalTableData({ data: historicalData, date });
-
-
   const { refetch: refetchSaveLocationQuery } = useSaveLocationQuery(historicalPageData);
-  //const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
-  //const { data: todayData, error } = useTodayDataQuery(location.name); // currently using the todays data query, because the historical is not available yet
-  //onst { data: geoData, error: geoError } = useGeolocationQuery(location.name);
+  const columnDef = getAllHistoricalDataTableColumns(temperatureScale)
+
 
   // handle date change
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
     setDate(dateValue);
   };
 
-  const handleSaveLocation = async () => {
+  const handleSaveLocation = () => {
     refetchSaveLocationQuery();
   }
 
   const handleExportLocation = () => {
-
+    exportCSV(historicalPageData);
   };
 
   const handleResetLocation = async () => {
@@ -102,7 +100,7 @@ export function HistoricalPage() {
 
           <Grid size={{ xs: 6, md: 12 }}>
             <StyledItem sx={{ height: "400px" }}>
-              <DataTable data={historicalPageData} columns={allHistoricalDataTableColumns} />
+              <DataTable data={historicalPageData} columns={columnDef} />
             </StyledItem>
           </Grid>
 
