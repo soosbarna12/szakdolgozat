@@ -1,24 +1,25 @@
+import Grid from "@mui/material/Grid2";
 import React, { useContext, useState } from "react";
 import { ContentBox, StyledItem } from "../../stlyes/content.style";
-import Grid from "@mui/material/Grid2";
 
-import { Pages } from "../../types/page.type";
-import { FilterBar } from "../../components/FilterBar/FilterBar";
+import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
 import { DataMap } from "../../components/DataGrids/DataMap/DataMap";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
-import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
+import { FilterBar } from "../../components/FilterBar/FilterBar";
+import { Pages } from "../../types/page.type";
 
 
 import dayjs from "dayjs";
+import { PrecipitationDataChart } from "../../components/DataGrids/DataChart/PrecipitationDataChart";
+import { WindPressureCombinedChart } from "../../components/DataGrids/DataChart/WindPressureCombinedChart";
+import { HistoricalWeatherCard } from "../../components/DataGrids/WeatherCard/HistoricalWeatherCard";
+import { getAllHistoricalDataTableColumns } from "../../consts/dataTable.conts";
 import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
 import { useHistoricalDataQuery } from "../../hooks/useHistoricalDataQuery";
 import { useHistoricalTableData } from "../../hooks/useHistoricalTableData";
 import { useSaveLocationQuery } from "../../hooks/useSaveLocationQuery";
-import { HistoricalWeatherCard } from "../../components/DataGrids/WeatherCard/HistoricalWeatherCard";
-import { PrecipitationDataChart } from "../../components/DataGrids/DataChart/PrecipitationDataChart";
-import { WindPressureCombinedChart } from "../../components/DataGrids/DataChart/WindPressureCombinedChart";
 import { exportCSV } from "../../utils/exportCSV";
-import { getAllHistoricalDataTableColumns } from "../../consts/dataTable.conts";
+import { TemperatureScale } from "../../types/temperatureScale.type";
 
 
 export function HistoricalPage() {
@@ -33,7 +34,7 @@ export function HistoricalPage() {
   // processed historicalData for the DataTable component
   const { historicalPageData, setHistoricalPageData } = useHistoricalTableData({ data: historicalData, date });
   const { refetch: refetchSaveLocationQuery } = useSaveLocationQuery(historicalPageData);
-  const columnDef = getAllHistoricalDataTableColumns(temperatureScale)
+  const columnDef = getAllHistoricalDataTableColumns(temperatureScale as TemperatureScale);
 
 
   // handle date change
@@ -79,7 +80,7 @@ export function HistoricalPage() {
         <Grid container spacing={2}>
 
           <Grid size={{ xs: 6, md: 8 }}>
-            <StyledItem sx={{ height: "400px" }}>
+            <StyledItem sx={{ height: "400px" }} data-testid="dataMap">
               {error ? (
                 <p>Error fetching historical data.</p>
               ) : (
@@ -89,7 +90,7 @@ export function HistoricalPage() {
           </Grid>
 
           <Grid size={{ xs: 6, md: 4 }}>
-            <StyledItem sx={{ height: "400px" }}>
+            <StyledItem sx={{ height: "400px" }} data-testid="historicalWeatherCard">
               {error ? (
                 <p>Error fetching historical weather data.</p>
               ) : (
@@ -111,7 +112,7 @@ export function HistoricalPage() {
           </Grid>*/}
 
           <Grid size={{ xs: 6, md: 6 }}>
-            <StyledItem sx={{ height: "400px" }}>
+            <StyledItem sx={{ height: "400px" }} data-testid="dataTable">
               <DataChart data={historicalPageData} />
             </StyledItem>
           </Grid>

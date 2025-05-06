@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import { FilterBar } from "../../components/FilterBar/FilterBar";
-import { Pages } from "../../types/page.type";
-import { ContentBox, StyledItem } from "../../stlyes/content.style";
-import { TodayWeatherCard } from "../../components/DataGrids/WeatherCard/TodayWeatherCard";
 import { Skeleton } from "@mui/material";
-import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
+import React, { useContext } from "react";
+import { TodayWeatherCard } from "../../components/DataGrids/WeatherCard/TodayWeatherCard";
+import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { TodayContext } from "../../contexts/TodayContext/TodayContext";
+import { useTodayDataQuery } from "../../hooks/useTodayDataQuery";
+import { ContentBox, StyledItem } from "../../stlyes/content.style";
+import { Pages } from "../../types/page.type";
 
 
 export function TodayPage() {
@@ -23,6 +23,7 @@ export function TodayPage() {
           animation="wave"
           width="350px"
           height="375px"
+          data-testid="todaySkeleton"
           sx={{ borderRadius: '20px' }}
         />
       )
@@ -38,7 +39,7 @@ export function TodayPage() {
   function renderWeatherCard() {
     if (todayData) {
       return (
-        <StyledItem sx={{ height: "400px", width: "350px" }}>
+        <StyledItem sx={{ height: "400px", width: "350px" }} data-testid="todayWeatherCard">
           <TodayWeatherCard data={todayData} />
         </StyledItem>
       );

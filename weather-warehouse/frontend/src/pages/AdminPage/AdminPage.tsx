@@ -1,10 +1,10 @@
-import React from 'react';
 import { Box, Button, Paper, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import { ContentBox } from '../../stlyes/content.style';
+import React from 'react';
 import { useAcceptUserMutation } from '../../hooks/useAcceptUserMutation';
-import { User } from '../../types/userData.type';
 import { useDeleteUserMutation } from '../../hooks/useDeleteUserMutation';
 import { useFetchUsersQuery } from '../../hooks/useFetchUsersQuery';
+import { ContentBox } from '../../stlyes/content.style';
+import { User } from '../../types/userData.type';
 
 
 export function AdminPage() {
@@ -16,18 +16,18 @@ export function AdminPage() {
   // await for the acceptUserMutation to complete before refetching
   // load userdata before accepting or deleting a user (usernotfound error)
   async function handleAcceptUser(id: number) {
-    acceptUserMutatue(id).then(() => { refetch() });
+    acceptUserMutatue(id)?.then(() => { refetch() });
   }
 
   async function handleDeleteUser(id: number) {
-    deleteUserMutatue(id).then(() => { refetch() });
+    deleteUserMutatue(id)?.then(() => { refetch() });
   }
 
 
   function renderShimmerTableContent() {
     for (let i = 0; i < 5; i++) {
       return (
-        <TableRow key={i}>
+        <TableRow key={i} data-testid="shimmerTableRow">
           <TableCell>
             <Skeleton variant="text" width={50} />
           </TableCell>
@@ -50,13 +50,13 @@ export function AdminPage() {
       return (
         <ContentBox>
           <Box p={3}>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom data-testid="userManagementTitle">
               User Management
             </Typography>
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow>
+                  <TableRow data-testid="shimmerTableRowHeader">
                     <TableCell>User ID</TableCell>
                     <TableCell>Username</TableCell>
                     <TableCell>Status</TableCell>

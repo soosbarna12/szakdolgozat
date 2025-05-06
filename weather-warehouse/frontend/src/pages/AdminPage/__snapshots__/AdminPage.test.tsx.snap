@@ -1,0 +1,290 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/AdminPage matches AdminPage component snapshot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-uasic2"
+  >
+    <div
+      class="MuiBox-root css-19kzrtu"
+    >
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1it4a80-MuiTypography-root"
+      >
+        User Management
+      </h4>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1gtchvp-MuiPaper-root"
+        style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+      >
+        <table
+          class="MuiTable-root css-1xwxv7r-MuiTable-root"
+        >
+          <thead
+            class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-1xtozoh-MuiTableRow-root"
+            >
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                User ID
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                Username
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                Status
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-to33az-MuiTableCell-root"
+                scope="col"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+          >
+            <tr
+              class="MuiTableRow-root css-1xtozoh-MuiTableRow-root"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                1
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                user1
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                pending
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-3ssuu9-MuiTableCell-root"
+              >
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-ox4pna-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Accept
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedError MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorError MuiButton-root MuiButton-outlined MuiButton-outlinedError MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorError css-1hz6i2n-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr
+              class="MuiTableRow-root css-1xtozoh-MuiTableRow-root"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                2
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                user2
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                active
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-3ssuu9-MuiTableCell-root"
+              >
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedError MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorError MuiButton-root MuiButton-outlined MuiButton-outlinedError MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorError css-1hz6i2n-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`pages/AdminPage renders render shimmer loading state when loading 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-uasic2"
+  >
+    <div
+      class="MuiBox-root css-19kzrtu"
+    >
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1it4a80-MuiTypography-root"
+        data-testid="userManagementTitle"
+      >
+        User Management
+      </h4>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1gtchvp-MuiPaper-root"
+        style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+      >
+        <table
+          class="MuiTable-root css-1xwxv7r-MuiTable-root"
+        >
+          <thead
+            class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-1xtozoh-MuiTableRow-root"
+              data-testid="shimmerTableRowHeader"
+            >
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                User ID
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                Username
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                Status
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-to33az-MuiTableCell-root"
+                scope="col"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+          >
+            <tr
+              class="MuiTableRow-root css-1xtozoh-MuiTableRow-root"
+              data-testid="shimmerTableRow"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                <span
+                  class="MuiSkeleton-root MuiSkeleton-text MuiSkeleton-pulse css-kkcbhd-MuiSkeleton-root"
+                  style="width: 50px;"
+                />
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                <span
+                  class="MuiSkeleton-root MuiSkeleton-text MuiSkeleton-pulse css-kkcbhd-MuiSkeleton-root"
+                  style="width: 100px;"
+                />
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1dc80h3-MuiTableCell-root"
+              >
+                <span
+                  class="MuiSkeleton-root MuiSkeleton-text MuiSkeleton-pulse css-kkcbhd-MuiSkeleton-root"
+                  style="width: 80px;"
+                />
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-3ssuu9-MuiTableCell-root"
+              >
+                <span
+                  class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-pulse css-3sr0vz-MuiSkeleton-root"
+                  style="width: 100px; height: 30px;"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiBox-root css-uasic2"
+  >
+    <div
+      class="MuiBox-root css-19kzrtu"
+    >
+      <h4
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1it4a80-MuiTypography-root"
+      >
+        User Management
+      </h4>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1gtchvp-MuiPaper-root"
+        style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+      >
+        <table
+          class="MuiTable-root css-1xwxv7r-MuiTable-root"
+        >
+          <thead
+            class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-1xtozoh-MuiTableRow-root"
+            >
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                User ID
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                Username
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1orzuox-MuiTableCell-root"
+                scope="col"
+              >
+                Status
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-to33az-MuiTableCell-root"
+                scope="col"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+          />
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;
