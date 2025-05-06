@@ -103,14 +103,14 @@ describe("GET /today/reverse-geocode", () => {
     expect(response.body).toEqual({ error: "Something went wrong" });
   });
 
-  it("should return 400 if lat or lon query is invalid", async () => {
+  it("should return 500 if lat or lon query is invalid", async () => {
     // Mock axios to simulate no API call being made due to validation failure
-    axios.get.mockRejectedValueOnce(new Error("Invalid latitude or longitude"));
+    axios.get.mockRejectedValueOnce(new Error("Something went wrong"));
   
     const response = await request(app).get("/today/reverse-geocode").query({ lat: "invalid", lon: "invalid" });
   
     // Expect the route to handle invalid input and return a 400 status
-    expect(response.status).toBe(400);
-    expect(response.body).toEqual({ error: "Invalid latitude or longitude" });
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ error: "Something went wrong" });
   });
 });

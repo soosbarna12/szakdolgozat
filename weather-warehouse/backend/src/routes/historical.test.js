@@ -15,11 +15,12 @@ app.use("/historical", historicalRouter);
 describe("POST /historical/historicalData", () => {
   it("should return 400 if validation fails", async () => {
     validate.mockReturnValueOnce({ error: "Validation failed" });
-  
-    const response = await request(app).get("/historical/historicalLocations").query({
-      location: "Budapest",
+
+    const response = await request(app).post("/historical/historicalData").send({
+      location: { name: "Budapest", country: "HU" },
+      date: "2023-01-01",
     });
-  
+
     expect(response.status).toBe(400);
     expect(response.body).toEqual({ error: { error: "Validation failed" } });
   });
@@ -61,11 +62,11 @@ describe("POST /historical/historicalData", () => {
 describe("GET /historical/historicalLocations", () => {
   it("should return 400 if validation fails", async () => {
     validate.mockReturnValueOnce({ error: "Validation failed" });
-  
+
     const response = await request(app).get("/historical/historicalLocations").query({
       location: "Budapest",
     });
-  
+
     expect(response.status).toBe(400);
     expect(response.body).toEqual({ error: { error: "Validation failed" } });
   });
@@ -105,14 +106,13 @@ describe("GET /historical/historicalLocations", () => {
 describe("GET /historical/historicalDates", () => {
   it("should return 400 if validation fails", async () => {
     validate.mockReturnValueOnce({ error: "Validation failed" });
-  
-    const response = await request(app).post("/historical/historicalData").send({
-      location: { name: "Budapest", country: "HU" },
-      date: "2023-01-01",
+
+    const response = await request(app).get("/historical/historicalDates").query({
+      location: "",
     });
-  
+
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({ error: { error: "Validation failed" } });
+    expect(response.body.error).toEqual({ error: "Validation failed" });
   });
 
   it("should return 200 with date data if input is valid", async () => {
@@ -132,6 +132,23 @@ describe("GET /historical/historicalDates", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual([{ date: "2023-01-01" }]);
+  });
+
+  it("should return 200 with an empty array if no dates are found", async () => {
+    validate.mockReturnValueOnce(undefined); // No validation errors
+    sql.connect.mockResolvedValueOnce({
+      request: jest.fn().mockReturnValue({
+        input: jest.fn().mockReturnThis(),
+        query: jest.fn().mockResolvedValue({ recordset: [] }), // Simulate no results
+      }),
+    });
+
+    const response = await request(app).get("/historical/historicalDates").query({
+      location: "NonExistentCity",
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([]); // Expect an empty array
   });
 
   it("should return 500 if an error occurs", async () => {

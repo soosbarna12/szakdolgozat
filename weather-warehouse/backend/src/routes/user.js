@@ -18,7 +18,6 @@ router.post('/register', async (req, res) => {
 
     const validationResult = validate(req.body, userRegisterConstraints)
     if (validationResult) {
-      //console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
@@ -48,7 +47,6 @@ router.post('/register', async (req, res) => {
     res.status(201).json({ message: "User registered successfully", id: result.recordset[0].id });
 
   } catch (error) {
-    console.error("Registration error:", error);
     res.status(500).json({ error: error.message || "Registration failed" });
   }
 });
@@ -60,7 +58,6 @@ router.post('/recoverPassword', async (req, res) => {
 
     const validationResult = validate(req.body, userRecoveryConstraints)
     if (validationResult) {
-      //console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
@@ -95,7 +92,6 @@ router.post('/recoverPassword', async (req, res) => {
     res.status(200).json({ message: "Password updated successfully." });
 
   } catch (error) {
-    console.error("Password recovery error:", error);
     res.status(500).json({ error: error.message || "Password recovery failed" });
   }
 });
@@ -107,7 +103,6 @@ router.post('/login', async (req, res) => {
 
     const validationResult = validate(req.body, userLoginConstraints)
     if (validationResult) {
-      //console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "All fields are required" });
     }
 
@@ -124,8 +119,6 @@ router.post('/login', async (req, res) => {
 
     const user = result.recordset[0];
 
-    //console.log(user);
-
     // compare the hashed password with the provided password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
@@ -139,13 +132,9 @@ router.post('/login', async (req, res) => {
     const payload = { userId: user.userID, username: user.username, role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" });
 
-    //console.log(payload);
-    //console.log(token);
-
     res.status(200).json({ message: "Logged in successfully", token, role });
 
   } catch (error) {
-    console.error("Login error:", error);
     res.status(500).json({ error: error.message || "Login failed" });
   }
 });
@@ -165,7 +154,6 @@ router.get('/userData', async (req, res) => {
     res.json(result.recordset);
 
   } catch (error) {
-    console.error("Error fetching users:", error);
     res.status(500).json({ error: "Failed to fetch users" });
   }
 });
@@ -177,7 +165,6 @@ router.post('/accept', async (req, res) => {
 
     const validationResult = validate(req.body, userAcceptConstraints)
     if (validationResult) {
-      console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "ID required" });
     }
 
@@ -190,7 +177,6 @@ router.post('/accept', async (req, res) => {
     res.status(200).json({ message: "User accepted successfully" });
 
   } catch (error) {
-    console.error("Error accepting user:", error);
     res.status(500).json({ error: "Failed to accept user" });
   }
 });
@@ -202,7 +188,6 @@ router.delete('/delete', async (req, res) => {
 
     const validationResult = validate(req.body, userDeleteConstraints)
     if (validationResult) {
-      console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "ID required" });
     }
 
@@ -230,7 +215,6 @@ router.delete('/delete', async (req, res) => {
     res.status(200).json({ message: "User deleted successfully" });
 
   } catch (error) {
-    console.error("Error deleting user:", error);
     res.status(500).json({ error: "Failed to delete user" });
   }
 });
@@ -242,7 +226,6 @@ router.post('/saveLocation', authGuard, async (req, res) => {
 
   const validationResult = validate(req.body, userSaveLocationConstraints)
   if (validationResult) {
-    console.log(validationResult);
     return res.status(400).json({ error: validationResult?? "All fields are required" });
   }
 
@@ -268,7 +251,6 @@ router.post('/saveLocation', authGuard, async (req, res) => {
       res.status(200).json({ message: "Location saved successfully" });
 
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Failed to save location" });
   }
 });
@@ -280,7 +262,6 @@ router.delete('/deleteLocation', authGuard, async (req, res) => {
 
   const validationResult = validate(req.query, userDeleteLocationConstraints)
   if (validationResult) {
-    console.log(validationResult);
     return res.status(400).json({ error: validationResult?? "All fields are required" });
   }
 
@@ -302,7 +283,6 @@ router.delete('/deleteLocation', authGuard, async (req, res) => {
 
     res.status(200).json({ message: "Location deleted successfully" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Failed to delete location" });
   }
 });
@@ -328,7 +308,6 @@ router.get('/fetchSavedLocations', authGuard, async (req, res) => {
     res.status(200).json(savedLocations);
 
   } catch (error) {
-    console.error("Error fetching saved locations:", error);
     res.status(500).json({ error: "Failed to fetch saved locations" });
   }
 });

@@ -12,7 +12,6 @@ router.post("/lstm", async (req, res) => {
     const forecast = await lstmForecast(data);
     res.status(200).json({ forecast });
   } catch (error) {
-    console.error("Error generating LSTM forecast:", error);
     res.status(500).json({ error: "Failed to generate forecast" });
   }
 });

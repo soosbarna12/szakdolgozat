@@ -44,11 +44,9 @@ router.get('/locationData', async (req, res) => {
     res.send(response.data); // send the response data back to the client
 
   } catch (error) {
-    console.error(error);
     if (error.response && error.response.status === 404) {
       res.status(404).json({ error: 'City not found' });
     } else {
-      //console.log(locationName);
       res.status(500).json({ error: 'Something went wrong' });
     }
   }
@@ -62,7 +60,6 @@ router.get("/reverse-geocode", async (req, res) => {
     const response = await axios.get(
       `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${apiKey}`
     );
-    //console.log(response.data[0]); 
     const { name, country } = response.data?.[0];
     res.send({name, country});
 

@@ -18,7 +18,6 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
     }
   } catch (error) {
     showAlert("Invalid session. Access Denied.", "error");
-    console.error("Error decoding token:", error);
     return <Navigate to="/" />;
   }
 

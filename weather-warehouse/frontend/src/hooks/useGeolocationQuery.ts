@@ -34,7 +34,6 @@ export function useGeolocationQuery(locationName: string, type: Pages) {
         
         return uniqueResults;
       } catch (error) {
-        console.error("Error fetching geolocation data:", error);
         throw new Error("Failed to fetch geolocation data");
       }
     },

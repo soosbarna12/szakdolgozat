@@ -12,7 +12,6 @@ router.post('/historicalData', async (req, res) => {
 
     const validationResult = validate(req.body, historicalDataConstraints)
     if (validationResult) {
-      console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "Location and date required" });
     }
 
@@ -51,7 +50,6 @@ router.post('/historicalData', async (req, res) => {
     res.status(200).json(historicalData);
 
   } catch (error) {
-    console.error("Error fetching historical data.", error);
     res.status(500).json({ error: 'Failed to fetch historical data' });
   }
 });
@@ -63,7 +61,6 @@ router.get('/historicalLocations', async (req, res) => {
 
     const validationResult = validate(req.query, historicalLocationConstraints)
     if (validationResult) {
-      console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "Location required" });
     }
 
@@ -78,7 +75,6 @@ router.get('/historicalLocations', async (req, res) => {
     res.status(200).json(locations);
 
   } catch (error) {
-    console.error("Error fetching historical locations.", error);
     res.status(500).json({ error: 'Failed to fetch historical locations' });
   }
 });
@@ -90,7 +86,6 @@ router.get('/historicalDates', async (req, res) => {
 
     const validationResult = validate(req.query, historicalLocationConstraints)
     if (validationResult) {
-      console.log(validationResult);
       return res.status(400).json({ error: validationResult?? "Location required" });
     }
 
@@ -102,17 +97,11 @@ router.get('/historicalDates', async (req, res) => {
       JOIN FactWeather f ON d.DateKey = f.DateKey
       JOIN DimLocation l ON f.LocationKey = l.LocationKey
       WHERE l.CityName = @location;`)
-      //WHERE l.CityName = @location AND l.CountryCode = @InputCountryCode ORDER BY d.FullDate;`)
     const dates = result.recordset;
-
-    //console.log("Query result:", result.recordset);    
-    //console.log(result);
-    //console.log(dates);
 
     res.status(200).json(dates);
 
   } catch (error) {
-    console.error("Error fetching historical dates.", error);
     res.status(500).json({ error: 'Failed to fetch historical dates' });
   }
 });
