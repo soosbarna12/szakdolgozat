@@ -1,9 +1,9 @@
+import { Box, Skeleton } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
 import React from "react";
-import { Skeleton } from "@mui/material";
-import { Box } from "@mui/material";
 import { StyledDataGrid } from "../../../stlyes/content.style";
 import { HistoricalDataTable } from "../../../types/historicalDataTable.type";
-import { GridColDef } from "@mui/x-data-grid";
+import { getRowId } from "../../../utils/getRowId";
 
 
 export function DataTable({ data, columns }: { data: HistoricalDataTable[], columns: GridColDef[] }) {
@@ -15,20 +15,20 @@ export function DataTable({ data, columns }: { data: HistoricalDataTable[], colu
           animation="wave"
           width="100%"
           height={367}
+          data-testid="dataTableSkeleton"
           sx={{ borderRadius: '10px' }}
         />
       );
     }
     return (
-      <Box sx={{ width: "100%", height: 400 }}>
+      <Box sx={{ width: "100%", height: 400 }} data-testid="dataTableContainer">
         <StyledDataGrid
           rows={data}
-
-
-          getRowId={(row) => row.date + row.cityName + row.countryCode}
+          getRowId={getRowId}
           columns={columns}
           hideFooterPagination
           hideFooterSelectedRowCount
+          data-testid="dataTable"
         />
       </Box>
     )

@@ -1,13 +1,12 @@
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import React, { useContext, useEffect, useRef } from "react";
-import { StyledDatePicker } from "../../../stlyes/inputField.style";
-import { DateFilterProps } from "./DateFilter.type";
-import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { LOCAL_STORAGE_SELECTED_DATE_NAME } from "../../../consts/historicalDate.const";
 import { HistoricalContext } from "../../../contexts/HistoricalContext/HistoricalContext";
 import { useHistoricalDates } from "../../../hooks/useHistoricalDates";
-import { LOCAL_STORAGE_SELECTED_DATE_NAME } from "../../../consts/historicalDate.const";
+import { StyledDatePicker } from "../../../stlyes/inputField.style";
+import { DateFilterProps } from "./DateFilter.type";
 
 
 export function DateFilter({ onDateChange }: DateFilterProps) {

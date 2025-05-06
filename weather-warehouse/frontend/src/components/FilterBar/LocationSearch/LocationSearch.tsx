@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { LocationOption, LocationSearchProps } from "./LocationSearch.type";
-import { StyledAutocompleteDropdown, StyledLocationSearch } from "../../../stlyes/inputField.style";
 import { useGeolocationQuery } from "../../../hooks/useGeolocationQuery";
 import { useHistoricalLocations } from "../../../hooks/useHistoricalLocations";
+import { StyledAutocompleteDropdown, StyledLocationSearch } from "../../../stlyes/inputField.style";
 import { Pages } from "../../../types/page.type";
+import { LocationOption, LocationSearchProps } from "./LocationSearch.type";
 
 export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const { type: pageType, location, setLocation } = props;
-  const isTodayPage = pageType === Pages.Today;
   const [inputValue, setInputValue] = useState(getOptionLabel(location as LocationOption));
   const [selectedValue, setSelectedValue] = useState<LocationOption | null>(null);
   const [debouncedValue] = useDebounce(inputValue, 500);
@@ -98,6 +97,7 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
       renderInput={(params) => (
         <StyledLocationSearch
           {...params}
+          data-testid="locationSearchBox"
           placeholder={pageType === Pages.Today ? location.name : "Location"}
           sx={{ boxShadow: 4, width: pageType === "Historical" ? 300 : 400 }}
           variant="outlined"

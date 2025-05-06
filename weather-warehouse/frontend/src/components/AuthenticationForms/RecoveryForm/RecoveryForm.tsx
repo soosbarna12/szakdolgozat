@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DialogContent, IconButton, InputAdornment, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { StyledButton } from '../../../stlyes/button.style';
 import { StyledDialog } from '../../../stlyes/common.style';
 import { StyledTextField } from '../../../stlyes/inputField.style';
-import { StyledButton } from '../../../stlyes/button.style';
 import { useAlert } from '../../../utils/AlertContext';
 import axios from '../../../utils/axiosConfig';
 
@@ -27,8 +27,8 @@ export function PasswordRecoveryForm({ open, onClose }: { open: boolean; onClose
       });
       showAlert('Password updated successfully', 'success');
       onClose();
+
     } catch (error: any) {
-      console.error(error);
       showAlert(error.response?.data?.error || 'Password recovery failed', 'error');
     }
   };
@@ -46,7 +46,7 @@ export function PasswordRecoveryForm({ open, onClose }: { open: boolean; onClose
     <StyledDialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <form onSubmit={(e) => { e.preventDefault(); handleRecoverPassword(); }}>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Typography variant="h5" sx={{ textAlign: 'left' }}>
+          <Typography variant="h5" sx={{ textAlign: 'left' }} data-testid="recoveryTitle">
             Recover Password
           </Typography>
 
@@ -57,6 +57,7 @@ export function PasswordRecoveryForm({ open, onClose }: { open: boolean; onClose
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            data-testid="usernameInput"
           />
 
           <StyledTextField
@@ -66,6 +67,7 @@ export function PasswordRecoveryForm({ open, onClose }: { open: boolean; onClose
             required
             value={securityAnswer}
             onChange={(e) => setSecurityAnswer(e.target.value)}
+            data-testid="securityAnswerInput"
           />
 
           <StyledTextField
@@ -82,11 +84,13 @@ export function PasswordRecoveryForm({ open, onClose }: { open: boolean; onClose
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
+                  data-testid="togglePasswordVisibility"
                 >
                   {showPassword ? <VisibilityOff fontSize="inherit" /> : <Visibility fontSize="inherit" />}
                 </IconButton>
               </InputAdornment>
             }
+            data-testid="newPasswordInput"
           />
 
           <StyledTextField
@@ -103,14 +107,20 @@ export function PasswordRecoveryForm({ open, onClose }: { open: boolean; onClose
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
+                  data-testid="toggleConfirmPasswordVisibility"
                 >
                   {showPassword ? <VisibilityOff fontSize="inherit" /> : <Visibility fontSize="inherit" />}
                 </IconButton>
               </InputAdornment>
             }
+            data-testid="confirmPasswordInput"
           />
 
-          <StyledButton variant="outlined" onClick={handleRecoverPassword}>
+          <StyledButton
+            variant="outlined"
+            onClick={handleRecoverPassword}
+            data-testid="recoverPasswordButton"
+          >
             Recover Password
           </StyledButton>
         </DialogContent>

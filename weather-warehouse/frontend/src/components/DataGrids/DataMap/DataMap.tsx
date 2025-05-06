@@ -1,9 +1,9 @@
-import React from "react";
 import { Skeleton } from "@mui/material";
-import { TileLayer } from "react-leaflet";
-import { DataMapProps } from "./DataMap.type";
-import { StyledMapContainer } from "../../../stlyes/content.style";
 import "leaflet/dist/leaflet.css";
+import React from "react";
+import { TileLayer } from "react-leaflet";
+import { StyledMapContainer } from "../../../stlyes/content.style";
+import { DataMapProps } from "./DataMap.type";
 import { MapLocationChange } from "./MapLocationChange";
 
 
@@ -20,12 +20,13 @@ export function DataMap({ data }: Readonly<DataMapProps>) {
           animation="wave"
           width="100%"
           height="100%"
+          data-testid="dataMapSkeleton"
           sx={{ borderRadius: '10px' }}
         />
       );
     }
     return (
-      < StyledMapContainer center={coords} zoom={12} maxZoom={12} minZoom={2} >
+      <StyledMapContainer center={coords} zoom={12} maxZoom={12} minZoom={2}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png"

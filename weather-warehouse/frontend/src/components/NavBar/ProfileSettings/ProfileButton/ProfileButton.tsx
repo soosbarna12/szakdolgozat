@@ -19,11 +19,12 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
   }
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box sx={{ flexGrow: 0 }} data-testid="profileButtonContainer">
       <Tooltip title="Open settings">
         <StyledIconButton
           onClick={handleOpenMenu}
-          sx={{ boxShadow: 4 }}>
+          sx={{ boxShadow: 4 }}
+          data-testid="profileButton">
           <PersonOutlineOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
         </StyledIconButton>
       </Tooltip>
@@ -31,7 +32,8 @@ export function ProfileButton(props: Readonly<ProfileButtonProps>) {
         isLightTheme={isLightTheme}
         handleSetLightTheme={handleSetLightTheme}
         handleCloseMenu={handleCloseMenu}
-        anchorElUser={anchorElUser} />
+        anchorElUser={anchorElUser}
+        data-testid="profileMenu"/>
     </Box>
   );
 }

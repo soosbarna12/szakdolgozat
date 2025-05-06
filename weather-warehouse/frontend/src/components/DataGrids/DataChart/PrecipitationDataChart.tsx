@@ -1,7 +1,6 @@
-import React from "react";
 import { Skeleton } from "@mui/material";
-import { ResponsiveContainer, Tooltip, CartesianGrid, XAxis, YAxis, Legend, Line, AreaChart, Area } from "recharts";
-import { StlyedLineChart } from "../../../stlyes/content.style";
+import React from "react";
+import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { HistoricalDataTable } from "../../../types/historicalDataTable.type";
 
 
@@ -14,6 +13,7 @@ export function PrecipitationDataChart({ data }: { data: HistoricalDataTable[] }
           animation="wave"
           width="100%"
           height="100%"
+          data-testid="precipitationChartSkeleton"
           sx={{ borderRadius: '10px' }}
         />
       )

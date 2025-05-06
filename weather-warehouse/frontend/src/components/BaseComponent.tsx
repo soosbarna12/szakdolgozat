@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useUserDefaultLocationQuery } from "../hooks/useUserDefaultLocationQuery";
-import { TodayContext } from "../contexts/TodayContext/TodayContext";
 import { ROUTES } from "../consts/routes";
+import { TodayContext } from "../contexts/TodayContext/TodayContext";
+import { useUserDefaultLocationQuery } from "../hooks/useUserDefaultLocationQuery";
 import { TodayPage } from "../pages/TodayPage/TodayPage";
 
 
@@ -11,7 +11,6 @@ export function BaseComponent() {
   const { location, setLocation } = useContext(TodayContext);
   const { data } = useUserDefaultLocationQuery(coords?.latitude, coords?.longitude);
 
-  //
   useEffect(() => {
     if (data && coords) {
       setLocation({
@@ -39,7 +38,7 @@ export function BaseComponent() {
 
   function renderRouteElements() {
     return ROUTES.map(({ id, path, element }) => (
-      <Route key={id} path={path} element={element} />
+      <Route key={id} path={path} element={element} data-testid={`route${id}`} />
     ));
   }
 
@@ -47,9 +46,9 @@ export function BaseComponent() {
     <>
       <Routes>
         <Route path="/">
-          <Route index element={<TodayPage />} />
+          <Route index element={<TodayPage />} data-testid="routeToday" />
           {renderRouteElements()}
-          <Route path="*" element={<TodayPage />} />
+          <Route path="*" element={<TodayPage />} data-testid="routeNotFound" />
         </Route>
       </Routes>
     </>

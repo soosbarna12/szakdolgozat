@@ -1,12 +1,12 @@
 import { AppBar, CssBaseline, Toolbar } from "@mui/material";
 import React from "react";
+import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
+import { TodayContext } from "../../contexts/TodayContext/TodayContext";
 import { Pages } from "../../types/page.type";
 import { ActionsButton } from "./Actions/ActionsButton/ActionsButton";
 import { DateFilter } from "./DateFilter/DateFilter";
 import { FilterBarProps } from "./FitlerBar.type";
 import { LocationSearch } from "./LocationSearch/LocationSearch";
-import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
-import { TodayContext } from "../../contexts/TodayContext/TodayContext";
 
 
 export function FilterBar(props: Readonly<FilterBarProps>) {

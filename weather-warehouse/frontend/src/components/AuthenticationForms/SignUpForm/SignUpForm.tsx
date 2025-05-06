@@ -1,22 +1,22 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DialogContent, IconButton, InputAdornment, Typography } from '@mui/material';
 import * as React from 'react';
-import { SignUpFormProps } from './SignUpForm.type';
+import { useEffect, useState } from 'react';
+import { useSignUpQuery } from '../../../hooks/useSignUpQuery';
+import { StyledButton } from '../../../stlyes/button.style';
 import { StyledDialog } from '../../../stlyes/common.style';
 import { StyledTextField } from '../../../stlyes/inputField.style';
-import { StyledButton } from '../../../stlyes/button.style';
-import { useEffect } from 'react';
-import { useSignUpQuery } from '../../../hooks/useSignUpQuery';
+import { SignUpFormProps } from './SignUpForm.type';
 
 
 export function SignUpForm(props: Readonly<SignUpFormProps>) {
 	const { open, onClose, onRegisterSuccess } = props;
-	const [username, setUsername] = React.useState('');
-	const [password, setPassword] = React.useState('');
-	const [confirmPassword, setConfirmPassword] = React.useState('');
-	const [securityQuestion, setSecurityQuestion] = React.useState('');
-	const [securityAnswer, setSecurityAnswer] = React.useState('');
-	const [showPassword, setShowPassword] = React.useState(false);
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [securityQuestion, setSecurityQuestion] = useState('');
+	const [securityAnswer, setSecurityAnswer] = useState('');
+	const [showPassword, setShowPassword] = useState(false);
 	const { isSuccess, refetch: refetchRegisterQuery } = useSignUpQuery(username, password, securityQuestion, securityAnswer);
 
 	useEffect(() => {
@@ -61,10 +61,10 @@ export function SignUpForm(props: Readonly<SignUpFormProps>) {
 
 
 	return (
-		<StyledDialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
+		<StyledDialog open={open} onClose={onClose} maxWidth="xs" fullWidth data-testid="signUpDialog">
 			<DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
 
-				<Typography variant="h5" sx={{ textAlign: 'left' }}>
+				<Typography variant="h5" sx={{ textAlign: 'left' }} data-testid="signUpTitle">
 					Sign Up
 				</Typography>
 
@@ -75,6 +75,7 @@ export function SignUpForm(props: Readonly<SignUpFormProps>) {
 					required
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
+					data-testid="usernameInput"
 				/>
 
 				<StyledTextField
@@ -91,11 +92,13 @@ export function SignUpForm(props: Readonly<SignUpFormProps>) {
 								onClick={handleClickShowPassword}
 								onMouseDown={handleMouseDownPassword}
 								edge="end"
+								data-testid="togglePasswordVisibility"
 							>
 								{renderShowPassword()}
 							</IconButton>
 						</InputAdornment>
 					}
+					data-testid="passwordInput"
 				/>
 
 				<StyledTextField
@@ -112,11 +115,13 @@ export function SignUpForm(props: Readonly<SignUpFormProps>) {
 								onClick={handleClickShowPassword}
 								onMouseDown={handleMouseDownPassword}
 								edge="end"
+								data-testid="toggleConfirmPasswordVisibility"
 							>
 								{renderShowPassword()}
 							</IconButton>
 						</InputAdornment>
 					}
+					data-testid="confirmPasswordInput"
 				/>
 
 				<StyledTextField
@@ -126,6 +131,7 @@ export function SignUpForm(props: Readonly<SignUpFormProps>) {
 					required
 					value={securityQuestion}
 					onChange={(e) => setSecurityQuestion(e.target.value)}
+					data-testid="securityQuestionInput"
 				/>
 
 				<StyledTextField
@@ -135,9 +141,14 @@ export function SignUpForm(props: Readonly<SignUpFormProps>) {
 					required
 					value={securityAnswer}
 					onChange={(e) => setSecurityAnswer(e.target.value)}
+					data-testid="securityAnswerInput"
 				/>
 
-				<StyledButton variant="outlined" onClick={handleRegister}>
+				<StyledButton
+					variant="outlined"
+					onClick={handleRegister}
+					data-testid="signUpButton"
+				>
 					Sign Up
 				</StyledButton>
 

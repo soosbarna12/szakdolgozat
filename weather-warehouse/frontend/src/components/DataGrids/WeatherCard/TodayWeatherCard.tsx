@@ -1,23 +1,23 @@
+import { Box, Skeleton, Typography, useTheme } from "@mui/material";
 import React, { useContext } from "react";
-import { Skeleton } from "@mui/material";
-import { WiDaySunny, WiCloud, WiRain, WiSnow, WiThunderstorm, WiFog } from "react-icons/wi";
-import { Box, Typography, useTheme } from "@mui/material";
-import { TodayWeatherCardProps } from "./TodayWeatherCard.type";
-import { convertKelvinToCelsius, convertTitleCase } from "../../../utils/dataConverters";
 import { HistoricalContext } from "../../../contexts/HistoricalContext/HistoricalContext";
 import { TemperatureScale } from "../../../types/temperatureScale.type";
+import { convertTitleCase } from "../../../utils/dataConverters";
 import { temperatureScaleChanger } from "../../../utils/temperatureScaleChanger";
+import { getWeatherIcon } from "../../../utils/weatherUtils";
+import { TodayWeatherCardProps } from "./TodayWeatherCard.type";
 
 
 export function TodayWeatherCard({ data }: Readonly<TodayWeatherCardProps>) {
 
   const theme = useTheme();
-  const { temperatureScale, setTemperatureScale } = useContext(HistoricalContext);
+  const { temperatureScale } = useContext(HistoricalContext);
   const temperatureScaleLabel = (temperatureScale === TemperatureScale.Celsius ? "°C" : "°F");
 
   if (!data) {
     return (
       <Skeleton
+        data-testid="todayWeatherCardSkeleton"
         variant="rectangular"
         animation="wave"
         width="100%"
@@ -25,34 +25,6 @@ export function TodayWeatherCard({ data }: Readonly<TodayWeatherCardProps>) {
         sx={{ borderRadius: '10px' }}
       />
     );
-  }
-
-  function getWeatherIcon(weatherMain: string) {
-    switch (weatherMain) {
-      case "Clear":
-        return <WiDaySunny size={"120px"} />;
-      case "Clouds":
-        return <WiCloud size={"120px"} />;
-      case "Rain":
-      case "Drizzle":
-        return <WiRain size={"120px"} />;
-      case "Snow":
-        return <WiSnow size={"120px"} />;
-      case "Thunderstorm":
-        return <WiThunderstorm size={"120px"} />;
-      case "Mist":
-      case "Smoke":
-      case "Haze":
-      case "Dust":
-      case "Fog":
-      case "Sand":
-      case "Ash":
-      case "Squall":
-      case "Tornado":
-        return <WiFog size={"120px"} />;
-      default:
-        return null;
-    }
   }
 
   function getFormattedTime(unixTimestamp: number) {
@@ -67,30 +39,30 @@ export function TodayWeatherCard({ data }: Readonly<TodayWeatherCardProps>) {
 
   return (
     <Box sx={{ textAlign: "left" }}>
-      <Typography variant="h6">{getFormattedTime(data.dt)}</Typography>
-      <Typography variant="h5" fontWeight="700">
+      <Typography data-testid="date" variant="h6">{getFormattedTime(data.dt)}</Typography>
+      <Typography data-testid="location" variant="h5" fontWeight="700">
         {data.name}, {data.sys.country}
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center", m: 0, p: 0 }} color={theme.palette.primary.dark}>
-        <Box sx={{ m: 0, p: 0 }}>{getWeatherIcon(data.weather[0].main)}</Box>
-        <Typography variant="h2" sx={{ ml: 1, m: 0 }}>
-          {temperatureScaleChanger(TemperatureScale.Kelvin, temperatureScale, data.main.temp)}
+        <Box data-testid="weatherIcon" sx={{ m: 0, p: 0 }}>{getWeatherIcon(data.weather?.[0].main)}</Box>
+        <Typography data-testid="temperature" variant="h2" sx={{ ml: 1, m: 0 }}>
+          {temperatureScaleChanger(TemperatureScale.Kelvin, temperatureScale as TemperatureScale, data?.main?.temp)}
           <span style={{ fontSize: "0.5em", verticalAlign: "super" }}> {temperatureScaleLabel}</span>
         </Typography>
       </Box>
       {data.weather && data.weather.length > 0 && (
-        <Typography variant="h6" fontStyle="italic">
+        <Typography data-testid="desciption" variant="h6" fontStyle="italic">
           {convertTitleCase(data.weather[0].description)}
         </Typography>
       )}
       <Box>
-        <Typography>Feels Like: {temperatureScaleChanger(TemperatureScale.Kelvin, temperatureScale, data.main.feels_like)} {temperatureScaleLabel}</Typography>
-        <Typography>
+        <Typography data-testid="feelsLike">Feels Like: {temperatureScaleChanger(TemperatureScale.Kelvin, temperatureScale as TemperatureScale, data.main?.feels_like)} {temperatureScaleLabel}</Typography>
+        <Typography data-testid="precipitation">
           Precipitation: {data.rain?.["1h"] || data.rain?.["3h"] || data.snow?.["1h"] || data.snow?.["3h"] || 0} mm/h
         </Typography>
-        <Typography>Humidity: {data.main.humidity}%</Typography>
-        <Typography>Pressure: {data.main.pressure} hPa</Typography>
-        <Typography>Wind: {data.wind.speed} m/s</Typography>
+        <Typography data-testid="humidity">Humidity: {data.main?.humidity}%</Typography>
+        <Typography data-testid="pressure">Pressure: {data.main?.pressure} hPa</Typography>
+        <Typography data-testid="windSpeed">Wind: {data.wind?.speed} m/s</Typography>
       </Box>
     </Box>
   );

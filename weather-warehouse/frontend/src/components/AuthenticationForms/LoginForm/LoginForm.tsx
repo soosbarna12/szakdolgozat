@@ -1,14 +1,14 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DialogContent, IconButton, InputAdornment, Link, Typography } from '@mui/material';
 import * as React from 'react';
-import { LoginFormProps } from './LoginForm.type';
-import { StyledDialog } from '../../../stlyes/common.style';
-import { StyledTextField } from '../../../stlyes/inputField.style';
-import { StyledButton } from '../../../stlyes/button.style';
-import { SignUpForm } from '../SignUpForm/SignUpForm';
-import { PasswordRecoveryForm } from '../RecoveryForm/RecoveryForm';
 import { useEffect, useState } from 'react';
 import { useLoginQuery } from '../../../hooks/useLoginQuery';
+import { StyledButton } from '../../../stlyes/button.style';
+import { StyledDialog } from '../../../stlyes/common.style';
+import { StyledTextField } from '../../../stlyes/inputField.style';
+import { PasswordRecoveryForm } from '../RecoveryForm/RecoveryForm';
+import { SignUpForm } from '../SignUpForm/SignUpForm';
+import { LoginFormProps } from './LoginForm.type';
 
 
 export function LoginForm(props: Readonly<LoginFormProps>) {
@@ -32,8 +32,8 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
   useEffect(() => {
     if (isSuccess) {
       onLoginSuccess();
-      window.location.reload(); // refresh the page
       onClose();
+      window.location.reload(); // refresh the page
     }
   }, [isSuccess])
 
@@ -70,10 +70,10 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
 
   return (
     <>
-      <StyledDialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
+      <StyledDialog open={open} onClose={onClose} maxWidth="xs" fullWidth data-testid="loginForm">
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
 
-          <Typography variant="h5" sx={{ textAlign: 'left' }}>
+          <Typography variant="h5" sx={{ textAlign: 'left' }} data-testid="loginSuccessButton">
             Log In
           </Typography>
 
@@ -107,13 +107,14 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
             }
           />
 
-          <StyledButton variant="outlined" onClick={handleLogin}>
+          <StyledButton variant="outlined" onClick={handleLogin} data-testid="loginButton">
             Log In
           </StyledButton>
 
           <Link
             component="button"
             onClick={handleSignUpClick}
+            data-testid='signUpButton'
             variant="body2"
             sx={{ textAlign: 'center' }}
           >
@@ -123,6 +124,7 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
           <Link
             component="button"
             onClick={handleRecoveryClick}
+            data-testid='recoveryButton'
             variant="body2"
             sx={{ textAlign: 'center' }}
           >
@@ -134,7 +136,6 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
       <SignUpForm
         open={openSignUp}
         onClose={() => setOpenSignUp(false)}
-        onRegisterSuccess={() => console.log('Registration successful')}
       />
       <PasswordRecoveryForm open={openRecovery} onClose={() => setOpenRecovery(false)} />
     </>

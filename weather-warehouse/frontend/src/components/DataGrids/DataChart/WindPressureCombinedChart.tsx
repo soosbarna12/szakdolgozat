@@ -1,10 +1,20 @@
+import { Skeleton } from "@mui/material";
 import React from "react";
-import { ResponsiveContainer, Tooltip, CartesianGrid, XAxis, YAxis, Legend, Line, Bar, ComposedChart } from "recharts";
+import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { HistoricalDataTable } from "../../../types/historicalDataTable.type";
 
 export function WindPressureCombinedChart({ data }: { data: HistoricalDataTable[] }) {
   if (!data || data.length === 0) {
-    return <p>No data available</p>;
+    return (
+      <Skeleton
+        variant="rectangular"
+        animation="wave"
+        width="100%"
+        height="100%"
+        data-testid="windPressureSkeleton"
+        sx={{ borderRadius: '10px' }}
+      />
+    )
   }
 
   return (

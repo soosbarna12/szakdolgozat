@@ -21,7 +21,8 @@ export function LocationButton() {
       <Tooltip title="Open locations">
         <StyledIconButton
           onClick={handleDrawerOpen}
-          sx={{ boxShadow: 4 }}>
+          sx={{ boxShadow: 4 }}
+          data-testid="locationButton">
           <PlaceOutlinedIcon sx={{ padding: 0, margin: 0, width: "32px", height: "32px" }} />
         </StyledIconButton>
       </Tooltip>

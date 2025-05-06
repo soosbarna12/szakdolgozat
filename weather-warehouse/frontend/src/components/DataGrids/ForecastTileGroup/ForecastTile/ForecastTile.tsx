@@ -7,7 +7,7 @@ export default function ForecastPage(props: Readonly<ForecastPageProps>) {
   const { dayName } = props;
 
   return (
-    <StyledItem>
+    <StyledItem data-testid="forecastTile">
       {dayName}
     </StyledItem>
   )

@@ -12,7 +12,7 @@ export function TimeTabBar() {
   const isAdmin = getIsAdmin();
 
   function renderMenu() {
-    let availableTabs = ROUTES.filter((route) => {
+    const availableTabs = ROUTES.filter((route) => {
       // Exclude the "Admin" route if the user is not an admin
       if (route.id === 'Admin' && !isAdmin) {
         return false;
@@ -28,6 +28,7 @@ export function TimeTabBar() {
           component={Link}
           to={route.path}
           key={route.id}
+          data-testid={`tab${route.id}`}
           sx={{
             boxShadow: 4,
             backgroundColor: isActive

@@ -1,16 +1,14 @@
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { Box, Divider, Typography } from "@mui/material";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { HistoricalContext } from '../../../../contexts/HistoricalContext/HistoricalContext';
 import { StyledToggleButton, StyledToggleButtonGroup } from '../../../../stlyes/button.style';
 import { StyledMenu, StyledMenuItem } from '../../../../stlyes/common.style';
-import { Language } from '../../../../types/language.type';
 import { TemperatureScale } from '../../../../types/temperatureScale.type';
 import { Theme } from '../../../../types/theme.type';
-import { ProfileMenuProps } from './ProfileMenu.type';
 import { LoginForm } from '../../../AuthenticationForms/LoginForm/LoginForm';
-import { LOCAL_STORAGE_TEMPERATURE_SCALE } from '../../../../consts/temperatureScale.const';
-import { HistoricalContext } from '../../../../contexts/HistoricalContext/HistoricalContext';
+import { ProfileMenuProps } from './ProfileMenu.type';
 
 
 export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
@@ -38,11 +36,11 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   }
 
   function handleCelsiusScale() {
-    setTemperatureScale(TemperatureScale.Celsius);
+    setTemperatureScale(JSON.stringify(TemperatureScale.Celsius));
   }
 
   function handleFahrenheitScale() {
-    setTemperatureScale(TemperatureScale.Fahrenheit);
+    setTemperatureScale(JSON.stringify(TemperatureScale.Fahrenheit));
   }
 
   function handleLightModeIconClick() {
@@ -90,13 +88,15 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
           <StyledToggleButton
             value={Theme.Light}
             onClick={handleLightModeIconClick}
+            data-testid="lightModeButton"
             disabled={isLightTheme}>
             <LightModeIcon />
           </StyledToggleButton>
           <StyledToggleButton
             value={Theme.Dark}
             onClick={handleDarkModeIconClick}
-            disabled={!isLightTheme}>
+            disabled={!isLightTheme}
+            data-testid="darkModeButton">
             <DarkModeIcon />
           </StyledToggleButton>
         </StyledToggleButtonGroup>

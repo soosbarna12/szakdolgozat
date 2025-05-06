@@ -24,7 +24,7 @@ export function ActionsButton({ onSaveLocation, onExportLocation, onResetLocatio
     }
 
     return (
-      <Box sx={{ flexGrow: 0 }}>
+      <Box sx={{ flexGrow: 0 }} data-testid="actionsButton">
         <Tooltip title="Open actions">
           <StyledMenuButton
             onClick={handleOpenUserMenu}

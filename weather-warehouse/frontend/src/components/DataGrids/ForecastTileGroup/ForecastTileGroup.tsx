@@ -7,14 +7,14 @@ export default function ForecastTileGroup() {
 
   function renderForecastTiles() {
     return DAYS.map((day) => (
-      <ForecastTile key={day.id} dayName={day.text} />
+      <ForecastTile key={day.id} dayName={day.text} data-testid="forecastTile" />
     ))
   };
 
 
   return (
-    <Grid container columns={7} spacing={2} justifyContent="center" alignItems="center">
+    <Grid container columns={7} spacing={2} justifyContent="center" alignItems="center" data-testid="forecastTileGroup" >
       {renderForecastTiles()}
-    </Grid>
+    </Grid >
   );
 }

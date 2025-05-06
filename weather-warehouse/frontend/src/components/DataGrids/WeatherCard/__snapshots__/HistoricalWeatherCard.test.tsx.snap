@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataGrids/WeatherCard/HistoricalWeatherCard matches HistoricalWeatherCard component snapshot 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiBox-root css-13brihr"
+      >
+        <h6
+          class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+          data-testid="date"
+        >
+          Sunday, January 1, 2023
+        </h6>
+        <h5
+          class="MuiTypography-root MuiTypography-h5 css-stnzmu-MuiTypography-root"
+          data-testid="location"
+        >
+          New York
+          , 
+          US
+        </h5>
+        <div
+          class="MuiBox-root css-nkffzc"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h2 css-6fhuif-MuiTypography-root"
+            data-testid="temperature"
+          >
+            5
+            <span
+              style="font-size: 0.5em; vertical-align: super;"
+            >
+              °C
+            </span>
+          </h2>
+        </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+            data-testid="precipitation"
+          >
+            Precipitation: 
+            10
+             mm/h
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+            data-testid="pressure"
+          >
+            Pressure: 
+            1015
+             hPa
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+            data-testid="windSpeed"
+          >
+            Wind: 
+            5
+             m/s
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiBox-root css-13brihr"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+        data-testid="date"
+      >
+        Sunday, January 1, 2023
+      </h6>
+      <h5
+        class="MuiTypography-root MuiTypography-h5 css-stnzmu-MuiTypography-root"
+        data-testid="location"
+      >
+        New York
+        , 
+        US
+      </h5>
+      <div
+        class="MuiBox-root css-nkffzc"
+      >
+        <h2
+          class="MuiTypography-root MuiTypography-h2 css-6fhuif-MuiTypography-root"
+          data-testid="temperature"
+        >
+          5
+          <span
+            style="font-size: 0.5em; vertical-align: super;"
+          >
+            °C
+          </span>
+        </h2>
+      </div>
+      <div
+        class="MuiBox-root css-0"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          data-testid="precipitation"
+        >
+          Precipitation: 
+          10
+           mm/h
+        </p>
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          data-testid="pressure"
+        >
+          Pressure: 
+          1015
+           hPa
+        </p>
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          data-testid="windSpeed"
+        >
+          Wind: 
+          5
+           m/s
+        </p>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
