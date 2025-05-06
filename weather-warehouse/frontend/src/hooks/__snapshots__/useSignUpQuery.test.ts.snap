@@ -4,8 +4,8 @@ exports[`useSignUpQuery matches useSignUpQuery hook snapshot 1`] = `
 {
   "error": null,
   "isLoading": false,
-  "isSuccess": false,
-  "refetch": [Function],
-  "registerData": undefined,
+  "isSuccess": undefined,
+  "refetch": [MockFunction],
+  "registerData": {},
 }
 `;

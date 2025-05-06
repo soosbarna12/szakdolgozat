@@ -318,8 +318,6 @@ router.get('/fetchSavedLocations', authGuard, async (req, res) => {
       .input('userID', sql.Int, userID)
       .query('SELECT userLocationID, locationData, dateSaved FROM userLocations WHERE userID = @userID');
 
-      //console.log(result.recordset);
-
       const savedLocations =  result.recordset.map(userLocation => {
         const parsedLocationData = JSON.parse(userLocation.locationData);
         return { locationData: parsedLocationData, dateSaved: userLocation.dateSaved, userLocationID: userLocation.userLocationID };

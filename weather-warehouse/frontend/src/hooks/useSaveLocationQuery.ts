@@ -15,7 +15,7 @@ export function useSaveLocationQuery(historicalPageData: HistoricalDataTable[] |
       return response.data;
     },
     refetchOnWindowFocus: false,
-    retry: false,
+    retry: 1,
     enabled: false, // Disable automatic refetching, we will call refetch() manually -> to use this query when clicking the login button
   });
 

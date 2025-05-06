@@ -1,15 +1,18 @@
 import '@testing-library/jest-dom';
 import { act, waitFor } from '@testing-library/react';
 import { useAlert } from '../utils/AlertContext';
-import axios from '../utils/axiosConfig';
 import { renderHookWithQueryClient } from '../utils/test/renderHookWithQueryClient';
 import { useSaveLocationQuery } from './useSaveLocationQuery';
+import { useQuery } from '@tanstack/react-query';
+
+jest.mock('@tanstack/react-query', () => ({
+  ...jest.requireActual('@tanstack/react-query'),
+  useQuery: jest.fn(),
+}));
 
 jest.mock('../utils/AlertContext', () => ({
   useAlert: jest.fn(),
 }));
-
-jest.mock('../utils/axiosConfig');
 
 describe('useSaveLocationQuery', () => {
   const mockShowAlert = jest.fn();
@@ -22,20 +25,32 @@ describe('useSaveLocationQuery', () => {
   });
 
   it('matches useSaveLocationQuery hook snapshot', async () => {
-    (axios.post as jest.Mock).mockReturnValue(Promise.resolve({ data: {} }));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: {},
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
+    }));
 
     const { result } = renderHookWithQueryClient(() =>
-      useSaveLocationQuery([{ id: 1, name: 'Test Location' }])
+      useSaveLocationQuery([{ id: 1, name: 'Test Location' } as any])
     );
 
     expect(result.current).toMatchSnapshot();
   });
 
   it('shows success alert when location is saved successfully', async () => {
-    (axios.post as jest.Mock).mockReturnValue(Promise.resolve({ data: {} }));
+    const mockRefetch = jest.fn();
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: {},
+      isSuccess: true,
+      isLoading: false,
+      error: null,
+      refetch: mockRefetch,
+    }));
 
     const { result } = renderHookWithQueryClient(() =>
-      useSaveLocationQuery([{ id: 1, name: 'Test Location' }])
+      useSaveLocationQuery([{ id: 1, name: 'Test Location' } as any])
     );
 
     await act(async () => {
@@ -48,14 +63,26 @@ describe('useSaveLocationQuery', () => {
   });
 
   it('shows error alert when saving location fails', async () => {
-    (axios.post as jest.Mock).mockReturnValue(Promise.reject(new Error("Can't save location")));
+    const mockRefetch = jest.fn(() => {
+      throw new Error("Can't save location");
+    });
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: null,
+      isLoading: false,
+      error: new Error("Can't save location"),
+      refetch: mockRefetch,
+    }));
 
     const { result } = renderHookWithQueryClient(() =>
-      useSaveLocationQuery([{ id: 1, name: 'Test Location' }])
+      useSaveLocationQuery([{ id: 1, name: 'Test Location' } as any])
     );
 
     await act(async () => {
-      result.current.refetch();
+      try {
+        result.current.refetch();
+      } catch (e) {
+        // Handle error in test
+      }
     });
 
     await waitFor(() => {

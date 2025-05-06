@@ -21,7 +21,6 @@ export const HistoricalLocationProvider = ({ children }: HistoricalProviderProps
     try {
       return storedLocation ? JSON.parse(storedLocation) : defaultLocation;
     } catch (error) {
-      console.error("Failed to parse location from localStorage:", error);
       return defaultLocation;
     }
   });
@@ -31,7 +30,6 @@ export const HistoricalLocationProvider = ({ children }: HistoricalProviderProps
     try {
       return storedData ? JSON.parse(storedData) : [];
     } catch (error) {
-      console.error("Failed to parse historical data from localStorage:", error);
       return [];
     }
   });
@@ -41,7 +39,6 @@ export const HistoricalLocationProvider = ({ children }: HistoricalProviderProps
     try {
       return storedTemperatureScale ? JSON.parse(storedTemperatureScale) : TemperatureScale.Celsius;
     } catch (error) {
-      console.error("Failed to parse temperature scale from localStorage:", error);
       return TemperatureScale.Celsius;
     }
   });

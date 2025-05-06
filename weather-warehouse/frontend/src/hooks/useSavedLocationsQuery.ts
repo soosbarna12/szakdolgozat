@@ -15,7 +15,7 @@ export function useSavedLocationQuery(open: boolean) {
       return response.data as SavedUserLocation[];
     },
     enabled: open,
-    retry: false,
+    retry: 1,
   });
   
   useEffect(() => {

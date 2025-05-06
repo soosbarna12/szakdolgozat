@@ -55,7 +55,6 @@ describe('useHistoricalDataQuery', () => {
     );
 
     await waitFor(() => {
-      console.log('result.current', result.current);
       expect(result.current.data).toEqual(mockConvertedData[0]);
       expect(result.current.isLoading).toBe(false);
       expect(result.current.error).toBeNull();

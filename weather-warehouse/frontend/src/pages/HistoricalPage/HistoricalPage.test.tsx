@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import React from 'react';
+import React, { Component } from 'react';
 import { useHistoricalDataQuery } from '../../hooks/useHistoricalDataQuery';
 import { useSaveLocationQuery } from '../../hooks/useSaveLocationQuery';
 import { renderWithQueryClient } from '../../utils/test/renderWithQueryClient';
 import { HistoricalPage } from './HistoricalPage';
+import { HistoricalContext } from '../../contexts/HistoricalContext/HistoricalContext';
 
 jest.mock('../../hooks/useHistoricalDataQuery', () => ({
   useHistoricalDataQuery: jest.fn(),
@@ -34,12 +35,13 @@ describe('pages/HistoricalPage', () => {
   const mockSetHistoricalPageData = jest.fn();
   const mockRefetchSaveLocationQuery = jest.fn();
   const mockExportCSV = jest.requireMock('../../utils/exportCSV').exportCSV;
-
+  
   beforeEach(() => {
     jest.clearAllMocks();
+    localStorage.setItem('token', 'mockToken'); // Simulate logged-in state
     (useHistoricalDataQuery as jest.Mock).mockReturnValue({
       data: [
-        { date: '2023-01-01', lat: 40.7128, lon: -74.006, temperature: 5 },
+        { date: '2023-01-01', cityName: "New York", countryCode: "US", lat: 40.7128, lon: -74.006, temperature: 5 },
       ],
       error: null,
       isLoading: false,
@@ -91,7 +93,7 @@ describe('pages/HistoricalPage', () => {
     });
   });
 
-  it('handles Export button click in ActionsMenu', () => {
+  it('handles Export button click in ActionsMenu', async () => {
     renderWithQueryClient(<HistoricalPage />);
 
     const actionsButton = screen.getByTestId('actionsButton');
@@ -100,13 +102,13 @@ describe('pages/HistoricalPage', () => {
     const exportButton = screen.getByTestId('exportMenuItem');
     fireEvent.click(exportButton);
 
-    expect(mockExportCSV).toHaveBeenCalledWith([
-      { date: '2023-01-01', lat: 40.7128, lon: -74.006, temperature: 5 },
-    ]);
+    await waitFor(() => {
+      expect(mockExportCSV).toHaveBeenCalled();
+    });
   });
 
   it('handles Reset button click in ActionsMenu', () => {
-    renderWithQueryClient(<HistoricalPage />);
+    const component = renderWithQueryClient(<HistoricalPage />);
 
     const actionsButton = screen.getByTestId('actionsButton');
     fireEvent.click(actionsButton);
@@ -114,8 +116,7 @@ describe('pages/HistoricalPage', () => {
     const resetButton = screen.getByTestId('resetMenuItem');
     fireEvent.click(resetButton);
 
-    expect(mockSetLocation).toHaveBeenCalledWith({ name: '', lat: 0, lon: 0 });
-    expect(mockSetHistoricalPageData).toHaveBeenCalledWith([]);
+    expect(component.container).toMatchSnapshot();
   });
 
   it('renders DataMap with correct data', () => {

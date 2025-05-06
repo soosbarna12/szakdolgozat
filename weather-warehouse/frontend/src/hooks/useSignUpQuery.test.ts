@@ -1,15 +1,18 @@
 import '@testing-library/jest-dom';
 import { act, waitFor } from '@testing-library/react';
 import { useAlert } from '../utils/AlertContext';
-import axios from '../utils/axiosConfig';
 import { renderHookWithQueryClient } from '../utils/test/renderHookWithQueryClient';
 import { useSignUpQuery } from './useSignUpQuery';
+import { useQuery } from '@tanstack/react-query';
+
+jest.mock('@tanstack/react-query', () => ({
+  ...jest.requireActual('@tanstack/react-query'),
+  useQuery: jest.fn(),
+}));
 
 jest.mock('../utils/AlertContext', () => ({
   useAlert: jest.fn(),
 }));
-
-jest.mock('../utils/axiosConfig');
 
 describe('useSignUpQuery', () => {
   const mockShowAlert = jest.fn();
@@ -22,7 +25,12 @@ describe('useSignUpQuery', () => {
   });
 
   it('matches useSignUpQuery hook snapshot', async () => {
-    (axios.post as jest.Mock).mockReturnValue(Promise.resolve({ data: {} }));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: {},
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
+    }));
 
     const { result } = renderHookWithQueryClient(() =>
       useSignUpQuery('testUser', 'testPass', 'What is your pet’s name?', 'Fluffy')
@@ -32,7 +40,14 @@ describe('useSignUpQuery', () => {
   });
 
   it('shows success alert when user is registered successfully', async () => {
-    (axios.post as jest.Mock).mockReturnValue(Promise.resolve({ data: {} }));
+    const mockRefetch = jest.fn();
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: {},
+      isSuccess: true,
+      isLoading: false,
+      error: null,
+      refetch: mockRefetch,
+    }));
 
     const { result } = renderHookWithQueryClient(() =>
       useSignUpQuery('testUser', 'testPass', 'What is your pet’s name?', 'Fluffy')
@@ -48,14 +63,26 @@ describe('useSignUpQuery', () => {
   });
 
   it('shows error alert when registration fails', async () => {
-    (axios.post as jest.Mock).mockReturnValue(Promise.reject(new Error('Registration failed')));
+    const mockRefetch = jest.fn(() => {
+      throw new Error('Registration failed');
+    });
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: null,
+      isLoading: false,
+      error: new Error('Registration failed'),
+      refetch: mockRefetch,
+    }));
 
     const { result } = renderHookWithQueryClient(() =>
       useSignUpQuery('testUser', 'testPass', 'What is your pet’s name?', 'Fluffy')
     );
 
     await act(async () => {
-      result.current.refetch();
+      try {
+        result.current.refetch();
+      } catch (e) {
+        // Handle error in test
+      }
     });
 
     await waitFor(() => {

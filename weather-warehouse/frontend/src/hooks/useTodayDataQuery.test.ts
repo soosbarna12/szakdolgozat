@@ -1,15 +1,18 @@
 import '@testing-library/jest-dom';
 import { waitFor } from '@testing-library/react';
 import { useAlert } from '../utils/AlertContext';
-import axios from '../utils/axiosConfig';
 import { renderHookWithQueryClient } from '../utils/test/renderHookWithQueryClient';
 import { useTodayDataQuery } from './useTodayDataQuery';
+import { useQuery } from '@tanstack/react-query';
+
+jest.mock('@tanstack/react-query', () => ({
+  ...jest.requireActual('@tanstack/react-query'),
+  useQuery: jest.fn(),
+}));
 
 jest.mock('../utils/AlertContext', () => ({
   useAlert: jest.fn(),
 }));
-
-jest.mock('../utils/axiosConfig');
 
 describe('useTodayDataQuery', () => {
   const mockShowAlert = jest.fn();
@@ -22,7 +25,12 @@ describe('useTodayDataQuery', () => {
   });
 
   it('matches useTodayDataQuery hook snapshot', async () => {
-    (axios.get as jest.Mock).mockReturnValue(Promise.resolve({ data: { temperature: 25 } }));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { temperature: 25 },
+      isLoading: false,
+      isSuccess: true,
+      error: null,
+    }));
 
     const { result } = renderHookWithQueryClient(() => useTodayDataQuery('New York'));
 
@@ -35,7 +43,12 @@ describe('useTodayDataQuery', () => {
 
   it('fetches today’s weather data successfully', async () => {
     const mockWeatherData = { temperature: 25, humidity: 60 };
-    (axios.get as jest.Mock).mockReturnValue(Promise.resolve({ data: mockWeatherData }));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: mockWeatherData,
+      isLoading: false,
+      isSuccess: true,
+      error: null,
+    }));
 
     const { result } = renderHookWithQueryClient(() => useTodayDataQuery('New York'));
 
@@ -47,7 +60,12 @@ describe('useTodayDataQuery', () => {
   });
 
   it('shows error alert when fetching today’s weather data fails', async () => {
-    (axios.get as jest.Mock).mockReturnValue(Promise.reject(new Error("Error fetching today's weather data")));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: null,
+      isLoading: false,
+      isSuccess: false,
+      error: new Error("Error fetching today's weather data"),
+    }));
 
     const { result } = renderHookWithQueryClient(() => useTodayDataQuery('New York'));
 
@@ -58,7 +76,12 @@ describe('useTodayDataQuery', () => {
   });
 
   it('throws an error when city is not found', async () => {
-    (axios.get as jest.Mock).mockReturnValue(Promise.resolve({ data: { code: '404' } }));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { code: '404' },
+      isLoading: false,
+      isSuccess: false,
+      error: new Error('City not found'),
+    }));
 
     const { result } = renderHookWithQueryClient(() => useTodayDataQuery('InvalidCity'));
 

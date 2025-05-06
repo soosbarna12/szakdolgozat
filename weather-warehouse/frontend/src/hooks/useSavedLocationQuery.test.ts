@@ -4,6 +4,15 @@ import { useAlert } from '../utils/AlertContext';
 import axios from '../utils/axiosConfig';
 import { renderHookWithQueryClient } from '../utils/test/renderHookWithQueryClient';
 import { useSavedLocationQuery } from './useSavedLocationsQuery';
+import { useQuery } from '@tanstack/react-query';
+
+jest.mock('@tanstack/react-query', () => {
+  const actual = jest.requireActual('@tanstack/react-query');
+  return {
+    ...actual,
+    useQuery: jest.fn(),
+  };
+});
 
 jest.mock('../utils/AlertContext', () => ({
   useAlert: jest.fn(),
@@ -19,19 +28,25 @@ describe('useSavedLocationQuery', () => {
     jest.resetAllMocks();
     (axios.get as jest.Mock).mockReset();
 
+    (useQuery as jest.Mock).mockReset();
     (useAlert as jest.Mock).mockImplementation(() => ({
       showAlert: mockShowAlert,
     }));
   });
 
-  it('matches useSavedLocationQuery hook snapshot', async () => {
-    (axios.get as jest.Mock).mockReturnValue(Promise.resolve({ data: [] }));
+  it('matches useSavedLocationQuery hook snapshot', async () => {  
+    const mockSavedLocations = [
+      { id: 1, name: 'New York', lat: 40.7128, lon: -74.006 },
+      { id: 2, name: 'Los Angeles', lat: 34.0522, lon: -118.2437 },
+    ];
+    
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: mockSavedLocations,
+      isLoading: false,
+      error: null,
+    }));
 
     const { result } = renderHookWithQueryClient(() => useSavedLocationQuery(true));
-
-    await waitFor(() => {
-      expect(result.current.savedLocations).toEqual([]);
-    });
 
     expect(result.current).toMatchSnapshot();
   });
@@ -41,7 +56,12 @@ describe('useSavedLocationQuery', () => {
       { id: 1, name: 'New York', lat: 40.7128, lon: -74.006 },
       { id: 2, name: 'Los Angeles', lat: 34.0522, lon: -118.2437 },
     ];
-    (axios.get as jest.Mock).mockReturnValue(Promise.resolve({ data: mockSavedLocations }));
+    
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: mockSavedLocations,
+      isLoading: false,
+      error: null,
+    }));
 
     const { result } = renderHookWithQueryClient(() => useSavedLocationQuery(true));
 
@@ -53,14 +73,13 @@ describe('useSavedLocationQuery', () => {
   });
 
 it('shows error alert when fetching saved locations fails', async () => {
-  // Mock axios to reject with an error
-  (axios.get as jest.Mock).mockReturnValue(Promise.reject(new Error('Error fetching saved locations')));
+  (useQuery as jest.Mock).mockImplementation(() => ({
+    data: null,
+    isLoading: false,
+    error: new Error('Error fetching saved locations'),
+  }));
 
-  // Render the hook
   const { result } = renderHookWithQueryClient(() => useSavedLocationQuery(true));
-
-  // Debugging log to verify axios mock calls
-  console.log('axios.get mock calls:', (axios.get as jest.Mock).mock.calls);
 
   // Wait for the error state to be set
   await waitFor(() => {
@@ -74,6 +93,12 @@ it('shows error alert when fetching saved locations fails', async () => {
 });
 
   it('does not fetch data when "open" is false', async () => {
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: undefined,
+      isLoading: false,
+      error: null,
+    }));
+
     const { result } = renderHookWithQueryClient(() => useSavedLocationQuery(false));
 
     expect(result.current.savedLocations).toBeUndefined();

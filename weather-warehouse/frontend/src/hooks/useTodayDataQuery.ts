@@ -26,7 +26,7 @@ export function useTodayDataQuery(locationName: string) {
     },
     //enabled: !!(lat && lon)
     enabled: !!(locationName),
-    retry: false,
+    retry: 1,
   });
 
   useEffect(() => {

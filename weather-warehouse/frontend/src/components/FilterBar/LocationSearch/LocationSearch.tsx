@@ -19,8 +19,6 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const historicalLocations = useHistoricalLocations(debouncedValue, pageType);
   const { data, error, isLoading } = pageType === Pages.Today ? todayLocationOptions : historicalLocations;
 
-  //console.log("LocationSearch data: ", location);
-
   // fetch location suggestions when debounced value changes
   useEffect(() => {
     if (debouncedValue.trim() === "" || selectedValue?.name === debouncedValue) {

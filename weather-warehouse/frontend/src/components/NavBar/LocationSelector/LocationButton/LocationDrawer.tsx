@@ -55,11 +55,12 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
                 primary={arrayElement?.locationData?.at(-1)?.cityName}
                 secondary={
                   <>
-                    <div>Filtered Date: {arrayElement?.locationData?.at(-1)?.date}</div>
-                    <div>Saved Date: {dayjs(arrayElement.dateSaved).format("YYYY-MM-DD")}</div>
+                    <span>Filtered Date: {arrayElement?.locationData?.at(-1)?.date}</span>
+                    <span>Saved Date: {dayjs(arrayElement.dateSaved).format("YYYY-MM-DD")}</span>
                   </>}
               />
-              <IconButton
+            </StyledButton>
+            <IconButton
                 edge="end"
                 aria-label="delete"
                 onClick={(event) => handleDeleteLocation(arrayElement.userLocationID, event)}
@@ -68,7 +69,6 @@ export function LocationDrawer(props: Readonly<LocationDrawerProps>) {
               >
                 <DeleteIcon />
               </IconButton>
-            </StyledButton>
           </ListItem >
         )
       });

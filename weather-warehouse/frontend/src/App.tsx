@@ -20,20 +20,6 @@ const queryClient = new QueryClient({
     queries: {
       retry: 1, // Retry failed requests once
       staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
-      queryFn: async ({ queryKey }) => {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 120000); // 2-minute timeout
-
-        try {
-          const response = await fetch(queryKey[0] as string, { signal: controller.signal });
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        } finally {
-          clearTimeout(timeoutId);
-        }
-      },
     },
   },
 });

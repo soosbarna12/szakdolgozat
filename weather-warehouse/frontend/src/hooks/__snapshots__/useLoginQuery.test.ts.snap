@@ -4,8 +4,8 @@ exports[`useLoginQuery matches useLoginQuery hook snapshot 1`] = `
 {
   "error": null,
   "isLoading": false,
-  "isSuccess": false,
-  "loginData": undefined,
-  "refetch": [Function],
+  "isSuccess": undefined,
+  "loginData": null,
+  "refetch": [MockFunction],
 }
 `;

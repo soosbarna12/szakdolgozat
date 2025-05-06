@@ -4,7 +4,20 @@ exports[`useSavedLocationQuery matches useSavedLocationQuery hook snapshot 1`] =
 {
   "error": null,
   "isLoading": false,
-  "refetch": [Function],
-  "savedLocations": [],
+  "refetch": undefined,
+  "savedLocations": [
+    {
+      "id": 1,
+      "lat": 40.7128,
+      "lon": -74.006,
+      "name": "New York",
+    },
+    {
+      "id": 2,
+      "lat": 34.0522,
+      "lon": -118.2437,
+      "name": "Los Angeles",
+    },
+  ],
 }
 `;

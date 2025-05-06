@@ -10,8 +10,6 @@ import { Pages } from "../../types/page.type";
 
 export function TodayPage() {
   const { location } = useContext(TodayContext);
-  //console.log("TodayPage location: ", location);
-  //const { data: todayData, error, isLoading } = useTodayDataQuery(location.lat, location.lon); // currently using the todays data query, because the historical is not available yet
   const { data: todayData, error, isLoading } = useTodayDataQuery(location.name); // currently using the todays data query, because the historical is not available yet
 
 

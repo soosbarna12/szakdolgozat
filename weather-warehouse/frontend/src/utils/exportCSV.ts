@@ -10,5 +10,5 @@ export function exportCSV(data: HistoricalDataTable[]) {
   const csvConfig = mkConfig({ useKeysAsHeaders: true, filename: "historical_data" });
 
   const csv = generateCsv(csvConfig)(data as any[]);
-  download(csv); // Call download directly with the CSV content
+  download(csvConfig)(csv); // Call download directly with the CSV content
 }

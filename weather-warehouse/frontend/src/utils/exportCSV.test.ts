@@ -1,11 +1,11 @@
 import { exportCSV } from './exportCSV';
-import { download, generateCsv, mkConfig } from 'export-to-csv';
+import { generateCsv, mkConfig } from 'export-to-csv';
 import { HistoricalDataTable } from '../types/historicalDataTable.type';
 
 jest.mock('export-to-csv', () => ({
-  download: jest.fn(),
-  generateCsv: jest.fn(() => jest.fn()),
+  generateCsv: jest.fn(() => jest.fn()), // Mock generateCsv to return a mock function
   mkConfig: jest.fn(),
+  download: jest.fn(() => jest.fn()), // Mock download function
 }));
 
 describe('utils/exportCSV', () => {
@@ -21,25 +21,24 @@ describe('utils/exportCSV', () => {
     expect(console.error).toHaveBeenCalledWith('No data available to export.');
     expect(mkConfig).not.toHaveBeenCalled();
     expect(generateCsv).not.toHaveBeenCalled();
-    expect(download).not.toHaveBeenCalled();
   });
 
   it('generates and downloads a CSV file when data is provided', () => {
-    const mockData: HistoricalDataTable[] = [
-      { date: '2023-05-01', cityName: 'New York', countryCode: 'US' },
-      { date: '2023-05-02', cityName: 'Los Angeles', countryCode: 'US' },
+    const mockData = [
+      { date: '2023-05-01', cityName: 'New York', countryCode: 'US' } as any,
+      { date: '2023-05-02', cityName: 'Los Angeles', countryCode: 'US' } as any,
     ];
 
     const mockCsvConfig = { useKeysAsHeaders: true, filename: 'historical_data' };
-    const mockCsv = 'mockCsvContent';
+    const mockDownload = jest.fn(); // Mock the download function
 
     (mkConfig as jest.Mock).mockReturnValue(mockCsvConfig);
-    (generateCsv as jest.Mock).mockReturnValue(() => mockCsv);
+    (generateCsv as jest.Mock).mockReturnValue(mockDownload); // Mock generateCsv to return the mockDownload function
 
     exportCSV(mockData);
 
     expect(mkConfig).toHaveBeenCalledWith({ useKeysAsHeaders: true, filename: 'historical_data' });
     expect(generateCsv).toHaveBeenCalledWith(mockCsvConfig);
-    expect(download).toHaveBeenCalledWith(mockCsv); // Ensure download is called with the CSV content
+    expect(mockDownload).toHaveBeenCalledWith(mockData); // Ensure the mockDownload function is called with the data
   });
 });

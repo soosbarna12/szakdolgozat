@@ -31,8 +31,7 @@ export function useGeolocationQuery(locationName: string, type: Pages) {
               (t) => t.name === loc.name && t.state === loc.state && t.country === loc.country
             )
         );
-        //console.log("Unique results:", uniqueResults); // Log the unique results for debugging
-
+        
         return uniqueResults;
       } catch (error) {
         console.error("Error fetching geolocation data:", error);

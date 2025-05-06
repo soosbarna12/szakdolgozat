@@ -15,7 +15,6 @@ export const TodayLocationProvider = ({ children }: TodayProviderProps) => {
 		try {
 			return storedLocation ? JSON.parse(storedLocation) : defaultLocation;
 		} catch (error) {
-			console.error("Failed to parse location from localStorage:", error);
 			return defaultLocation;
 		}
 	});

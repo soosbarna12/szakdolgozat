@@ -17,7 +17,7 @@ export function useUserDefaultLocationQuery(lat: number | undefined, lon: number
       return response.data;
     },
     enabled: !!(lat && lon),
-    retry: false,
+    retry: 1,
   });
 
   useEffect(() => {

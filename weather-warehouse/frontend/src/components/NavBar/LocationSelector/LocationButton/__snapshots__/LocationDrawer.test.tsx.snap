@@ -81,35 +81,35 @@ exports[`NavBar/LocationSelector/LocationDrawer matches LocationDrawer component
                   <p
                     class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-1a1whku-MuiTypography-root"
                   >
-                    <div>
+                    <span>
                       Filtered Date: 
                       2023-01-01
-                    </div>
-                    <div>
+                    </span>
+                    <span>
                       Saved Date: 
                       2023-01-02
-                    </div>
+                    </span>
                   </p>
                 </div>
-                <button
-                  aria-label="delete"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1l3by4e-MuiButtonBase-root-MuiIconButton-root"
-                  data-testid="deleteButton"
-                  tabindex="0"
-                  type="button"
+              </button>
+              <button
+                aria-label="delete"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1l3by4e-MuiButtonBase-root-MuiIconButton-root"
+                data-testid="deleteButton"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="DeleteIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="DeleteIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
-                    />
-                  </svg>
-                </button>
+                  <path
+                    d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  />
+                </svg>
               </button>
             </li>
           </ul>

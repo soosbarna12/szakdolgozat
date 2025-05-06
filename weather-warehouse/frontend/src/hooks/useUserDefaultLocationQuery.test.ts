@@ -1,15 +1,18 @@
 import '@testing-library/jest-dom';
 import { waitFor } from '@testing-library/react';
 import { useAlert } from '../utils/AlertContext';
-import axios from '../utils/axiosConfig';
 import { renderHookWithQueryClient } from '../utils/test/renderHookWithQueryClient';
 import { useUserDefaultLocationQuery } from './useUserDefaultLocationQuery';
+import { useQuery } from '@tanstack/react-query';
+
+jest.mock('@tanstack/react-query', () => ({
+  ...jest.requireActual('@tanstack/react-query'),
+  useQuery: jest.fn(),
+}));
 
 jest.mock('../utils/AlertContext', () => ({
   useAlert: jest.fn(),
 }));
-
-jest.mock('../utils/axiosConfig');
 
 describe('useUserDefaultLocationQuery', () => {
   const mockShowAlert = jest.fn();
@@ -22,7 +25,12 @@ describe('useUserDefaultLocationQuery', () => {
   });
 
   it('matches useUserDefaultLocationQuery hook snapshot', async () => {
-    (axios.get as jest.Mock).mockReturnValue(Promise.resolve({ data: { city: 'New York' } }));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: { city: 'New York' },
+      isLoading: false,
+      isSuccess: true,
+      error: null,
+    }));
 
     const { result } = renderHookWithQueryClient(() => useUserDefaultLocationQuery(40.7128, -74.006));
 
@@ -35,7 +43,12 @@ describe('useUserDefaultLocationQuery', () => {
 
   it('fetches reverse geocoded location successfully', async () => {
     const mockLocationData = { city: 'New York', state: 'NY', country: 'US' };
-    (axios.get as jest.Mock).mockReturnValue(Promise.resolve({ data: mockLocationData }));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: mockLocationData,
+      isLoading: false,
+      isSuccess: true,
+      error: null,
+    }));
 
     const { result } = renderHookWithQueryClient(() => useUserDefaultLocationQuery(40.7128, -74.006));
 
@@ -47,7 +60,12 @@ describe('useUserDefaultLocationQuery', () => {
   });
 
   it('shows error alert when fetching reverse geocoded location fails', async () => {
-    (axios.get as jest.Mock).mockReturnValue(Promise.reject(new Error('Failed to fetch reverse geocoded location')));
+    (useQuery as jest.Mock).mockImplementation(() => ({
+      data: null,
+      isLoading: false,
+      isSuccess: false,
+      error: new Error('Failed to fetch reverse geocoded location'),
+    }));
 
     const { result } = renderHookWithQueryClient(() => useUserDefaultLocationQuery(40.7128, -74.006));
 

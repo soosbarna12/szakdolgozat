@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import { PrecipitationDataChart } from "../../components/DataGrids/DataChart/PrecipitationDataChart";
 import { WindPressureCombinedChart } from "../../components/DataGrids/DataChart/WindPressureCombinedChart";
 import { HistoricalWeatherCard } from "../../components/DataGrids/WeatherCard/HistoricalWeatherCard";
-import { getAllHistoricalDataTableColumns } from "../../consts/dataTable.conts";
+import { getAllHistoricalDataTableColumns } from "../../consts/dataTable.const";
 import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
 import { useHistoricalDataQuery } from "../../hooks/useHistoricalDataQuery";
 import { useHistoricalTableData } from "../../hooks/useHistoricalTableData";

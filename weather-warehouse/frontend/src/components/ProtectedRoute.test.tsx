@@ -26,12 +26,17 @@ const renderProtectedRoute = (children: React.ReactNode) => {
 
 describe('ProtectedRoute', () => {
     const mockShowAlert = jest.fn();
+    const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     beforeEach(() => {
         jest.clearAllMocks();
         (useAlert as jest.Mock).mockImplementation(() => ({
             showAlert: mockShowAlert,
         }));
+    });
+
+    afterAll(() => {
+        mockConsoleError.mockRestore(); // Restore original console.error after all tests
     });
 
     it('matches ProtectedRoute component snapshot', () => {

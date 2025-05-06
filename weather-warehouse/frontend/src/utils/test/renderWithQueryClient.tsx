@@ -6,7 +6,7 @@ export function renderWithQueryClient(ui: React.ReactElement) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: false, // Disable retries for tests
+        retry: 1, // Disable retries for tests
         staleTime: Infinity, // Prevent automatic refetching
       },
     },

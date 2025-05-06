@@ -2,9 +2,9 @@
 
 exports[`useSaveLocationQuery matches useSaveLocationQuery hook snapshot 1`] = `
 {
-  "data": undefined,
+  "data": {},
   "error": null,
   "isLoading": false,
-  "refetch": [Function],
+  "refetch": [MockFunction],
 }
 `;
