@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`utils/AlertContext displays the alert with the correct message and severity (error) 1`] = `
+<div
+  class="MuiAlert-message css-zioonp-MuiAlert-message"
+>
+  Error message
+</div>
+`;
+
+exports[`utils/AlertContext displays the alert with the correct message and severity (success) 1`] = `
+<div
+  class="MuiAlert-message css-zioonp-MuiAlert-message"
+>
+  Test message
+</div>
+`;

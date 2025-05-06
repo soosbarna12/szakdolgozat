@@ -1,6 +1,6 @@
 import { Dialog, Menu, MenuItem, styled, Typography } from '@mui/material';
 
-export const StyledMenu = styled(Menu)(({ theme }) => ({
+export const StyledMenu = styled(Menu)(() => ({
 	'& .MuiPaper-root': {
 		borderRadius: '20px'
 	},
@@ -9,7 +9,7 @@ export const StyledMenu = styled(Menu)(({ theme }) => ({
 	borderRadius: '20px'
 }));
 
-export const StyledDialog = styled(Dialog)(({ theme }) => ({
+export const StyledDialog = styled(Dialog)(() => ({
 	'& .MuiPaper-root': {
 		borderRadius: '20px'
 	},

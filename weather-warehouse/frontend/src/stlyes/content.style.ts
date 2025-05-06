@@ -36,7 +36,7 @@ export const StyledItem = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper
 }));
 
-export const StyledMapContainer = styled(MapContainer)(({ theme }) => ({
+export const StyledMapContainer = styled(MapContainer)(() => ({
 	height: '100%',
 	width: '100%',
 	borderRadius: 10,
@@ -50,7 +50,7 @@ export const StyledTableContainer = styled(Paper)(() => ({
 	boxShadow: "none",
 }));
 
-export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+export const StyledTableCell = styled(TableCell)(() => ({
     border: "1px solid #ccc",
 }));
 

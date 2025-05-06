@@ -44,7 +44,7 @@ export const StyledMenuButton = styled(Button)(({ theme }) => ({
 	'&:hover:not(.Mui-focused)': { backgroundColor: theme.palette.primary.main }
 }));
 
-export const StyledButton2 = styled(Button)(({ theme }) => ({
+export const StyledButton2 = styled(Button)(() => ({
 	margin: 1,
 	borderRadius: 20,
 	width: 150,
@@ -53,8 +53,7 @@ export const StyledButton2 = styled(Button)(({ theme }) => ({
 	fontSize: 16
 })) as typeof Button;
 
-export const StyledToggleButtonGroup = styled(ToggleButtonGroup)(
-	({ theme }) => ({
+export const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
 		paddingLeft: 16,
 		paddingRight: 16,
 		height: '30px'

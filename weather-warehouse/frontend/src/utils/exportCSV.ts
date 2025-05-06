@@ -1,5 +1,5 @@
+import { download, generateCsv, mkConfig } from "export-to-csv";
 import { HistoricalDataTable } from "../types/historicalDataTable.type";
-import { mkConfig, generateCsv, download } from "export-to-csv";
 
 export function exportCSV(data: HistoricalDataTable[]) {
   if (!data || data.length === 0) {
@@ -10,5 +10,5 @@ export function exportCSV(data: HistoricalDataTable[]) {
   const csvConfig = mkConfig({ useKeysAsHeaders: true, filename: "historical_data" });
 
   const csv = generateCsv(csvConfig)(data as any[]);
-  download(csvConfig)(csv);
+  download(csv); // Call download directly with the CSV content
 }

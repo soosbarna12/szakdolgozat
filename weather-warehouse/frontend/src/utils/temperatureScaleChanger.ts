@@ -1,4 +1,3 @@
-import { LOCAL_STORAGE_TEMPERATURE_SCALE } from "../consts/temperatureScale.const";
 import { TemperatureScale } from "../types/temperatureScale.type";
 import { convertCelsiusToFahrenheit, convertFahrenheitToCelsius, convertKelvinToCelsius, convertKelvinToFahrenheit } from "./dataConverters";
 

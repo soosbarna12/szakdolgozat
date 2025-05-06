@@ -79,11 +79,11 @@ export const StyledLocationSearch = styled(TextField)(({ theme }) => ({
 	}
 }));
 
-export const StyledAutocompleteDropdown = styled(Paper)(({ theme }) => ({
+export const StyledAutocompleteDropdown = styled(Paper)(() => ({
 	mt: '45px',
 	padding: '0',
 	borderRadius: '20px'
-  }));
+}));
 
 export const StyledDatePicker = styled(DatePicker)(({ theme }) => ({
 	width: '170px',

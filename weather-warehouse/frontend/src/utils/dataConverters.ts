@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import { HistoricalDataTable, ServerHistoricalData } from "../types/historicalDataTable.type";
 import { HistoricalLocationData } from "../contexts/HistoricalContext/HistoricalContext.type";
+import { HistoricalDataTable, ServerHistoricalData } from "../types/historicalDataTable.type";
 import { getDataOrNA } from "./getDataOrNA";
 
 export function convertKelvinToCelsius(kelvin: number | null): number | string {

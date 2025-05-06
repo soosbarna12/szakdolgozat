@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 
 export interface HistoricalDataTable {
     lat: number;
