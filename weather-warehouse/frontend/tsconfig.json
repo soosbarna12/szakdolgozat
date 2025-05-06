@@ -1,13 +1,19 @@
 {
-	"compilerOptions": {
-		"target": "es2016",
-		"module": "commonjs",
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"strict": true,
-		"jsx": "react",
-		"allowJs": true,
-    	"checkJs": false,
-	},
-	"include": ["src/**/*", "app.js"]
-}
+    "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": false,
+      "jsx": "react",
+      "allowJs": true,
+      "checkJs": false,
+      "target": "ES2022",
+      "lib": ["ES2022", "DOM"],
+      "types": ["node"], // Add this line
+      "skipLibCheck": true,
+      "noEmit": true,
+      "moduleResolution": "node",
+      "isolatedModules": true,
+    },
+    "include": ["src/**/*", "app.js", "__mock__"]
+  }

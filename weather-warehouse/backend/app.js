@@ -1,3 +1,4 @@
+const timeout = require('connect-timeout');
 const express = require('express');
 const cors = require("cors");
 const sql = require('mssql');
@@ -43,6 +44,14 @@ app.use("/forecast", forecast);
 app.use("/today", today);
 app.use("/historical", historical);
 app.use("/user", user);
+
+
+app.use(timeout(120000));
+app.use(haltOnTimedout);
+function haltOnTimedout(req, res, next){
+  if (!req.timedout) next();
+}
+
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
