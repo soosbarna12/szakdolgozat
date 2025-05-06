@@ -1,0 +1,148 @@
+const request = require("supertest");
+const express = require("express");
+const sql = require("mssql");
+const validate = require("validate.js");
+const historicalRouter = require("./historical");
+
+// Mock the SQL module and validate.js
+jest.mock("mssql");
+jest.mock("validate.js");
+
+const app = express();
+app.use(express.json());
+app.use("/historical", historicalRouter);
+
+describe("POST /historical/historicalData", () => {
+  it("should return 400 if validation fails", async () => {
+    validate.mockReturnValueOnce({ error: "Validation failed" });
+  
+    const response = await request(app).get("/historical/historicalLocations").query({
+      location: "Budapest",
+    });
+  
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: { error: "Validation failed" } });
+  });
+
+  it("should return 200 with historical data if input is valid", async () => {
+    validate.mockReturnValueOnce(undefined); // No validation errors
+    sql.connect.mockResolvedValueOnce({
+      request: jest.fn().mockReturnValue({
+        input: jest.fn().mockReturnThis(),
+        query: jest.fn().mockResolvedValue({
+          recordset: [{ temperature: 25, humidity: 60 }],
+        }),
+      }),
+    });
+
+    const response = await request(app).post("/historical/historicalData").send({
+      location: { name: "Budapest", country: "HU" },
+      date: "2023-01-01",
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([{ temperature: 25, humidity: 60 }]);
+  });
+
+  it("should return 500 if an error occurs", async () => {
+    validate.mockReturnValueOnce(undefined); // No validation errors
+    sql.connect.mockRejectedValueOnce(new Error("Database error"));
+
+    const response = await request(app).post("/historical/historicalData").send({
+      location: { name: "Budapest", country: "HU" },
+      date: "2023-01-01",
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ error: "Failed to fetch historical data" });
+  });
+});
+
+describe("GET /historical/historicalLocations", () => {
+  it("should return 400 if validation fails", async () => {
+    validate.mockReturnValueOnce({ error: "Validation failed" });
+  
+    const response = await request(app).get("/historical/historicalLocations").query({
+      location: "Budapest",
+    });
+  
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: { error: "Validation failed" } });
+  });
+
+  it("should return 200 with location data if input is valid", async () => {
+    validate.mockReturnValueOnce(undefined); // No validation errors
+    sql.connect.mockResolvedValueOnce({
+      request: jest.fn().mockReturnValue({
+        input: jest.fn().mockReturnThis(),
+        query: jest.fn().mockResolvedValue({
+          recordset: [{ name: "Budapest", country: "HU" }],
+        }),
+      }),
+    });
+
+    const response = await request(app).get("/historical/historicalLocations").query({
+      location: "Budapest",
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([{ name: "Budapest", country: "HU" }]);
+  });
+
+  it("should return 500 if an error occurs", async () => {
+    validate.mockReturnValueOnce(undefined); // No validation errors
+    sql.connect.mockRejectedValueOnce(new Error("Database error"));
+
+    const response = await request(app).get("/historical/historicalLocations").query({
+      location: "Budapest",
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ error: "Failed to fetch historical locations" });
+  });
+});
+
+describe("GET /historical/historicalDates", () => {
+  it("should return 400 if validation fails", async () => {
+    validate.mockReturnValueOnce({ error: "Validation failed" });
+  
+    const response = await request(app).post("/historical/historicalData").send({
+      location: { name: "Budapest", country: "HU" },
+      date: "2023-01-01",
+    });
+  
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: { error: "Validation failed" } });
+  });
+
+  it("should return 200 with date data if input is valid", async () => {
+    validate.mockReturnValueOnce(undefined); // No validation errors
+    sql.connect.mockResolvedValueOnce({
+      request: jest.fn().mockReturnValue({
+        input: jest.fn().mockReturnThis(),
+        query: jest.fn().mockResolvedValue({
+          recordset: [{ date: "2023-01-01" }],
+        }),
+      }),
+    });
+
+    const response = await request(app).get("/historical/historicalDates").query({
+      location: "Budapest",
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([{ date: "2023-01-01" }]);
+  });
+
+  it("should return 500 if an error occurs", async () => {
+    validate.mockReturnValueOnce(undefined); // No validation errors
+    sql.connect.mockRejectedValueOnce(new Error("Database error"));
+
+    const response = await request(app).get("/historical/historicalDates").query({
+      location: "Budapest",
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ error: "Failed to fetch historical dates" });
+  });
+});

@@ -3,37 +3,6 @@ import axios from "../utils/axiosConfig";
 import { Pages } from "../types/page.type";
 
 
-/*
-export function useGeolocationQuery(location: string) {
-    
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["location", location],
-    queryFn: async () => {
-      const response = await axios.get(`/geo/location`, {
-        params: { location }
-      })
-
-      if (!response?.data || response?.data?.length === 0) {
-        return []; // return empty array if no data found
-      }
-
-      // search for unique locations
-      const newResults = response.data.filter(
-        (loc: any, index: number, self: any[]) =>
-          index ===
-          self.findIndex(
-            (t) => t.name === loc.name && t.state === loc.state && t.country === loc.country
-          )
-      );
-      return newResults; 
-    },
-
-    enabled: !!location,
-  });
-
-  return { data, error, isLoading };
-}
-*/
 
 export function useGeolocationQuery(locationName: string, type: Pages) {
   const { data, error, isLoading } = useQuery({
@@ -44,7 +13,7 @@ export function useGeolocationQuery(locationName: string, type: Pages) {
       }
 
       try {
-        const response = await axios.get(`/geo/location`, {
+        const response = await axios.get(`/today/location`, {
           params: {
             location: locationName.trim(),
            },
