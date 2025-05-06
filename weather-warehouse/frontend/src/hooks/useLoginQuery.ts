@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
-import { useEffect } from "react";
 
 
 export function useLoginQuery(username: string, password: string) {
@@ -10,7 +10,7 @@ export function useLoginQuery(username: string, password: string) {
   const { data: loginData, error, isLoading, isSuccess, refetch } = useQuery({
     queryKey: ["login"],
     queryFn: async () => {
-      const response = await axios.post(`/user/login`, {
+      const response = await axios.post(`/api/user/login`, {
           username,
           password
         });

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useSignUpQuery matches useSignUpQuery hook snapshot 1`] = `
+{
+  "error": null,
+  "isLoading": false,
+  "isSuccess": false,
+  "refetch": [Function],
+  "registerData": undefined,
+}
+`;

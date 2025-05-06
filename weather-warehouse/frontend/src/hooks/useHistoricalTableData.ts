@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
-import { UseHistoricalDataProps } from "../pages/HistoricalPage/HistoricalPage.type";
+import { useContext, useEffect } from "react";
 import { HistoricalContext } from "../contexts/HistoricalContext/HistoricalContext";
+import { UseHistoricalDataProps } from "../pages/HistoricalPage/HistoricalPage.type";
 
 
 export function useHistoricalTableData(props: Readonly<UseHistoricalDataProps>) {

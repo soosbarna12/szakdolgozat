@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { UseHistoricalDataQueryProps } from "../pages/HistoricalPage/HistoricalPage.type";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
-import { useEffect } from "react";
 import { convertServerHistoricalData } from "../utils/dataConverters";
 
 export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryProps>) {
@@ -12,7 +12,7 @@ export function useHistoricalDataQuery(props: Readonly<UseHistoricalDataQueryPro
   const { data, error, isLoading } = useQuery({
     queryKey: ["historicalWeatherData", location, date],
     queryFn: async () => {
-      const response = await axios.post(`/historical/historicalData`, {
+      const response = await axios.post(`/api/historical/historicalData`, {
         location,
         date
       });

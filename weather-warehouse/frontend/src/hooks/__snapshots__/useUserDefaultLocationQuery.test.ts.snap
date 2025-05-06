@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useUserDefaultLocationQuery matches useUserDefaultLocationQuery hook snapshot 1`] = `
+{
+  "data": {
+    "city": "New York",
+  },
+  "error": null,
+  "isLoading": false,
+}
+`;

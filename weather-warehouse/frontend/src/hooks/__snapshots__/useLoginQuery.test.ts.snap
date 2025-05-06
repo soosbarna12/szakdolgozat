@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useLoginQuery matches useLoginQuery hook snapshot 1`] = `
+{
+  "error": null,
+  "isLoading": false,
+  "isSuccess": false,
+  "loginData": undefined,
+  "refetch": [Function],
+}
+`;

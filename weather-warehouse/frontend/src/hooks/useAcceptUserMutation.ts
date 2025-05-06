@@ -8,7 +8,7 @@ export function useAcceptUserMutation() {
 
   const mutation = useMutation({
     mutationFn: async (id: number) => {
-      const response = await axios.post(`/user/accept`, { id });
+      const response = await axios.post(`/api/user/accept`, { id });
       return response.data;
     },
     onSuccess: () => {

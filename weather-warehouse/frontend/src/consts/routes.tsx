@@ -1,10 +1,10 @@
 import React from 'react';
+import { ProtectedRoute } from '../components/ProtectedRoute';
+import { AdminPage } from '../pages/AdminPage/AdminPage';
 import { ForecastPage } from '../pages/ForecastPage/ForecastPage';
 import { HistoricalPage } from '../pages/HistoricalPage/HistoricalPage';
 import { TodayPage } from '../pages/TodayPage/TodayPage';
 import { Pages } from '../types/page.type';
-import { AdminPage } from '../pages/AdminPage/AdminPage';
-import { ProtectedRoute } from '../components/ProtectedRoute';
 
 export const ROUTES = [
 	{

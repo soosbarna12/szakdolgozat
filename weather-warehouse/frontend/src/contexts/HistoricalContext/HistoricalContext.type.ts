@@ -11,17 +11,16 @@ export interface HistoricalLocationData {
 }
 
 // historical page data
-export interface HistoricalPageData extends HistoricalDataTable {
-  // historicalDataGraph ....
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface HistoricalPageData extends HistoricalDataTable {}
 
 export interface HistoricalContextType {
   location: HistoricalLocationData;
   historicalPageData: any []; // add historicalData to the context type
-  temperatureScale: TemperatureScale;
+  temperatureScale: TemperatureScale | string;
   setLocation: Dispatch<SetStateAction<HistoricalLocationData>>;
   setHistoricalPageData: Dispatch<SetStateAction<HistoricalPageData[]>>; // add setter for historicalData
-  setTemperatureScale: Dispatch<SetStateAction<TemperatureScale>>;
+  setTemperatureScale: Dispatch<SetStateAction<TemperatureScale | string>>;
 }
 
 export interface HistoricalProviderProps {

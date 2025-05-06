@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useHistoricalLocations matches useHistoricalLocations hook snapshot 1`] = `
+{
+  "data": [
+    {
+      "country": "US",
+      "name": "New York",
+      "state": "NY",
+    },
+    {
+      "country": "US",
+      "name": "Los Angeles",
+      "state": "CA",
+    },
+  ],
+  "error": null,
+  "isLoading": false,
+}
+`;

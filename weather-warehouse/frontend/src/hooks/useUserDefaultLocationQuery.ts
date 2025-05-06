@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
-import { useEffect } from "react";
 
 
 export function useUserDefaultLocationQuery(lat: number | undefined, lon: number | undefined) {
@@ -10,13 +10,14 @@ export function useUserDefaultLocationQuery(lat: number | undefined, lon: number
   const { data, error, isLoading } = useQuery({
     queryKey: ["userDefaultLocation", lat, lon],
     queryFn: async () => {
-      const response = await axios.get(`/today/reverse-geocode`, {
+      const response = await axios.get(`/api/today/reverse-geocode`, {
         params: { lat, lon },
       });
 
       return response.data;
     },
-    enabled: !!(lat && lon)
+    enabled: !!(lat && lon),
+    retry: false,
   });
 
   useEffect(() => {

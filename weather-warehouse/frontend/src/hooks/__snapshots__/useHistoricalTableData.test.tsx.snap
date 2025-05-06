@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useHistoricalTableData matches useHistoricalTableData hook snapshot 1`] = `
+{
+  "historicalPageData": [
+    {
+      "cityName": "New York",
+      "countryCode": "US",
+      "date": "2023-01-01",
+    },
+    {
+      "cityName": "Los Angeles",
+      "countryCode": "US",
+      "date": "2023-01-02",
+    },
+  ],
+  "setHistoricalPageData": [MockFunction],
+}
+`;

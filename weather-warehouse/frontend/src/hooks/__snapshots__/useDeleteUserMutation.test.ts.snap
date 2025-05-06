@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useDeleteUserMutation matches useDeleteUserMutation hook snapshot 1`] = `
+{
+  "context": undefined,
+  "data": undefined,
+  "error": null,
+  "failureCount": 0,
+  "failureReason": null,
+  "isError": false,
+  "isIdle": true,
+  "isPaused": false,
+  "isPending": false,
+  "isSuccess": false,
+  "mutate": [Function],
+  "mutateAsync": [Function],
+  "reset": [Function],
+  "status": "idle",
+  "submittedAt": 0,
+  "variables": undefined,
+}
+`;

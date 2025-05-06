@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useTodayDataQuery matches useTodayDataQuery hook snapshot 1`] = `
+{
+  "data": {
+    "temperature": 25,
+  },
+  "error": null,
+  "isLoading": false,
+}
+`;

@@ -8,7 +8,7 @@ export function useFetchUsersQuery() {
   const { data, error, isLoading, refetch } = useQuery<User[]>({
     queryKey: ["users"],
     queryFn: async () => {
-      const response = await axios.get(`/user/userData`);
+      const response = await axios.get(`/api//user/userData`);
 
       return response.data as User[];
     },

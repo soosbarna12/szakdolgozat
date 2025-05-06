@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useHistoricalDataQuery matches useHistoricalDataQuery hook snapshot 1`] = `
+{
+  "data": {
+    "humidity": 80,
+    "location": {
+      "lat": 40.7128,
+      "lon": -74.006,
+      "name": "New York",
+    },
+    "temperature": 5,
+  },
+  "error": null,
+  "isLoading": false,
+}
+`;

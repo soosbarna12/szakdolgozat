@@ -8,7 +8,7 @@ export function useDeleteUserMutation() {
 
   const mutation = useMutation({
     mutationFn: async (id: number) => {
-      const response = await axios.delete(`/user/delete`, { params: { id } });
+      const response = await axios.delete(`/api//user/delete`, { params: { id } });
       return response.data;
     },
     onSuccess: () => {

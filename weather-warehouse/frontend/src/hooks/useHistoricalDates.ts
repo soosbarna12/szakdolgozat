@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "../utils/axiosConfig";
-import { useAlert } from "../utils/AlertContext";
-import { useEffect } from "react";
-import { Pages } from "../types/page.type";
 import dayjs from "dayjs";
+import { useEffect } from "react";
+import { useAlert } from "../utils/AlertContext";
+import axios from "../utils/axiosConfig";
 
 export function useHistoricalDates(location: string) {
   const { showAlert } = useAlert();
@@ -11,12 +10,11 @@ export function useHistoricalDates(location: string) {
   const { data, error, isLoading } = useQuery({
     queryKey: ["historicalDates", location],
     queryFn: async () => {
-      const response = await axios.get(`/historical/historicalDates`, {
+      const response = await axios.get(`/api/historical/historicalDates`, {
         params: { location },
       });
       
       // format the dates to YYYY-MM-DD for debugging
-      //return response.data.map((date: string) => dayjs(date).format("YYYY-MM-DD"));
       return response.data.map((date: any) => dayjs(date.date).format("YYYY-MM-DD"));
     },
     

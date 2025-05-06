@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
-import { useEffect } from "react";
-import { Pages } from "../types/page.type";
 
 
 //export function useTodayDataQuery(lat: number, lon: number) {
@@ -13,7 +12,7 @@ export function useTodayDataQuery(locationName: string) {
     //queryKey: ["todayWeatherData", lat, lon],
     queryKey: ["todayWeatherData", locationName],
     queryFn: async () => {
-      const response = await axios.get(`/today/locationData`, {
+      const response = await axios.get(`/api/today/locationData`, {
       //const response = await axios.get(`/today/saveCurrentWeather`, {
         params: { locationName, lang: "en" },
         //params: { lat, lon, lang: "en" },
@@ -27,6 +26,7 @@ export function useTodayDataQuery(locationName: string) {
     },
     //enabled: !!(lat && lon)
     enabled: !!(locationName),
+    retry: false,
   });
 
   useEffect(() => {

@@ -1,7 +1,7 @@
-import React, { createContext, useState, ReactNode, Dispatch, SetStateAction, useEffect } from "react";
-import { HistoricalContextType, HistoricalLocationData, HistoricalPageData, HistoricalProviderProps } from "./HistoricalContext.type";
-import { TemperatureScale } from "../../types/temperatureScale.type";
+import React, { createContext, useEffect, useState } from "react";
 import { LOCAL_STORAGE_TEMPERATURE_SCALE } from "../../consts/temperatureScale.const";
+import { TemperatureScale } from "../../types/temperatureScale.type";
+import { HistoricalContextType, HistoricalLocationData, HistoricalPageData, HistoricalProviderProps } from "./HistoricalContext.type";
 
 
 export const HistoricalContext = createContext<HistoricalContextType>({
@@ -21,6 +21,7 @@ export const HistoricalLocationProvider = ({ children }: HistoricalProviderProps
     try {
       return storedLocation ? JSON.parse(storedLocation) : defaultLocation;
     } catch (error) {
+      console.error("Failed to parse location from localStorage:", error);
       return defaultLocation;
     }
   });
@@ -35,11 +36,12 @@ export const HistoricalLocationProvider = ({ children }: HistoricalProviderProps
     }
   });
 
-  const [temperatureScale, setTemperatureScale] = useState<TemperatureScale>(() => {
+  const [temperatureScale, setTemperatureScale] = useState<TemperatureScale | string>(() => {
     const storedTemperatureScale = localStorage.getItem(LOCAL_STORAGE_TEMPERATURE_SCALE);
     try {
       return storedTemperatureScale ? JSON.parse(storedTemperatureScale) : TemperatureScale.Celsius;
     } catch (error) {
+      console.error("Failed to parse temperature scale from localStorage:", error);
       return TemperatureScale.Celsius;
     }
   });

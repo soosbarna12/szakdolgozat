@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { HistoricalDataTable } from "../types/historicalDataTable.type";
 import { useAlert } from "../utils/AlertContext";
 import axios from "../utils/axiosConfig";
-import { HistoricalDataTable } from "../types/historicalDataTable.type";
-import { useEffect } from "react";
 
 
 export function useSaveLocationQuery(historicalPageData: HistoricalDataTable[] | undefined) {
@@ -11,7 +11,7 @@ export function useSaveLocationQuery(historicalPageData: HistoricalDataTable[] |
   const { data, error, isLoading, isSuccess, refetch } = useQuery({
     queryKey: ["saveLocation"],
     queryFn: async () => {
-      const response = await axios.post(`/user/saveLocation`, {historicalPageData});
+      const response = await axios.post(`/api/user/saveLocation`, {historicalPageData});
       return response.data;
     },
     refetchOnWindowFocus: false,

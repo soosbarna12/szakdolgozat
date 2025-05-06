@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useSaveLocationQuery matches useSaveLocationQuery hook snapshot 1`] = `
+{
+  "data": undefined,
+  "error": null,
+  "isLoading": false,
+  "refetch": [Function],
+}
+`;

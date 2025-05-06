@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "../utils/axiosConfig";
 import { Pages } from "../types/page.type";
+import axios from "../utils/axiosConfig";
 
 
 
@@ -13,7 +13,7 @@ export function useGeolocationQuery(locationName: string, type: Pages) {
       }
 
       try {
-        const response = await axios.get(`/today/location`, {
+        const response = await axios.get(`/api/today/location`, {
           params: {
             location: locationName.trim(),
            },

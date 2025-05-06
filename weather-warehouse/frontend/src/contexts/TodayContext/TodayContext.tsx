@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode, Dispatch, SetStateAction, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { TodayContextType, TodayLocationData, TodayProviderProps } from "./TodayContext.type";
 
 
@@ -15,6 +15,7 @@ export const TodayLocationProvider = ({ children }: TodayProviderProps) => {
 		try {
 			return storedLocation ? JSON.parse(storedLocation) : defaultLocation;
 		} catch (error) {
+			console.error("Failed to parse location from localStorage:", error);
 			return defaultLocation;
 		}
 	});

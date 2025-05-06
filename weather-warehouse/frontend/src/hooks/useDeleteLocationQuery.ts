@@ -7,7 +7,7 @@ export function useDeleteLocationQuery() {
 
   const mutation = useMutation({
     mutationFn: async (userLocationID: number) => {
-      const response = await axios.delete(`/user/deleteLocation`, { params: { userLocationID } });
+      const response = await axios.delete(`/api/user/deleteLocation`, { params: { userLocationID } });
       return response.data;
     },
     onSuccess: () => {
