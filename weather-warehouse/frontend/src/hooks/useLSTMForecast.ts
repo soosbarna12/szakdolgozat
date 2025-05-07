@@ -4,12 +4,11 @@ import axios from "../utils/axiosConfig";
 
 export function useLSTMForecast(locationName: string, date: string) {
   return useQuery({
-    queryKey: ["lstmForecast", locationName, date],
+    queryKey: ["forecast", locationName, date],
     queryFn: async () => {
       // Send location and date to the backend
-      const response = await axios.post("/forecast/lstm", {
+      const response = await axios.post("/api/forecast/forecastLSTM", {
         location: locationName,
-        date,
       });
 
       return response.data.forecast;

@@ -17,6 +17,11 @@ export function ForecastPage() {
     date: todayDate,
   });
 
+  const { data: forecastData, error: forecastError, isLoading: isForecastLoading } = useLSTMForecast(
+    location.name,
+    todayDate
+  );
+
   useEffect(() => {
       setLocation(location);
   }, [location]);
@@ -25,7 +30,22 @@ export function ForecastPage() {
     <>
       <FilterBar type={Pages.Forecast} location={location.name} />
       <ContentBox sx={{ display: "flex", justifyContent: "center" }}>
-
+        {isForecastLoading ? (
+            <p>Loading forecast...</p>
+          ) : forecastError ? (
+            <p>Error fetching forecast data.</p>
+          ) : forecastData ? (
+            <div>
+              <h3>Forecast Data:</h3>
+              <ul>
+                {forecastData.map((value: number, index: number) => (
+                  <li key={index}>Day {index + 1}: {value}°C</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p>No forecast data available.</p>
+          )}
       </ContentBox>
     </>
   );

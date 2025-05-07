@@ -1,5 +1,5 @@
 import { AppBar, CssBaseline, Toolbar } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
 import { TodayContext } from "../../contexts/TodayContext/TodayContext";
 import { Pages } from "../../types/page.type";
@@ -12,9 +12,9 @@ import { ForecastContext } from "../../contexts/ForecastContext/ForecastContext"
 
 export function FilterBar(props: Readonly<FilterBarProps>) {
   const { type, onDateChange, onExportLocation, onSaveLocation, onResetLocation } = props;
-  const { location: historicalLocation, setLocation: historicalSetLocation } = React.useContext(HistoricalContext);
-  const { location: todayLocation, setLocation: todaySetLocation } = React.useContext(TodayContext);
-  const { location: forecastLocation, setLocation: forecastSetLocation } = React.useContext(ForecastContext);
+  const { location: historicalLocation, setLocation: historicalSetLocation } = useContext(HistoricalContext);
+  const { location: todayLocation, setLocation: todaySetLocation } = useContext(TodayContext);
+  const { location: forecastLocation, setLocation: forecastSetLocation } = useContext(ForecastContext);
 
   function renderFilterBar() {
     if (type === Pages.Historical) {
@@ -32,7 +32,6 @@ export function FilterBar(props: Readonly<FilterBarProps>) {
         <LocationSearch type={Pages.Forecast} location={forecastLocation} setLocation={forecastSetLocation} />
       );
     }
-
 
     return (
       <LocationSearch type={type} location={todayLocation} setLocation={todaySetLocation} />
