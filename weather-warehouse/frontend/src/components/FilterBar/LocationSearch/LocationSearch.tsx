@@ -9,6 +9,7 @@ import { StyledAutocompleteDropdown, StyledLocationSearch } from "../../../stlye
 import { Pages } from "../../../types/page.type";
 import { LocationOption, LocationSearchProps } from "./LocationSearch.type";
 
+
 export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const { type: pageType, location, setLocation } = props;
   const [inputValue, setInputValue] = useState(getOptionLabel(location as LocationOption));
@@ -17,7 +18,9 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const [options, setOptions] = useState<Array<LocationOption>>([]);
   const todayLocationOptions = useGeolocationQuery(debouncedValue, pageType);
   const historicalLocations = useHistoricalLocations(debouncedValue, pageType);
-  const { data, error, isLoading } = pageType === Pages.Today ? todayLocationOptions : historicalLocations;
+  //const { data, error, isLoading } =  pageType === Pages.Today ? todayLocationOptions : historicalLocations;
+  const { data, error, isLoading } = getLocationOptions(pageType, todayLocationOptions, historicalLocations);
+
 
   // fetch location suggestions when debounced value changes
   useEffect(() => {
@@ -40,6 +43,17 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
       setInputValue(optionLabel);
     }
   }, [location]);
+
+
+  function getLocationOptions(pageType: Pages, todayLocationOptions: any, historicalLocations: any) {
+    if (pageType === Pages.Today) {
+      return todayLocationOptions;
+    }
+    if (pageType === Pages.Historical || pageType === Pages.Forecast) {
+      return historicalLocations;
+    }
+    return { data: [], error: null, isLoading: false };
+  }
 
   function getOptionLabel(option: LocationOption) {
     if (!option.name || !option.country) {
@@ -83,6 +97,7 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
     }
   }
 
+  
   return (
     <Autocomplete
       options={options}

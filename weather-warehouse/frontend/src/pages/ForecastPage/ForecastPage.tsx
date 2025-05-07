@@ -1,79 +1,32 @@
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid2";
-import Skeleton from "@mui/material/Skeleton";
-import { LocationSearch } from "../../components/FilterBar/LocationSearch/LocationSearch";
-import { HistoricalLocationData } from "../../contexts/HistoricalContext/HistoricalContext.type";
-import { Pages } from "../../types/page.type";
-import ForecastTileGroup from "../../components/DataGrids/ForecastTileGroup/ForecastTileGroup";
+import React, { useContext, useEffect } from "react";
+import { FilterBar } from "../../components/FilterBar/FilterBar";
+import { ForecastContext } from "../../contexts/ForecastContext/ForecastContext";
 import { useLSTMForecast } from "../../hooks/useLSTMForecast";
+import { useHistoricalDataQuery } from "../../hooks/useHistoricalDataQuery";
+import { Pages } from "../../types/page.type";
+import { ContentBox } from "../../stlyes/content.style";
+import dayjs from "dayjs";
 
 export function ForecastPage() {
-  const [location, setLocation] = useState<HistoricalLocationData>({
-    name: "",
-    lat: 0,
-    lon: 0,
+  const { location, setLocation } = useContext(ForecastContext);
+
+  // Fetch historical data for the selected location and today's date
+  const todayDate = dayjs().format("YYYY-MM-DD");
+  const { data: historicalData, error: historicalError, isLoading: isHistoricalLoading } = useHistoricalDataQuery({
+    location,
+    date: todayDate,
   });
 
-  const { data: forecastData, isLoading, error } = useLSTMForecast(location.name);
-
-  function renderShimmerTiles() {
-    return (
-      <Grid container columns={7} spacing={2} justifyContent="center" alignItems="center">
-        {Array.from({ length: 7 }).map((_, index) => (
-          <Skeleton
-            key={index}
-            variant="rectangular"
-            animation="wave"
-            width="100px"
-            height="150px"
-            sx={{ borderRadius: "10px", margin: "8px" }}
-          />
-        ))}
-      </Grid>
-    );
-  }
-
-  function renderForecastTiles() {
-    if (!forecastData || forecastData.length === 0) {
-      return <p style={{ textAlign: "center" }}>No forecast data available.</p>;
-    }
-
-    return (
-      <Grid container columns={7} spacing={2} justifyContent="center" alignItems="center">
-        {forecastData.map((temperature: number, index: number) => (
-          <div
-            key={index}
-            style={{
-              width: "100px",
-              height: "150px",
-              borderRadius: "10px",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "8px",
-              backgroundColor: "#f5f5f5",
-            }}
-          >
-            <p style={{ fontSize: "1.2rem", fontWeight: "bold" }}>{temperature}°C</p>
-          </div>
-        ))}
-      </Grid>
-    );
-  }
+  useEffect(() => {
+      setLocation(location);
+  }, [location]);
 
   return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-        <LocationSearch
-          type={Pages.Forecast}
-          location={location}
-          setLocation={setLocation}
-        />
-      </div>
-      {isLoading && renderShimmerTiles()}
-      {error && <p style={{ textAlign: "center" }}>Error loading forecast data.</p>}
-      {!isLoading && !error && renderForecastTiles()}
-    </div>
+    <>
+      <FilterBar type={Pages.Forecast} location={location.name} />
+      <ContentBox sx={{ display: "flex", justifyContent: "center" }}>
+
+      </ContentBox>
+    </>
   );
-}
+};

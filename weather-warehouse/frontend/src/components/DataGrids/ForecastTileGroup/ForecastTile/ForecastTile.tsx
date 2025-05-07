@@ -1,14 +1,11 @@
 import * as React from 'react';
-import { ForecastPageProps } from '../../../../pages/ForecastPage/ForecastPage.type';
 import { StyledItem } from '../../../../stlyes/content.style';
 
-
-export default function ForecastPage(props: Readonly<ForecastPageProps>) {
-  const { dayName } = props;
-
+export default function ForecastTile({ dayName, temperature }: { dayName: string; temperature: number }) {
   return (
     <StyledItem data-testid="forecastTile">
-      {dayName}
+      <p>{dayName}</p>
+      <p>{temperature}°C</p>
     </StyledItem>
-  )
+  );
 };

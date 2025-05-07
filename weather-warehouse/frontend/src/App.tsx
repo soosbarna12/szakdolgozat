@@ -9,6 +9,7 @@ import { LOCAL_STORAGE_TEMPERATURE_SCALE } from "./consts/temperatureScale.const
 import { LOCAL_STORAGE_THEME_NAME } from "./consts/theme.const";
 import { HistoricalLocationProvider } from "./contexts/HistoricalContext/HistoricalContext";
 import { TodayLocationProvider } from "./contexts/TodayContext/TodayContext";
+import { ForecastLocationProvider } from "./contexts/ForecastContext/ForecastContext";
 import { darkTheme, lightTheme } from "./stlyes/theme.style";
 import { TemperatureScale } from "./types/temperatureScale.type";
 import { Theme } from "./types/theme.type";
@@ -49,10 +50,12 @@ export function App() {
     <QueryClientProvider client={queryClient}>
       <HistoricalLocationProvider>
         <TodayLocationProvider>
-          <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
-            <NavBar isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
-            <BaseComponent />
-          </ThemeProvider >
+          <ForecastLocationProvider>
+            <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
+              <NavBar isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
+              <BaseComponent />
+            </ThemeProvider >
+          </ForecastLocationProvider>
         </TodayLocationProvider>
       </HistoricalLocationProvider>
     </QueryClientProvider>

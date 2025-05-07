@@ -7,12 +7,14 @@ import { ActionsButton } from "./Actions/ActionsButton/ActionsButton";
 import { DateFilter } from "./DateFilter/DateFilter";
 import { FilterBarProps } from "./FitlerBar.type";
 import { LocationSearch } from "./LocationSearch/LocationSearch";
+import { ForecastContext } from "../../contexts/ForecastContext/ForecastContext";
 
 
 export function FilterBar(props: Readonly<FilterBarProps>) {
   const { type, onDateChange, onExportLocation, onSaveLocation, onResetLocation } = props;
   const { location: historicalLocation, setLocation: historicalSetLocation } = React.useContext(HistoricalContext);
   const { location: todayLocation, setLocation: todaySetLocation } = React.useContext(TodayContext);
+  const { location: forecastLocation, setLocation: forecastSetLocation } = React.useContext(ForecastContext);
 
   function renderFilterBar() {
     if (type === Pages.Historical) {
@@ -24,6 +26,13 @@ export function FilterBar(props: Readonly<FilterBarProps>) {
         </>
       );
     }
+
+    if (type === Pages.Forecast) {
+      return (
+        <LocationSearch type={Pages.Forecast} location={forecastLocation} setLocation={forecastSetLocation} />
+      );
+    }
+
 
     return (
       <LocationSearch type={type} location={todayLocation} setLocation={todaySetLocation} />

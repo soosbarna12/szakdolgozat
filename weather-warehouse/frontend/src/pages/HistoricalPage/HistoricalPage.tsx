@@ -24,14 +24,8 @@ import { TemperatureScale } from "../../types/temperatureScale.type";
 
 export function HistoricalPage() {
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
-
-  // stores the current location
   const { location, setLocation, temperatureScale } = useContext(HistoricalContext);
-
-  // raw weather data from database by location and date
   const { data: historicalData, error } = useHistoricalDataQuery({ location: location, date: date?.format("YYYY-MM-DD") });
-
-  // processed historicalData for the DataTable component
   const { historicalPageData, setHistoricalPageData } = useHistoricalTableData({ data: historicalData, date });
   const { refetch: refetchSaveLocationQuery } = useSaveLocationQuery(historicalPageData);
   const columnDef = getAllHistoricalDataTableColumns(temperatureScale as TemperatureScale);
