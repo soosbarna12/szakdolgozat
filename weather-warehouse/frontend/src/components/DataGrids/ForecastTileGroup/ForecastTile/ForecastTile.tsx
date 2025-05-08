@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 export function ForecastTile({ dayName, date, temperature }: Readonly<ForecastTileProps>) {
   const theme = useTheme();
   const { temperatureScale } = useContext(HistoricalContext);
-  const temperatureScaleLabel = temperatureScale === TemperatureScale.Celsius ? "°C" : "°F";
+  const temperatureScaleLabel = (temperatureScale === TemperatureScale.Celsius ? "°C" : "°F");
 
   function getFormattedTime(date: string) {
     const dayName = dayjs(date).format("dddd");
@@ -38,7 +38,7 @@ export function ForecastTile({ dayName, date, temperature }: Readonly<ForecastTi
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center", mt: 1 }} color={theme.palette.primary.dark}>
         <Typography data-testid="temperature" variant="h2" sx={{ fontSize: "30px", ml: 1, m: 0 }}>
-          {temperatureScaleChanger(TemperatureScale.Celsius, temperatureScale as TemperatureScale, temperature)}
+          {temperatureScaleChanger(TemperatureScale.Celsius, temperatureScale as TemperatureScale, Number(temperature))}
           <span style={{ fontSize: "0.5em", verticalAlign: "super" }}>{temperatureScaleLabel}</span>
         </Typography>
       </Box>

@@ -36,11 +36,11 @@ export function ProfileMenu(props: Readonly<ProfileMenuProps>) {
   }
 
   function handleCelsiusScale() {
-    setTemperatureScale(JSON.stringify(TemperatureScale.Celsius));
+    setTemperatureScale(TemperatureScale.Celsius);
   }
 
   function handleFahrenheitScale() {
-    setTemperatureScale(JSON.stringify(TemperatureScale.Fahrenheit));
+    setTemperatureScale(TemperatureScale.Fahrenheit);
   }
 
   function handleLightModeIconClick() {

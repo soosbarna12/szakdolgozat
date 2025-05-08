@@ -7,6 +7,8 @@ import { Pages } from "../../types/page.type";
 import { ContentBox } from "../../stlyes/content.style";
 import { ForecastTile } from "../../components/DataGrids/ForecastTileGroup/ForecastTile/ForecastTile";
 import { Skeleton } from "@mui/material";
+import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
+import { TemperatureScale } from "../../types/temperatureScale.type";
 
 export function ForecastPage() {
   const { location } = useContext(ForecastContext);
