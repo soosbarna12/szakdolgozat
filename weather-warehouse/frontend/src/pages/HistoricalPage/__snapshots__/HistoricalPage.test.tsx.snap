@@ -184,7 +184,7 @@ exports[`pages/HistoricalPage handles Reset button click in ActionsMenu 1`] = `
     </div>
   </header>
   <div
-    class="MuiBox-root css-uasic2"
+    class="MuiBox-root css-1gfjemb"
   >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 css-ubb9a5-MuiGrid2-root"
@@ -469,7 +469,7 @@ exports[`pages/HistoricalPage matches HistoricalPage component snapshot 1`] = `
     </div>
   </header>
   <div
-    class="MuiBox-root css-uasic2"
+    class="MuiBox-root css-1gfjemb"
   >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 css-ubb9a5-MuiGrid2-root"

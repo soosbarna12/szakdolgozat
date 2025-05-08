@@ -70,7 +70,7 @@ export function HistoricalPage() {
         onResetLocation={handleResetLocation}
       />
 
-      <ContentBox>
+      <ContentBox sx={{ paddingBottom: "2px" }}>
         <Grid container spacing={2}>
 
           <Grid size={{ xs: 6, md: 8 }}>

@@ -98,7 +98,7 @@ exports[`pages/TodayPage matches TodayPage component snapshot 1`] = `
     </div>
   </header>
   <div
-    class="MuiBox-root css-g04nnx"
+    class="MuiBox-root css-1v3ilv5"
   >
     <div
       class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-osau60-MuiPaper-root"

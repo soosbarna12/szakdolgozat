@@ -13,14 +13,15 @@ export function ForecastPage() {
   const { data: forecastData, isLoading, error } = useLSTMForecast(location.name);
 
   function renderSkeletons() {
-    return Array.from({ length: 7 }).map((_, index) => (
+    if (!isLoading) return null;
+    return [0, 1, 2, 3, 4, 5, 6].map((index) => (
       <Grid key={index}>
         <Skeleton
           data-testid="forecastTileSkeleton"
           variant="rectangular"
           animation="wave"
-          width="100%"
-          height="100%"
+          width="180px"
+          height="150px"
           sx={{ borderRadius: '10px' }}
         />
       </Grid>
@@ -28,12 +29,14 @@ export function ForecastPage() {
   }
 
   function renderError() {
+    if (!error) return null;
     return <p>Error fetching forecast data.</p>;
   }
 
   function renderForecastTiles() {
+    if (isLoading || error) return null;
     return forecastData?.map((day: { date: string; temperature: number | null }, index: number) => (
-      <Grid key={index}>
+      <Grid key={index} sx={{ paddingBottom: "2px" }}>
         <ForecastTile
           date={day.date}
           temperature={day.temperature != null ? day.temperature.toFixed(2) : "N/A"}
@@ -45,12 +48,11 @@ export function ForecastPage() {
   return (
     <>
       <FilterBar type={Pages.Forecast} location={location.name} />
-      <ContentBox sx={{ display: "flex", justifyContent: "center" }}>
+      <ContentBox sx={{ display: "flex", justifyContent: "center", paddingBottom: "2px" }}>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
-          {isLoading && renderSkeletons()}
-          {error && renderError()}
-          {!isLoading && !error && forecastData && renderForecastTiles()}
-          {!isLoading && !error && !forecastData && <p>No forecast data available.</p>}
+          {renderSkeletons()}
+          {renderError()}
+          {renderForecastTiles()}
         </Grid>
       </ContentBox>
     </>

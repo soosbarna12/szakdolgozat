@@ -101,7 +101,7 @@ exports[`BaseComponent matches BaseComponent snapshot 1`] = `
         </div>
       </header>
       <div
-        class="MuiBox-root css-g04nnx"
+        class="MuiBox-root css-1v3ilv5"
       >
         <span
           class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-jk665a-MuiSkeleton-root"
@@ -208,7 +208,7 @@ exports[`BaseComponent matches BaseComponent snapshot 1`] = `
       </div>
     </header>
     <div
-      class="MuiBox-root css-g04nnx"
+      class="MuiBox-root css-1v3ilv5"
     >
       <span
         class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-jk665a-MuiSkeleton-root"

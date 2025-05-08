@@ -47,7 +47,7 @@ export function TodayPage() {
   return (
     <>
       <FilterBar type={Pages.Today} location={location.name} />
-      <ContentBox sx={{ display: "flex", justifyContent: "center" }}>
+      <ContentBox sx={{ display: "flex", justifyContent: "center", paddingBottom: "2px" }}>
         {renderShimmer()}
         {renderError()}
         {renderWeatherCard()}

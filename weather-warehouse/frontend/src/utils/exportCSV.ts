@@ -3,7 +3,6 @@ import { HistoricalDataTable } from "../types/historicalDataTable.type";
 
 export function exportCSV(data: HistoricalDataTable[]) {
   if (!data || data.length === 0) {
-    console.warn("No data available to export.");
     return;
   }
 

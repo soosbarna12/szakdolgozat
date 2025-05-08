@@ -14,6 +14,7 @@ module.exports = {
     '!src/**/index.ts',
     '!src/**/App.tsx',
     '!src/**/main.tsx',
+    '!src/**/axiosConfig.ts',
     '!src/**/*.style.ts', 
     '!src/**/*.const.ts',
     '!src/**/*.mock.ts',

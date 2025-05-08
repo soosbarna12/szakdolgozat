@@ -18,7 +18,6 @@ describe('utils/exportCSV', () => {
 
     exportCSV([]);
 
-    expect(console.error).toHaveBeenCalledWith('No data available to export.');
     expect(mkConfig).not.toHaveBeenCalled();
     expect(generateCsv).not.toHaveBeenCalled();
   });
