@@ -7,7 +7,6 @@ router.post("/forecastLSTM", (req, res) => {
   const { location } = req.body;
 
   if (!location) {
-    console.log("Error: Location is required");
     return res.status(400).json({ error: "Location is required" });
   }
 
@@ -22,12 +21,11 @@ router.post("/forecastLSTM", (req, res) => {
   console.log(`Executing command: ${command}`);
   exec(command, (error, stdout, stderr) => {
     if (error) {
-      console.error(`Error executing notebook: ${error.message}`);
       return res.status(500).json({ error: "Failed to run notebook" });
     }
 
     console.log("Notebook executed successfully. Extracting forecast data...");
-    const forecastData = extractForecastData(outputPath); // Implement this function to parse the notebook output
+    const forecastData = extractForecastData(outputPath);
     console.log("Extracted forecast data:", forecastData);
 
     res.json({ forecast: forecastData });
@@ -43,13 +41,9 @@ function extractForecastData(outputPath) {
     cell.source.some(line => line.includes("forecast_data"))
   );
 
-  if (!forecastCell || !forecastCell.outputs || forecastCell.outputs.length === 0) {
-    throw new Error("Forecast data not found in notebook output.");
-  }
-
   // Extract the forecast data from the cell's output
-  const forecastOutput = forecastCell.outputs.find(output => output.output_type === "execute_result");
-  if (!forecastOutput || !forecastOutput.data || !forecastOutput.data["text/plain"]) {
+  const forecastOutput = forecastCell?.outputs.find(output => output?.output_type === "execute_result");
+  if (!forecastOutput || !forecastOutput?.data || !forecastOutput?.data["text/plain"]) {
     throw new Error("Forecast data output is missing or malformed.");
   }
 
@@ -68,4 +62,7 @@ function extractForecastData(outputPath) {
   return forecastData;
 }
 
-module.exports = router;
+module.exports = {
+  router,
+  extractForecastData,
+};

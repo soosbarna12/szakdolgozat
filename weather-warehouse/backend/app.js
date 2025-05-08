@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 // routes
-const forecast = require("./src/routes/forecast");
+const { router: forecast } = require("./forecast");
 const today = require("./src/routes/today");
 const historical = require("./src/routes/historical");
 const user = require("./src/routes/user");

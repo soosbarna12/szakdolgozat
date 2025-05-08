@@ -81,6 +81,20 @@ describe("POST /user/register", () => {
     expect(response.status).toBe(400);
     expect(response.body).toEqual({ error: "Username already exists." });
   });
+
+  it("returns 500 if there is a server error", async () => {
+    sql.connect.mockRejectedValueOnce(new Error("Database connection failed"));
+
+    const response = await request(app).post("/user/register").send({
+      username: "newuser",
+      password: "password123",
+      securityQuestion: "What is your favorite color?",
+      securityAnswer: "Blue",
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ error: "Database connection failed" });
+  });
 });
 
 describe("POST /user/login", () => {
@@ -245,6 +259,37 @@ describe("POST /user/recoverPassword", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({ error: { error: "Validation failed" } });
+  });
+
+  it("returns 404 if user is not found", async () => {
+    const mockRequest = {
+      input: jest.fn().mockReturnThis(),
+      query: jest.fn().mockResolvedValueOnce({ recordset: [] }), // No user found
+    };
+
+    sql.connect.mockResolvedValueOnce({ request: () => mockRequest });
+
+    const response = await request(app).post("/user/recoverPassword").send({
+      username: "nonexistentuser",
+      securityAnswer: "Blue",
+      newPassword: "newpassword123",
+    });
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: "User not found." });
+  });
+
+  it("returns 500 if there is a server error", async () => {
+    sql.connect.mockRejectedValueOnce(new Error("Database connection failed"));
+
+    const response = await request(app).post("/user/recoverPassword").send({
+      username: "testuser",
+      securityAnswer: "Blue",
+      newPassword: "newpassword123",
+    });
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ error: "Database connection failed" });
   });
 });
 

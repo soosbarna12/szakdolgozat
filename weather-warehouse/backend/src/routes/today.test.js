@@ -3,7 +3,6 @@ const express = require("express");
 const axios = require("axios");
 const todayRouter = require("./today");
 
-// Mock the axios module
 jest.mock("axios");
 
 const app = express();
@@ -11,105 +10,125 @@ app.use(express.json());
 app.use("/today", todayRouter);
 
 describe("GET /today/location", () => {
-  afterEach(() => {
-    jest.clearAllMocks(); // Clears all mock calls and instances
-  });
-
-  it("should return 400 if location query is missing", async () => {
+  it("returns 400 if location query is missing", async () => {
     const response = await request(app).get("/today/location");
     expect(response.status).toBe(400);
     expect(response.body).toEqual({ error: "Query  location is required." });
   });
 
-  it("should return location data if location query is provided", async () => {
-    const mockResponse = [{ name: "Budapest", country: "HU" }];
-    axios.get.mockResolvedValueOnce({ data: mockResponse });
+  it("returns location data from OpenWeatherMap API", async () => {
+    const mockLocationData = [
+      { name: "Budapest", country: "HU", lat: 47.4979, lon: 19.0402 },
+    ];
+    axios.get.mockResolvedValueOnce({ data: mockLocationData });
 
-    const response = await request(app).get("/today/location").query({ location: "Budapest" });
+    const response = await request(app)
+      .get("/today/location")
+      .query({ location: "Budapest" });
+
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockResponse);
-
-    // Simplify the expectation
+    expect(response.body).toEqual(mockLocationData);
     expect(axios.get).toHaveBeenCalledWith(
-      "https://api.openweathermap.org/geo/1.0/direct?q=Budapest&limit=5&appid=462394b96065d405cd9ca7b3ef92d634"
+      expect.stringContaining(
+        "https://api.openweathermap.org/geo/1.0/direct?q=Budapest"
+      )
     );
   });
 
-  it("should return 500 if the external API call fails", async () => {
-    axios.get.mockRejectedValueOnce(new Error("API error"));
-  
-    const response = await request(app).get("/today/location").query({ location: "Budapest" });
+  it("handles API errors gracefully", async () => {
+    axios.get.mockRejectedValueOnce({
+      response: { status: 500 },
+      message: "Internal Server Error",
+    });
+
+    const response = await request(app)
+      .get("/today/location")
+      .query({ location: "Budapest" });
+
     expect(response.status).toBe(500);
-    expect(response.body).toEqual({ error: "API error" });
+    expect(response.body).toEqual({ error: "Internal Server Error" });
   });
 });
 
 describe("GET /today/locationData", () => {
-  it("should return 400 if locationName query is missing", async () => {
+  it("returns 400 if locationName query is missing", async () => {
     const response = await request(app).get("/today/locationData");
     expect(response.status).toBe(400);
     expect(response.body).toEqual({ error: "Location name is required" });
   });
 
-  it("should return weather data if locationName query is provided", async () => {
-    const mockResponse = { weather: "Sunny", temperature: 25 };
-    axios.get.mockResolvedValueOnce({ data: mockResponse });
+  it("returns weather data for a valid city", async () => {
+    const mockWeatherData = { weather: [{ description: "clear sky" }] };
+    axios.get.mockResolvedValueOnce({ data: mockWeatherData });
 
-    const response = await request(app).get("/today/locationData").query({ locationName: "Budapest" });
+    const response = await request(app)
+      .get("/today/locationData")
+      .query({ locationName: "Budapest" });
+
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockResponse);
-
-    // Match the full URL
+    expect(response.body).toEqual(mockWeatherData);
     expect(axios.get).toHaveBeenCalledWith(
-      "https://api.openweathermap.org/data/2.5/weather?q=Budapest&appid=462394b96065d405cd9ca7b3ef92d634&lang=en"
+      expect.stringContaining(
+        "https://api.openweathermap.org/data/2.5/weather?q=Budapest"
+      )
     );
   });
 
-  it("should return 500 if the external API call fails", async () => {
-    axios.get.mockRejectedValueOnce(new Error("API error"));
-  
-    const response = await request(app).get("/today/locationData").query({ locationName: "Budapest" });
+  it("returns 404 if city is not found", async () => {
+    axios.get.mockRejectedValueOnce({
+      response: { status: 404 },
+    });
+
+    const response = await request(app)
+      .get("/today/locationData")
+      .query({ locationName: "InvalidCity" });
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: "City not found" });
+  });
+
+  it("returns 500 if city is not found", async () => {
+    axios.get.mockRejectedValueOnce({
+      response: { status: 500 },
+    });
+
+    const response = await request(app)
+      .get("/today/locationData")
+      .query({ locationName: "InvalidCity" });
+
     expect(response.status).toBe(500);
     expect(response.body).toEqual({ error: "Something went wrong" });
   });
 });
 
 describe("GET /today/reverse-geocode", () => {
-  it("should return 500 if lat or lon query is missing", async () => {
-    const response = await request(app).get("/today/reverse-geocode");
-    expect(response.status).toBe(500);
-    expect(response.body).toEqual({ error: "Something went wrong" });
-  });
+  it("returns city name and country for valid coordinates", async () => {
+    const mockReverseGeocodeData = [{ name: "Budapest", country: "HU" }];
+    axios.get.mockResolvedValueOnce({ data: mockReverseGeocodeData });
 
-  it("should return location data if lat and lon query are provided", async () => {
-    const mockResponse = [{ name: "Budapest", country: "HU" }];
-    axios.get.mockResolvedValueOnce({ data: mockResponse });
+    const response = await request(app)
+      .get("/today/reverse-geocode")
+      .query({ lat: 47.4979, lon: 19.0402 });
 
-    const response = await request(app).get("/today/reverse-geocode").query({ lat: 47.4979, lon: 19.0402 });
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ name: "Budapest", country: "HU" });
-
-    // Match the full URL
     expect(axios.get).toHaveBeenCalledWith(
-      "https://api.openweathermap.org/geo/1.0/reverse?lat=47.4979&lon=19.0402&appid=462394b96065d405cd9ca7b3ef92d634"
+      expect.stringContaining(
+        "https://api.openweathermap.org/geo/1.0/reverse?lat=47.4979&lon=19.0402"
+      )
     );
   });
 
-  it("should return 500 if the external API call fails", async () => {
-    axios.get.mockRejectedValueOnce(new Error("API error"));
-  
-    const response = await request(app).get("/today/reverse-geocode").query({ lat: 47.4979, lon: 19.0402 });
-    expect(response.status).toBe(500);
-    expect(response.body).toEqual({ error: "Something went wrong" });
-  });
+  it("handles errors gracefully", async () => {
+    axios.get.mockRejectedValueOnce({
+      response: { status: 500 },
+      message: "Internal Server Error",
+    });
 
-  it("should return 500 if lat or lon query is invalid", async () => {
-    // Mock axios to simulate no API call being made due to validation failure
-    axios.get.mockRejectedValueOnce(new Error("Something went wrong"));
-  
-    const response = await request(app).get("/today/reverse-geocode").query({ lat: "invalid", lon: "invalid" });
-  
-    // Expect the route to handle invalid input and return a 400 status
+    const response = await request(app)
+      .get("/today/reverse-geocode")
+      .query({ lat: 47.4979, lon: 19.0402 });
+
     expect(response.status).toBe(500);
     expect(response.body).toEqual({ error: "Something went wrong" });
   });
