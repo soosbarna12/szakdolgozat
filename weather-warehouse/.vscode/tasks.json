@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run Papermill with Debugger",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\venv\\Scripts\\activate; python -m debugpy --listen 5678 --wait-for-client -m papermill \"D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\src\\notebooks\\lstm_forecast.ipynb\" -p location \"London Gatwick Airport\" \"D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\src\\notebooks\\output.ipynb\""
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

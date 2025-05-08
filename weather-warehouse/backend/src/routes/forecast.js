@@ -21,8 +21,15 @@ router.post("/forecastLSTM", (req, res) => {
   console.log(`Executing command: ${command}`);
   exec(command, (error, stdout, stderr) => {
     if (error) {
-      return res.status(500).json({ error: "Failed to run notebook" });
+      return res.status(500).json({ error: "Failed to run notebook", error });
     }
+
+
+    if (stderr) {
+      console.error("Command stderr:", stderr);
+    }
+    console.log("Command stdout:", stdout);
+
 
     console.log("Notebook executed successfully. Extracting forecast data...");
     const forecastData = extractForecastData(outputPath);

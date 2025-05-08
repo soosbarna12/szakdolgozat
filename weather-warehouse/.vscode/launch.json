@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Papermill with Debugger",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "papermill",
+        "D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\src\\notebooks\\lstm_forecast.ipynb",
+        "-p",
+        "location",
+        "London Gatwick Airport",
+        "D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\src\\notebooks\\output.ipynb"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/backend",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/backend"
+      }
+    }
+  ]
+}

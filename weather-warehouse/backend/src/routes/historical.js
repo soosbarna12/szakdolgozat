@@ -15,6 +15,8 @@ router.post('/historicalData', async (req, res) => {
       return res.status(400).json({ error: validationResult?? "Location and date required" });
     }
 
+    console.log(location, date)
+
     const pool = await sql.connect();
     const result = await pool.request()
     .input('location', sql.NVarChar, location.name)
@@ -50,6 +52,8 @@ router.post('/historicalData', async (req, res) => {
     res.status(200).json(historicalData);
 
   } catch (error) {
+
+    console.log(error);
     res.status(500).json({ error: 'Failed to fetch historical data' });
   }
 });
