@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid2";
 import React from "react";
-import ForecastTile from "./ForecastTile/ForecastTile";
+import { ForecastTile } from "./ForecastTile/ForecastTile";
 
 export default function ForecastTileGroup({ forecastData }: { forecastData: number[] }) {
   return (
