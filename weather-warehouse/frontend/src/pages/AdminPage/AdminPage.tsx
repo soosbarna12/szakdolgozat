@@ -13,8 +13,6 @@ export function AdminPage() {
   const { data: users, error, isLoading, refetch } = useFetchUsersQuery();
 
 
-  // await for the acceptUserMutation to complete before refetching
-  // load userdata before accepting or deleting a user (usernotfound error)
   async function handleAcceptUser(id: number) {
     acceptUserMutatue(id)?.then(() => { refetch() });
   }

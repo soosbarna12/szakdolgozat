@@ -19,8 +19,8 @@ dayjs.extend(utc);
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 1, // Retry failed requests once
-      staleTime: 1000 * 60 * 5, // Data is fresh for 5 minutes
+      retry: 1,
+      staleTime: 1000 * 60 * 5,
     },
   },
 });
@@ -28,10 +28,9 @@ const queryClient = new QueryClient({
 export function App() {
   const [isLightTheme, setIsLightTheme] = useState(() => {
     const storedTheme = localStorage.getItem(LOCAL_STORAGE_THEME_NAME);
-    return storedTheme !== Theme.Dark; // default to light if no value is stored
+    return storedTheme !== Theme.Dark;
   });
 
-  // save theme to local storage to not default the theme after redirecting to base url
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_THEME_NAME, isLightTheme ? Theme.Light : Theme.Dark);
   }, [isLightTheme]);

@@ -2,13 +2,13 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   server: {
-    port: 4000, // Change to your desired port
-    host: 'localhost', // Optional: specify the host
+    port: 4000, 
+    host: 'localhost',
     proxy: {
       '/api': {
-        target: 'http://localhost:4000', // Replace with your backend server's URL
+        target: 'http://localhost:4000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''), // Remove '/api' prefix if needed
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

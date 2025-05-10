@@ -28,12 +28,11 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
     }
   }, [open]);
 
-  // useffectbe kell rakni, mert ha a login sikeres, akkor a useLoginQuery hookban a isSuccess true lesz, viszont a refretch meghívása után nem fog egyből az isSuccess frissülni
   useEffect(() => {
     if (isSuccess) {
       onLoginSuccess();
       onClose();
-      window.location.reload(); // refresh the page
+      window.location.reload();
     }
   }, [isSuccess])
 
@@ -55,7 +54,7 @@ export function LoginForm(props: Readonly<LoginFormProps>) {
   }
 
   function handleLogin() {
-    refetchLoginQuery(); // neccessary to use this query when clicking the login button
+    refetchLoginQuery();
   };
 
   function handleSignUpClick() {

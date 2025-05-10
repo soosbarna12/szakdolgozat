@@ -1,14 +1,11 @@
 import Grid from "@mui/material/Grid2";
 import React, { useContext, useState } from "react";
 import { ContentBox, StyledItem } from "../../stlyes/content.style";
-
 import { DataChart } from "../../components/DataGrids/DataChart/DataChart";
 import { DataMap } from "../../components/DataGrids/DataMap/DataMap";
 import { DataTable } from "../../components/DataGrids/DataTable/DataTable";
 import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { Pages } from "../../types/page.type";
-
-
 import dayjs from "dayjs";
 import { PrecipitationDataChart } from "../../components/DataGrids/DataChart/PrecipitationDataChart";
 import { WindPressureCombinedChart } from "../../components/DataGrids/DataChart/WindPressureCombinedChart";
@@ -21,7 +18,6 @@ import { useSaveLocationQuery } from "../../hooks/useSaveLocationQuery";
 import { exportCSV } from "../../utils/exportCSV";
 import { TemperatureScale } from "../../types/temperatureScale.type";
 
-
 export function HistoricalPage() {
   const [date, setDate] = useState<dayjs.Dayjs | null>(null);
   const { location, setLocation, temperatureScale } = useContext(HistoricalContext);
@@ -31,7 +27,6 @@ export function HistoricalPage() {
   const columnDef = getAllHistoricalDataTableColumns(temperatureScale as TemperatureScale);
 
 
-  // handle date change
   const handleDateChange = (dateValue: dayjs.Dayjs | null) => {
     setDate(dateValue);
   };
@@ -98,12 +93,6 @@ export function HistoricalPage() {
               <DataTable data={historicalPageData} columns={columnDef} />
             </StyledItem>
           </Grid>
-
-          {/*<Grid size={{ xs: 6, md: 6 }}>
-            <StyledItem sx={{ height: "400px" }}>
-              <DataTable data={historicalPageData} columns={tempHistoricalDataTableColumns} />
-            </StyledItem>
-          </Grid>*/}
 
           <Grid size={{ xs: 6, md: 6 }}>
             <StyledItem sx={{ height: "400px" }} data-testid="dataTable">

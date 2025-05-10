@@ -69,7 +69,7 @@ export const StlyedLineChart = styled(LineChart)(({ theme }) => ({
 export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   borderRadius: 10,
   border: 0,
-  overflow: "auto", // Allow scrollbars
+  overflow: "auto",
   '& .MuiDataGrid-columnHeaders': {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
@@ -80,9 +80,8 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   '& .MuiDataGrid-columnHeader': {
     backgroundColor: theme.palette.primary.dark,
   },
-  // Override global scrollbar hiding
   '&::-webkit-scrollbar': {
-    display: 'block', // Ensure scrollbar is visible
+    display: 'block',
     width: '8px',
     height: '8px',
   },

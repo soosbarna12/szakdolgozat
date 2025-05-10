@@ -3,7 +3,7 @@ import { ForecastContextType, ForecastLocationData, ForecastProviderProps } from
 
 export const ForecastContext = createContext<ForecastContextType>({
   location: { name: "", lat: 0, lon: 0 },
-  setLocation: () => {},
+  setLocation: () => { },
 });
 
 export const ForecastLocationProvider = ({ children }: ForecastProviderProps) => {
@@ -18,7 +18,6 @@ export const ForecastLocationProvider = ({ children }: ForecastProviderProps) =>
   });
 
   useEffect(() => {
-    // Persist location to localStorage whenever it changes
     localStorage.setItem("forecastLocation", JSON.stringify(location));
   }, [location]);
 

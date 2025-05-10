@@ -20,7 +20,6 @@ export const TodayLocationProvider = ({ children }: TodayProviderProps) => {
 	});
 
 	useEffect(() => {
-		// Persist location to localStorage whenever it changes
 		localStorage.setItem("todayLocation", JSON.stringify(location));
 	}, [location]);
 

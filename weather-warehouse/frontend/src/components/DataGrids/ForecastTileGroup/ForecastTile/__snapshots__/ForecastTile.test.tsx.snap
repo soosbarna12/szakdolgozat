@@ -6,12 +6,12 @@ exports[`DataGrids/ForecastTileGroup/ForecastTile matches ForecastTile component
   "baseElement": <body>
     <div>
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-188vk8p-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
         data-testid="forecastTile"
         style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
       >
         <h6
-          class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h6 css-h9fkkg-MuiTypography-root"
           data-testid="dayName"
         >
           Thursday
@@ -37,17 +37,37 @@ exports[`DataGrids/ForecastTileGroup/ForecastTile matches ForecastTile component
             </span>
           </h2>
         </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+            data-testid="precipitation"
+          >
+            Precipitation: 
+            0.50
+             mm/h
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+            data-testid="pressure"
+          >
+            Pressure: 
+            1013.00
+             hPa
+          </p>
+        </div>
       </div>
     </div>
   </body>,
   "container": <div>
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-188vk8p-MuiPaper-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
       data-testid="forecastTile"
       style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
     >
       <h6
-        class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h6 css-h9fkkg-MuiTypography-root"
         data-testid="dayName"
       >
         Thursday
@@ -72,6 +92,26 @@ exports[`DataGrids/ForecastTileGroup/ForecastTile matches ForecastTile component
             °C
           </span>
         </h2>
+      </div>
+      <div
+        class="MuiBox-root css-0"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          data-testid="precipitation"
+        >
+          Precipitation: 
+          0.50
+           mm/h
+        </p>
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          data-testid="pressure"
+        >
+          Pressure: 
+          1013.00
+           hPa
+        </p>
       </div>
     </div>
   </div>,

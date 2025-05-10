@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "../utils/axiosConfig";
+import { ForecastLocationData } from "../contexts/ForecastContext/ForecastContext.type";
 
-export function useLSTMForecast(locationName: string) {
+export function useLSTMForecast(location: ForecastLocationData) {
   const { data, error, isLoading } = useQuery({
-    queryKey: ["forecast", locationName],
+    queryKey: ["forecast", location],
     queryFn: async () => {
-      const response = await axios.post("/api/forecast/forecastLSTM", { location: locationName });
-      return response.data.forecast;
+      const response = await axios.post("/api/forecast/forecastLSTM", { location: location });
+      return response.data;
     },
-    enabled: !!locationName,
+    enabled: !!location,
     retry: 1,
   });
 

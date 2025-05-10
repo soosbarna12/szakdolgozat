@@ -16,9 +16,8 @@ export function useHistoricalLocations(inputPartialLocation: string, type: Pages
       return response.data;
     },
     
-    //enabled: (inputPartialLocation.length !== 0 && type === Pages.Historical),
     enabled: (inputPartialLocation.length !== 0 && (type === Pages.Historical || type === Pages.Forecast)),
-    refetchOnWindowFocus: false, // Prevent refetching when the window regains focus
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

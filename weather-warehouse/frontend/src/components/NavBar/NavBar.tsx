@@ -5,13 +5,16 @@ import { LocationButton } from './LocationSelector/LocationButton/LocationButton
 import { NavBarProps } from './NavBar.type';
 import { ProfileButton } from './ProfileSettings/ProfileButton/ProfileButton';
 import { TimeTabBar } from './TimeTabBar/TimeTabBar';
+import { useLocation } from 'react-router-dom';
 
 export function NavBar(props: Readonly<NavBarProps>) {
 	const { isLightTheme, handleSetLightTheme } = props;
+	const location = useLocation();
+	const isHistoricalPage = location.pathname.toLowerCase().includes('historical');
 
 	return (
 		<>
-			<CssBaseline data-testid="cssBaseline" /> {/* for admin page, if not resets the theme*/}
+			<CssBaseline data-testid="cssBaseline" />
 			<AppBar
 				data-testid="appBar"
 				position="static"
@@ -22,7 +25,7 @@ export function NavBar(props: Readonly<NavBarProps>) {
 				}}
 			>
 				<Toolbar data-testid="toolbar">
-					<LocationButton />
+					{isHistoricalPage && <LocationButton />}
 					<TimeTabBar />
 					<ProfileButton isLightTheme={isLightTheme} handleSetLightTheme={handleSetLightTheme} />
 				</Toolbar>

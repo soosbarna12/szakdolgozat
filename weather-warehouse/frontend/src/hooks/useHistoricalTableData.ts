@@ -4,7 +4,6 @@ import { UseHistoricalDataProps } from "../pages/HistoricalPage/HistoricalPage.t
 
 
 export function useHistoricalTableData(props: Readonly<UseHistoricalDataProps>) {
-  //const [tableData, setTableData] = useState<HistoricalDataTable[]>([]);
   const { historicalPageData, setHistoricalPageData } = useContext(HistoricalContext);
   const { data: newRecord } = props;
 

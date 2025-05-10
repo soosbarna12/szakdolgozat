@@ -24,7 +24,6 @@ export function BaseComponent() {
   }, [data]);
 
 
-  // get user's default location
   useEffect(() => {
     if (navigator.geolocation && !location?.name) {
       navigator.geolocation.getCurrentPosition(

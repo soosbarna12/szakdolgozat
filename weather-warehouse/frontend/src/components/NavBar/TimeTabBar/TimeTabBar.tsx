@@ -13,7 +13,6 @@ export function TimeTabBar() {
 
   function renderMenu() {
     const availableTabs = ROUTES.filter((route) => {
-      // Exclude the "Admin" route if the user is not an admin
       if (route.id === 'Admin' && !isAdmin) {
         return false;
       }

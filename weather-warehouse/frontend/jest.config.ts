@@ -27,7 +27,7 @@ module.exports = {
     'node_modules/(?!(react-leaflet|@react-leaflet|leaflet)/)',
   ],
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': '<rootDir>/__mock__/styleMock.js', // Correct path for CSS mock
+    '\\.(css|less|scss|sass)$': '<rootDir>/__mock__/styleMock.js',
   },
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
 };

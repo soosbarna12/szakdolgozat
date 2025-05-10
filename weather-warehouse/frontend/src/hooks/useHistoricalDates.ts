@@ -14,12 +14,11 @@ export function useHistoricalDates(location: string) {
         params: { location },
       });
       
-      // format the dates to YYYY-MM-DD for debugging
       return response.data.map((date: any) => dayjs(date.date).format("YYYY-MM-DD"));
     },
     
-    enabled: !!(location), // Only fetch if location is provided
-    refetchOnWindowFocus: false, // Prevent refetching when the window regains focus
+    enabled: !!(location),
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

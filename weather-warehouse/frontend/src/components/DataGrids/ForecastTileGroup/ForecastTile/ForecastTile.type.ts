@@ -1,6 +1,6 @@
+import { ForecastData } from "../../../../types/forecastData.type";
+
 export interface ForecastTileProps {
-  dayName?: string;
-  date?: string;
-  temperature?: string | number;
+  data: ForecastData;
   isLoading?: boolean;
 }

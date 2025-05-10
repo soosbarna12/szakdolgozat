@@ -8,7 +8,6 @@ export function temperatureScaleChanger(currentTempScale: TemperatureScale, goal
     return tempValue;
   }
 
-  // c to c / f to f
   if (goalTempScale === currentTempScale) {
     return tempValue;
   }

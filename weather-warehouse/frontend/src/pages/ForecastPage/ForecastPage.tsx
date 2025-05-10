@@ -4,45 +4,28 @@ import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { ForecastContext } from "../../contexts/ForecastContext/ForecastContext";
 import { useLSTMForecast } from "../../hooks/useLSTMForecast";
 import { Pages } from "../../types/page.type";
-import { ContentBox } from "../../stlyes/content.style";
+import { ContentBox, StyledItem } from "../../stlyes/content.style";
 import { ForecastTile } from "../../components/DataGrids/ForecastTileGroup/ForecastTile/ForecastTile";
-import { Skeleton } from "@mui/material";
-import { HistoricalContext } from "../../contexts/HistoricalContext/HistoricalContext";
-import { TemperatureScale } from "../../types/temperatureScale.type";
+import { ForecastData } from "../../types/forecastData.type";
 
 export function ForecastPage() {
   const { location } = useContext(ForecastContext);
-  const { data: forecastData, isLoading, error } = useLSTMForecast(location.name);
-
-  function renderSkeletons() {
-    if (!isLoading) return null;
-    return [0, 1, 2, 3, 4, 5, 6].map((index) => (
-      <Grid key={index}>
-        <Skeleton
-          data-testid="forecastTileSkeleton"
-          variant="rectangular"
-          animation="wave"
-          width="180px"
-          height="150px"
-          sx={{ borderRadius: '10px' }}
-        />
-      </Grid>
-    ));
-  }
+  const { data: forecastData, isLoading, error } = useLSTMForecast(location);
 
   function renderError() {
     if (!error) return null;
-    return <p>Error fetching forecast data.</p>;
+    return (
+      <StyledItem>
+        <p>Error fetching forecast data.</p>
+      </StyledItem>
+    );
   }
 
   function renderForecastTiles() {
-    if (isLoading || error) return null;
-    return forecastData?.map((day: { date: string; temperature: number | null }, index: number) => (
-      <Grid key={index} sx={{ paddingBottom: "2px" }}>
-        <ForecastTile
-          date={day.date}
-          temperature={day.temperature != null ? day.temperature.toFixed(2) : "N/A"}
-        />
+    if (error) return null;
+    return (forecastData ?? [1, 2, 3, 4, 5, 6, 7])?.map((data: ForecastData, index: number) => (
+      <Grid key={index} size={{ xs: 4, sm: 4, md: 4, lg: 3 }} sx={{ display: "flex", justifyContent: "center" }}>
+        <ForecastTile data={data} isLoading={isLoading} />
       </Grid>
     ));
   }
@@ -52,7 +35,6 @@ export function ForecastPage() {
       <FilterBar type={Pages.Forecast} location={location.name} />
       <ContentBox sx={{ display: "flex", justifyContent: "center", paddingBottom: "2px" }}>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
-          {renderSkeletons()}
           {renderError()}
           {renderForecastTiles()}
         </Grid>

@@ -18,11 +18,9 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
   const [options, setOptions] = useState<Array<LocationOption>>([]);
   const todayLocationOptions = useGeolocationQuery(debouncedValue, pageType);
   const historicalLocations = useHistoricalLocations(debouncedValue, pageType);
-  //const { data, error, isLoading } =  pageType === Pages.Today ? todayLocationOptions : historicalLocations;
   const { data, error, isLoading } = getLocationOptions(pageType, todayLocationOptions, historicalLocations);
 
 
-  // fetch location suggestions when debounced value changes
   useEffect(() => {
     if (debouncedValue.trim() === "" || selectedValue?.name === debouncedValue) {
       setOptions([]);
@@ -30,7 +28,6 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
     }
   }, [debouncedValue, selectedValue]);
 
-  // fetch autocomplete options
   useEffect(() => {
     if (data?.length > 0) {
       setOptions(data);
@@ -81,7 +78,7 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
   function handleOnChange(event: React.SyntheticEvent, newValue: LocationOption | null) {
     if (newValue) {
       setSelectedValue(newValue);
-      setInputValue(getOptionLabel(newValue)); // option label format [city name, country]
+      setInputValue(getOptionLabel(newValue));
       setLocation({ name: newValue.name, country: newValue.country, state: newValue.state, lat: newValue.lat, lon: newValue.lon });
     }
   }
@@ -90,14 +87,13 @@ export function LocationSearch(props: Readonly<LocationSearchProps>) {
     if (reason === "input") {
       setInputValue(newValue);
 
-      // set locationcontext to null if input is empty -> datepicker resets
       if (newValue.trim() === "") {
         setLocation({ name: "", lat: 0, lon: 0 });
       }
     }
   }
 
-  
+
   return (
     <Autocomplete
       options={options}

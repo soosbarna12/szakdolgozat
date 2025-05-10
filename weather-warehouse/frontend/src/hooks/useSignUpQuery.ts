@@ -21,7 +21,7 @@ export function useSignUpQuery(username: string, password: string, securityQuest
     },
       refetchOnWindowFocus: false,
       retry: 1,
-      enabled: false, // Disable automatic refetching, we will call refetch() manually -> to use this query when clicking the login button
+      enabled: false,
   });
 
   useEffect(() => {

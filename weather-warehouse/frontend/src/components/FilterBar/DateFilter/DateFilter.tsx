@@ -29,7 +29,6 @@ export function DateFilter({ onDateChange }: DateFilterProps) {
     onDateChange?.(date);
   };
 
-  // reset datepicker when location changes
   useEffect(() => {
     if (isInitialized.current && location.name !== previousLocation.current) {
       setSelectedDate(null);
@@ -51,12 +50,12 @@ export function DateFilter({ onDateChange }: DateFilterProps) {
         sx={{ boxShadow: 4 }}
         onAccept={handleDateChange}
         value={selectedDate}
-        minDate={dayjs("1750-01-01")} // Set the minimum date to the first date in historicalDates
-        disabled={!location.name || isLoading || !historicalDates?.length} // disable if no location is selected
+        minDate={dayjs("1750-01-01")}
+        disabled={!location.name || isLoading || !historicalDates?.length}
         shouldDisableDate={(date) => {
-          if (isLoading || !historicalDates?.length) return true; // Disable all dates while loading
+          if (isLoading || !historicalDates?.length) return true;
           const formattedDate = date.format("YYYY-MM-DD");
-          return !historicalDates.includes(formattedDate); // Disable dates not in historicalDates
+          return !historicalDates.includes(formattedDate);
         }}
         slotProps={{
           textField: {

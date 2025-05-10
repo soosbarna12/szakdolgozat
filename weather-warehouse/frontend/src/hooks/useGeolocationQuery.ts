@@ -9,7 +9,7 @@ export function useGeolocationQuery(locationName: string, type: Pages) {
     queryKey: ["locationName", locationName],
     queryFn: async () => {
       if (!locationName.trim()) {
-        return []; // Return an empty array if no city name is provided
+        return [];
       }
 
       try {
@@ -20,10 +20,10 @@ export function useGeolocationQuery(locationName: string, type: Pages) {
         });
 
         if (!response?.data || response?.data?.length === 0) {
-          return []; // Return an empty array if no data is found
+          return [];
         }
 
-        // Filter unique city results
+        // filter out duplicates based on location name and country
         const uniqueResults = response.data.filter(
           (loc: any, index: number, self: any[]) =>
             index ===
@@ -38,7 +38,7 @@ export function useGeolocationQuery(locationName: string, type: Pages) {
       }
     },
     enabled: (locationName.length !== 0 && type === Pages.Today),
-    refetchOnWindowFocus: false, // Prevent refetching when the window regains focus
+    refetchOnWindowFocus: false,
   });
 
   return { data, error, isLoading };
