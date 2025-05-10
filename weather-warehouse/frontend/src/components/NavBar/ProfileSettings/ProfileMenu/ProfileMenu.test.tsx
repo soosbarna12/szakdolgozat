@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import React from 'react';
 import { HistoricalContext } from '../../../../contexts/HistoricalContext/HistoricalContext';
 import { useLoginQuery } from '../../../../hooks/useLoginQuery';
@@ -112,7 +112,7 @@ describe('NavBar/ProfileSettings/ProfileMenu', () => {
     const fahrenheitButton = screen.getByText('°F');
     fireEvent.click(fahrenheitButton);
 
-    expect(mockSetTemperatureScale).toHaveBeenCalledWith(JSON.stringify('fahrenheit'));
+    expect(mockSetTemperatureScale).toHaveBeenCalledWith('fahrenheit');
   });
 
   it('toggles temperature scale to Celsius', () => {
@@ -121,7 +121,7 @@ describe('NavBar/ProfileSettings/ProfileMenu', () => {
     const celsiusButton = screen.getByText('°C');
     fireEvent.click(celsiusButton);
 
-    expect(mockSetTemperatureScale).toHaveBeenCalledWith(JSON.stringify('celsius'));
+    expect(mockSetTemperatureScale).toHaveBeenCalledWith('celsius');
   });
 
   it('toggles theme to dark mode', () => {

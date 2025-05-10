@@ -22,7 +22,6 @@ describe('FilterBar/DateFilter', () => {
             isLoading: false,
         }));
 
-        // Mock localStorage
         Object.defineProperty(window, 'localStorage', {
             value: {
                 getItem: jest.fn((key) => {

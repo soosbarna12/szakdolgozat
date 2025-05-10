@@ -3,6 +3,13 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { renderWithQueryClient } from '../../utils/test/renderWithQueryClient';
 import { NavBar } from './NavBar';
+import { useLocation } from 'react-router-dom';
+
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useLocation: jest.fn(),
+}));
 
 jest.mock('./LocationSelector/LocationButton/LocationButton', () => ({
     LocationButton: (props: any) => <div data-testid="locationButton" {...props}>LocationButton</div>,
@@ -25,6 +32,12 @@ jest.mock('./ProfileSettings/ProfileButton/ProfileButton', () => ({
 
 describe('NavBar/NavBar', () => {
     const mockHandleSetLightTheme = jest.fn();
+
+    beforeEach(() => {
+        (useLocation as jest.Mock).mockReturnValue({
+            pathname: '/historical',
+        });
+    });
 
     const renderComponent = (isLightTheme = true) => {
         return renderWithQueryClient(

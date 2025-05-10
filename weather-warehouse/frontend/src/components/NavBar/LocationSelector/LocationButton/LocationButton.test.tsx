@@ -26,14 +26,11 @@ describe('NavBar/LocationSelector/LocationButton', () => {
   it('renders the LocationButton and opens the LocationDrawer on click', async () => {
     renderComponent();
 
-    // Verify the button is rendered
     const locationButton = screen.getByRole('button', { name: /open locations/i });
     expect(locationButton).toBeInTheDocument();
 
-    // Click the button to open the drawer
     fireEvent.click(locationButton);
 
-    // Verify the drawer is open
     await waitFor(() => {
       expect(screen.getByTestId('drawerContent')).toBeInTheDocument();
     });
@@ -42,20 +39,16 @@ describe('NavBar/LocationSelector/LocationButton', () => {
   it('closes the LocationDrawer when the close button is clicked', async () => {
     renderComponent();
 
-    // Open the drawer
     const locationButton = screen.getByRole('button', { name: /open locations/i });
     fireEvent.click(locationButton);
 
-    // Verify the drawer is open
     await waitFor(() => {
       expect(screen.getByTestId('drawerContent')).toBeInTheDocument();
     });
 
-    // Click the close button
     const closeButton = screen.getByTestId('closeDrawerButton');
     fireEvent.click(closeButton);
 
-    // Verify the drawer is closed
     await waitFor(() => {
       expect(screen.queryByTestId('drawerContent')).not.toBeInTheDocument();
     });

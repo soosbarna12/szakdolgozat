@@ -62,9 +62,9 @@ describe('NavBar/TimeTabBar', () => {
                 const tab = screen.getByTestId(`tab${route.id}`);
                 expect(tab).toBeInTheDocument();
                 if (route.path === '/today') {
-                    expect(tab).toHaveStyle('background-color: rgb(21, 101, 192)'); // Updated to match the actual value
+                    expect(tab).toHaveStyle('background-color: rgb(21, 101, 192)');
                 } else {
-                    expect(tab).toHaveStyle('background-color: rgb(255, 255, 255)'); // Assuming background.paper is white
+                    expect(tab).toHaveStyle('background-color: rgb(255, 255, 255)');
                 }
             }
         });

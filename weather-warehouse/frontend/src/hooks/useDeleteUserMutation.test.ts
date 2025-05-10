@@ -33,7 +33,7 @@ describe('useDeleteUserMutation', () => {
     const { result } = renderHookWithQueryClient(() => useDeleteUserMutation());
 
     await act(async () => {
-      result.current.mutate(1); // Simulate deleting a user with ID 1
+      result.current.mutate(1);
     });
 
     await waitFor(() => {
@@ -47,7 +47,7 @@ describe('useDeleteUserMutation', () => {
     const { result } = renderHookWithQueryClient(() => useDeleteUserMutation());
 
     await act(async () => {
-      result.current.mutate(1); // Simulate deleting a user with ID 1
+      result.current.mutate(1);
     });
 
     await waitFor(() => {

@@ -33,7 +33,7 @@ describe('useDeleteLocationQuery', () => {
     const { result } = renderHookWithQueryClient(() => useDeleteLocationQuery());
 
     await act(async () => {
-      result.current.mutate(1); // Simulate deleting a location with ID 1
+      result.current.mutate(1);
     });
 
     await waitFor(() => {
@@ -47,7 +47,7 @@ describe('useDeleteLocationQuery', () => {
     const { result } = renderHookWithQueryClient(() => useDeleteLocationQuery());
 
     await act(async () => {
-      result.current.mutate(1); // Simulate deleting a location with ID 1
+      result.current.mutate(1);
     });
 
     await waitFor(() => {

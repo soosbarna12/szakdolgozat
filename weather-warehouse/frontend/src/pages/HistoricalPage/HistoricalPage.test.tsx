@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import React, { Component } from 'react';
+import React from 'react';
 import { useHistoricalDataQuery } from '../../hooks/useHistoricalDataQuery';
 import { useSaveLocationQuery } from '../../hooks/useSaveLocationQuery';
 import { renderWithQueryClient } from '../../utils/test/renderWithQueryClient';
 import { HistoricalPage } from './HistoricalPage';
-import { HistoricalContext } from '../../contexts/HistoricalContext/HistoricalContext';
 
 jest.mock('../../hooks/useHistoricalDataQuery', () => ({
   useHistoricalDataQuery: jest.fn(),
@@ -19,7 +18,6 @@ jest.mock('../../utils/exportCSV', () => ({
   exportCSV: jest.fn(),
 }));
 
-// Mock react-leaflet components
 jest.mock('react-leaflet', () => ({
   MapContainer: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="dataMapContainer">{children}</div>
@@ -31,14 +29,12 @@ jest.mock('react-leaflet', () => ({
 }));
 
 describe('pages/HistoricalPage', () => {
-  const mockSetLocation = jest.fn();
-  const mockSetHistoricalPageData = jest.fn();
   const mockRefetchSaveLocationQuery = jest.fn();
   const mockExportCSV = jest.requireMock('../../utils/exportCSV').exportCSV;
-  
+
   beforeEach(() => {
     jest.clearAllMocks();
-    localStorage.setItem('token', 'mockToken'); // Simulate logged-in state
+    localStorage.setItem('token', 'mockToken');
     (useHistoricalDataQuery as jest.Mock).mockReturnValue({
       data: [
         { date: '2023-01-01', cityName: "New York", countryCode: "US", lat: 40.7128, lon: -74.006, temperature: 5 },
@@ -78,16 +74,15 @@ describe('pages/HistoricalPage', () => {
 
   it('handles Save button click in ActionsMenu', async () => {
     renderWithQueryClient(<HistoricalPage />);
-  
-    // Ensure the ActionsButton is visible
+
     const actionsButton = screen.getByTestId('actionsButton');
     expect(actionsButton).toBeInTheDocument();
-  
+
     fireEvent.click(actionsButton);
-  
+
     const saveButton = screen.getByTestId('saveMenuItem');
     fireEvent.click(saveButton);
-  
+
     await waitFor(() => {
       expect(mockRefetchSaveLocationQuery).toHaveBeenCalled();
     });

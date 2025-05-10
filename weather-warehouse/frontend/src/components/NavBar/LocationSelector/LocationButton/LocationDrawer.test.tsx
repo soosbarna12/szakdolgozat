@@ -61,14 +61,11 @@ describe('NavBar/LocationSelector/LocationDrawer', () => {
   it('renders saved locations and handles opening a saved location', async () => {
     renderComponent();
 
-    // Verify saved location is rendered
     const savedLocation = screen.getByText('New York');
     expect(savedLocation).toBeInTheDocument();
 
-    // Click on the saved location
     fireEvent.click(savedLocation);
 
-    // Verify setHistoricalPageData and setLocation are called
     await waitFor(() => {
       expect(mockSetHistoricalPageData).toHaveBeenCalledWith([{ cityName: 'New York', date: '2023-01-01' }]);
       expect(mockSetLocation).toHaveBeenCalledWith({ name: '', lat: 0, lon: 0 });
@@ -78,13 +75,11 @@ describe('NavBar/LocationSelector/LocationDrawer', () => {
   it('handles deleting a saved location', async () => {
     renderComponent();
 
-    // Click on the delete button
     const deleteButton = screen.getByLabelText('delete');
     fireEvent.click(deleteButton);
 
-    // Verify refetch is called
     await waitFor(() => {
-      expect(screen.getByText('New York')).toBeInTheDocument(); // Ensure the location is still rendered after deletion
+      expect(screen.getByText('New York')).toBeInTheDocument();
     });
   });
 
@@ -97,7 +92,6 @@ describe('NavBar/LocationSelector/LocationDrawer', () => {
 
     renderComponent();
 
-    // Verify skeletons are rendered
     const skeletons = screen.getAllByTestId('locationDrawerSkeleton');
     expect(skeletons).toHaveLength(3);
   });
@@ -111,18 +105,15 @@ describe('NavBar/LocationSelector/LocationDrawer', () => {
 
     renderComponent();
 
-    // Verify "No saved locations found" message is rendered
     expect(screen.getByText('No saved locations found.')).toBeInTheDocument();
   });
 
   it('closes the drawer when the close button is clicked', () => {
     renderComponent();
 
-    // Click on the close button
     const closeButton = screen.getByLabelText('Close locations');
     fireEvent.click(closeButton);
 
-    // Verify toggleLocationDrawer is called
     expect(mockToggleLocationDrawer).toHaveBeenCalledWith(false);
   });
 });

@@ -71,7 +71,7 @@ import {
   
         const mockLocation = { lat: 40.7128, lon: -74.006 };
   
-        const result = convertServerHistoricalData(mockHistoricalData, mockLocation);
+        const result = convertServerHistoricalData(mockHistoricalData as any, mockLocation as any);
   
         expect(result).toEqual([
           {

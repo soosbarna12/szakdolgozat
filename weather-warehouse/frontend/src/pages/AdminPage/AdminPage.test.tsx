@@ -19,7 +19,6 @@ jest.mock('../../hooks/useFetchUsersQuery', () => ({
   useFetchUsersQuery: jest.fn(),
 }));
 
-// Mock react-leaflet components
 jest.mock('react-leaflet', () => ({
   MapContainer: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="dataMapContainer">{children}</div>

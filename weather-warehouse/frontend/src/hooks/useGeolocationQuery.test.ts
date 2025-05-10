@@ -11,7 +11,7 @@ describe('useGeolocationQuery', () => {
   const mockLocationName = 'New York';
   const mockResponseData = [
     { name: 'New York', state: 'NY', country: 'US' },
-    { name: 'New York', state: 'NY', country: 'US' }, // Duplicate to test filtering
+    { name: 'New York', state: 'NY', country: 'US' },
     { name: 'Los Angeles', state: 'CA', country: 'US' },
   ];
 

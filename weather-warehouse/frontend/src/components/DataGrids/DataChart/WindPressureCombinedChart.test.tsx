@@ -7,7 +7,6 @@ import { WindPressureCombinedChart } from './WindPressureCombinedChart';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 global.ResizeObserver = require("resize-observer-polyfill");
 
-// Mock Recharts components
 jest.mock("recharts", () => ({
     ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
         <div data-testid="windPressureChartContainer">{children}</div>

@@ -15,7 +15,6 @@ jest.mock('jwt-decode', () => ({
     jwtDecode: jest.fn(),
 }));
 
-// Helper function for rendering ProtectedRoute
 const renderProtectedRoute = (children: React.ReactNode) => {
     return renderWithQueryClient(
         <MemoryRouter>
@@ -26,7 +25,7 @@ const renderProtectedRoute = (children: React.ReactNode) => {
 
 describe('ProtectedRoute', () => {
     const mockShowAlert = jest.fn();
-    const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => { });
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -36,7 +35,7 @@ describe('ProtectedRoute', () => {
     });
 
     afterAll(() => {
-        mockConsoleError.mockRestore(); // Restore original console.error after all tests
+        mockConsoleError.mockRestore();
     });
 
     it('matches ProtectedRoute component snapshot', () => {

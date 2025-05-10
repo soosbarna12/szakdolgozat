@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/forecast", forecastRouter);
 
 describe("POST /forecast/forecastLSTM", () => {
-  const mockOutputPath = path.join(__dirname, "../notebooks/output.ipynb");
+  const mockOutputPath = path.join(__dirname, "../notebook/output.ipynb");
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -32,7 +32,7 @@ describe("POST /forecast/forecastLSTM", () => {
 
     const response = await request(app)
       .post("/forecast/forecastLSTM")
-      .send({ location: "Budapest" });
+      .send({ location: {name: "Budapest", country: "HU"} });
 
     expect(response.status).toBe(500);
     expect(response.body).toEqual({ error: "Failed to run notebook" });
@@ -62,10 +62,10 @@ describe("POST /forecast/forecastLSTM", () => {
 
     const response = await request(app)
       .post("/forecast/forecastLSTM")
-      .send({ location: "Budapest" });
+      .send({ location: {name: "Budapest", country: "HU"} });
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual({ forecast: mockForecastData });
+    expect(response.body).toEqual( mockForecastData );
   });
 });
 

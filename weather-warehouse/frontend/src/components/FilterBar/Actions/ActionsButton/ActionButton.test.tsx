@@ -32,11 +32,11 @@ describe('FilterBar/Actions/ActionsButton', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        localStorage.setItem('token', 'mockToken'); // Simulate logged-in state
+        localStorage.setItem('token', 'mockToken');
     });
 
     afterEach(() => {
-        localStorage.removeItem('token'); // Clean up
+        localStorage.removeItem('token');
     });
 
     it('matches ActionsButton component snapshot', () => {
@@ -52,7 +52,7 @@ describe('FilterBar/Actions/ActionsButton', () => {
     });
 
     it('does not render anything when the user is not logged in', () => {
-        localStorage.removeItem('token'); // Simulate logged-out state
+        localStorage.removeItem('token');
 
         renderWithQueryClient(
             <ActionsButton

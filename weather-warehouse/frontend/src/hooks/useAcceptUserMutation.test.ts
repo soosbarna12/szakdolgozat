@@ -27,7 +27,7 @@ describe('useAcceptUserMutation', () => {
     const { result } = renderHookWithQueryClient(() => useAcceptUserMutation());
 
     await act(async () => {
-      result.current.mutate(1); // Simulate accepting a user with ID 1
+      result.current.mutate(1);
     });
 
     expect(mockShowAlert).toHaveBeenCalledWith('User accepted successfully', 'success');
@@ -39,7 +39,7 @@ describe('useAcceptUserMutation', () => {
     const { result } = renderHookWithQueryClient(() => useAcceptUserMutation());
 
     await act(async () => {
-      result.current.mutate(1); // Simulate accepting a user with ID 1
+      result.current.mutate(1);
     });
 
     expect(mockShowAlert).toHaveBeenCalledWith('Failed to accept user', 'error');

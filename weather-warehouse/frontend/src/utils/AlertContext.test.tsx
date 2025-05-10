@@ -60,6 +60,6 @@ describe('utils/AlertContext', () => {
 
     await waitFor(() => {
       expect(alert).not.toBeInTheDocument();
-    }, { timeout: 5000 }); // Allow some buffer for the auto-hide duration
+    }, { timeout: 5000 });
   });
 });

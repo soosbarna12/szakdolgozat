@@ -22,11 +22,11 @@ describe('contexts/HistoricalContext', () => {
     render(
       <HistoricalLocationProvider>{mockChildren}</HistoricalLocationProvider>
     );
-  
+
     const defaultLocation = { name: '', lat: 0, lon: 0 };
     const defaultPageData = [];
     const defaultTemperatureScale = 'celsius'; // Updated to lowercase
-  
+
     expect(localStorage.getItem('historicalLocation')).toEqual(
       JSON.stringify(defaultLocation)
     );
@@ -96,7 +96,7 @@ describe('contexts/HistoricalContext', () => {
         <div>
           <button
             data-testid="updatePageDataButton"
-            onClick={() => setHistoricalPageData([{ date: '2023-01-02', temperature: 10 }])}
+            onClick={() => setHistoricalPageData([{ date: '2023-01-02', temp: 10 } as any])}
           >
             Update Page Data
           </button>
@@ -154,15 +154,15 @@ describe('contexts/HistoricalContext', () => {
     localStorage.setItem('historicalLocation', 'invalid-json');
     localStorage.setItem('historicalPageData', 'invalid-json');
     localStorage.setItem('temperatureScale', 'invalid-json');
-  
+
     render(
       <HistoricalLocationProvider>{mockChildren}</HistoricalLocationProvider>
     );
-  
+
     const defaultLocation = { name: '', lat: 0, lon: 0 };
     const defaultPageData = [];
     const defaultTemperatureScale = 'celsius'; // Updated to lowercase
-  
+
     expect(localStorage.getItem('historicalLocation')).toEqual(
       JSON.stringify(defaultLocation)
     );

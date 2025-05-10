@@ -81,12 +81,10 @@ it('shows error alert when fetching saved locations fails', async () => {
 
   const { result } = renderHookWithQueryClient(() => useSavedLocationQuery(true));
 
-  // Wait for the error state to be set
   await waitFor(() => {
     expect(result.current.error).not.toBeNull();
   });
 
-  // Assert that the alert was shown
   await waitFor(() => {
     expect(mockShowAlert).toHaveBeenCalledWith('Error fetching saved locations', 'error');
   });

@@ -7,8 +7,6 @@ import { DataMap } from './DataMap';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 global.ResizeObserver = require("resize-observer-polyfill");
 
-
-// Mock react-leaflet components
 jest.mock('react-leaflet', () => ({
     MapContainer: ({ children }: { children: React.ReactNode }) => (
         <div data-testid="dataMapContainer">{children}</div>

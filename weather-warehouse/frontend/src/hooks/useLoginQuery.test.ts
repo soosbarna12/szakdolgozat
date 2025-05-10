@@ -75,7 +75,6 @@ describe('useLoginQuery', () => {
       try {
         result.current.refetch();
       } catch (e) {
-        // Handle error in test
       }
     });
 

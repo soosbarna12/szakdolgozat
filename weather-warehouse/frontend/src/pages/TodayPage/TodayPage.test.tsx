@@ -10,7 +10,6 @@ jest.mock('../../hooks/useTodayDataQuery', () => ({
   useTodayDataQuery: jest.fn(),
 }));
 
-// Mock react-leaflet components
 jest.mock('react-leaflet', () => ({
   MapContainer: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="dataMapContainer">{children}</div>
@@ -27,7 +26,7 @@ describe('pages/TodayPage', () => {
     name: 'New York',
     sys: { country: 'US' },
     dt: 1633036800,
-    weather: [{ main: 'Clear', description: 'clear sky' }], // Added description
+    weather: [{ main: 'Clear', description: 'clear sky' }],
     main: { temp: 25, humidity: 60 },
     wind: { speed: 5 },
   };
@@ -35,7 +34,7 @@ describe('pages/TodayPage', () => {
 
   const renderTodayPage = () =>
     renderWithQueryClient(
-      <TodayContext.Provider value={{ location: mockLocation as any }}>
+      <TodayContext.Provider value={{ location: mockLocation } as any}>
         <TodayPage />
       </TodayContext.Provider>
     );

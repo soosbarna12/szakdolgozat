@@ -51,14 +51,11 @@ describe('NavBar/ProfileSettings/ProfileButton', () => {
   it('renders the ProfileButton and opens the ProfileMenu on click', async () => {
     renderComponent();
 
-    // Verify the button is rendered
     const profileButton = screen.getByRole('button', { name: /open settings/i });
     expect(profileButton).toBeInTheDocument();
 
-    // Click the button to open the menu
     fireEvent.click(profileButton);
 
-    // Verify the menu is open
     await waitFor(() => {
       expect(screen.getByTestId('profileMenu')).toBeInTheDocument();
     });
@@ -67,15 +64,12 @@ describe('NavBar/ProfileSettings/ProfileButton', () => {
   it('calls handleSetLightTheme when the toggle theme button is clicked', async () => {
     renderComponent();
 
-    // Open the menu
     const profileButton = screen.getByRole('button', { name: /open settings/i });
     fireEvent.click(profileButton);
 
-    // Click the toggle theme button
     const toggleThemeButton = await screen.findByTestId('toggleThemeButton');
     fireEvent.click(toggleThemeButton);
 
-    // Verify the toggle theme function is called
     expect(mockHandleSetLightTheme).toHaveBeenCalled();
   });
 });

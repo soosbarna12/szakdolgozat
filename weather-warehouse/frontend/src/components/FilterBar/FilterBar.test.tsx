@@ -106,8 +106,7 @@ describe('FilterBar/FilterBar', () => {
 
         const actionsButton = screen.getByTestId('actionsButton');
         fireEvent.click(actionsButton);
-    
-        // Verify that the ActionsMenu is rendered
+
         const saveButton = await screen.findByTestId('saveMenuItem');
         fireEvent.click(saveButton);
 
@@ -121,8 +120,7 @@ describe('FilterBar/FilterBar', () => {
 
         const actionsButton = screen.getByTestId('actionsButton');
         fireEvent.click(actionsButton);
-    
-        // Verify that the ActionsMenu is rendered
+
         const exportButton = await screen.findByTestId('exportMenuItem');
         fireEvent.click(exportButton);
 
@@ -136,8 +134,7 @@ describe('FilterBar/FilterBar', () => {
 
         const actionsButton = screen.getByTestId('actionsButton');
         fireEvent.click(actionsButton);
-    
-        // Verify that the ActionsMenu is rendered
+
         const resetButton = await screen.findByTestId('resetMenuItem');
         fireEvent.click(resetButton);
 

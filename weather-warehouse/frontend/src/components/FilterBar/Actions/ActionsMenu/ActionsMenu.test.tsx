@@ -35,7 +35,7 @@ describe('FilterBar/Actions/ActionsMenu', () => {
     });
 
     it('renders menu items and handles Save button click', () => {
-        renderComponent([{ id: 1 }]); // Simulate historicalPageData with one item
+        renderComponent([{ id: 1 }]);
 
         const saveButton = screen.getByTestId('saveMenuItem');
         expect(saveButton).not.toBeDisabled();
@@ -47,7 +47,7 @@ describe('FilterBar/Actions/ActionsMenu', () => {
     });
 
     it('handles Export button click', () => {
-        renderComponent([{ id: 1 }]); // Simulate historicalPageData with one item
+        renderComponent([{ id: 1 }]);
 
         const exportButton = screen.getByTestId('exportMenuItem');
         expect(exportButton).not.toBeDisabled();
@@ -59,7 +59,7 @@ describe('FilterBar/Actions/ActionsMenu', () => {
     });
 
     it('handles Reset button click', () => {
-        renderComponent([{ id: 1 }]); // Simulate historicalPageData with one item
+        renderComponent([{ id: 1 }]);
 
         const resetButton = screen.getByTestId('resetMenuItem');
         expect(resetButton).not.toBeDisabled();
@@ -71,7 +71,7 @@ describe('FilterBar/Actions/ActionsMenu', () => {
     });
 
     it('disables menu items when historicalPageData is empty', () => {
-        renderComponent([]); // Simulate empty historicalPageData
+        renderComponent([]);
 
         const saveButton = screen.getByTestId('saveMenuItem');
         const exportButton = screen.getByTestId('exportMenuItem');
@@ -83,7 +83,7 @@ describe('FilterBar/Actions/ActionsMenu', () => {
     });
 
     it('does not render menu when anchorElUser is null', () => {
-        renderComponent([], null); // Simulate no anchor element
+        renderComponent([], null);
 
         expect(screen.queryByTestId('actionsMenu')).not.toBeInTheDocument();
     });

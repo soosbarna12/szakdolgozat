@@ -58,6 +58,6 @@ describe('DataGrids/WeatherCard/HistoricalWeatherCard', () => {
     it('renders temperature in Fahrenheit when scale is set to Fahrenheit', () => {
         renderComponent(mockData, TemperatureScale.Fahrenheit);
         const temperature = screen.getByTestId('temperature');
-        expect(temperature).toHaveTextContent('41°F'); // Assuming the conversion is correct
+        expect(temperature).toHaveTextContent('41°F');
     });
 });

@@ -1,11 +1,10 @@
 import { exportCSV } from './exportCSV';
 import { generateCsv, mkConfig } from 'export-to-csv';
-import { HistoricalDataTable } from '../types/historicalDataTable.type';
 
 jest.mock('export-to-csv', () => ({
-  generateCsv: jest.fn(() => jest.fn()), // Mock generateCsv to return a mock function
+  generateCsv: jest.fn(() => jest.fn()),
   mkConfig: jest.fn(),
-  download: jest.fn(() => jest.fn()), // Mock download function
+  download: jest.fn(() => jest.fn()),
 }));
 
 describe('utils/exportCSV', () => {
@@ -14,7 +13,7 @@ describe('utils/exportCSV', () => {
   });
 
   it('does nothing and logs an error if data is empty', () => {
-    console.error = jest.fn(); // Mock console.error
+    console.error = jest.fn();
 
     exportCSV([]);
 
@@ -29,15 +28,15 @@ describe('utils/exportCSV', () => {
     ];
 
     const mockCsvConfig = { useKeysAsHeaders: true, filename: 'historical_data' };
-    const mockDownload = jest.fn(); // Mock the download function
+    const mockDownload = jest.fn();
 
     (mkConfig as jest.Mock).mockReturnValue(mockCsvConfig);
-    (generateCsv as jest.Mock).mockReturnValue(mockDownload); // Mock generateCsv to return the mockDownload function
+    (generateCsv as jest.Mock).mockReturnValue(mockDownload);
 
     exportCSV(mockData);
 
     expect(mkConfig).toHaveBeenCalledWith({ useKeysAsHeaders: true, filename: 'historical_data' });
     expect(generateCsv).toHaveBeenCalledWith(mockCsvConfig);
-    expect(mockDownload).toHaveBeenCalledWith(mockData); // Ensure the mockDownload function is called with the data
+    expect(mockDownload).toHaveBeenCalledWith(mockData);
   });
 });

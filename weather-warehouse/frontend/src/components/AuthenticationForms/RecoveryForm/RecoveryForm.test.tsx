@@ -87,7 +87,6 @@ describe('AuthenticationForms/RecoveryForm', () => {
 
         fireEvent.click(recoverButton);
 
-        // Wait for the alert to be shown
         await waitFor(() => {
             expect(mockShowAlert).toHaveBeenCalledWith('Password updated successfully', 'success');
         });
@@ -96,7 +95,6 @@ describe('AuthenticationForms/RecoveryForm', () => {
     });
 
     it('shows an error alert on failed password recovery', async () => {
-        // Mock Axios to reject with an error
         (axios.post as jest.Mock).mockRejectedValueOnce({
             response: { data: { error: 'Password recovery failed' } },
         });
@@ -107,7 +105,6 @@ describe('AuthenticationForms/RecoveryForm', () => {
 
         fireEvent.click(recoverButton);
 
-        // Wait for the alert to be shown
         await waitFor(() => {
             expect(mockShowAlert).toHaveBeenCalledWith('Password recovery failed', 'error');
         });

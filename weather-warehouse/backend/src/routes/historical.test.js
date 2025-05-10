@@ -163,3 +163,66 @@ describe("GET /historical/historicalDates", () => {
     expect(response.body).toEqual({ error: "Failed to fetch historical dates" });
   });
 });
+
+describe('POST /pastHistoricalData', () => {
+  it('should return past historical data for valid input', async () => {
+    validate.mockReturnValue(undefined);
+    sql.connect.mockResolvedValue({
+      request: jest.fn().mockReturnValue({
+        input: jest.fn().mockReturnThis(),
+        query: jest.fn().mockResolvedValue({
+          recordset: [{ date: new Date("2020-01-01"), temperature: 20, maxTemperature: 10, minTemperature: 3, precipitation: 0, pressure: 1000 }],
+        }),
+      }),
+    });
+
+    const response = await request(app)
+      .post('/historical/pastHistoricalData')
+      .send({ location: { name: 'City', country: 'Country' } });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([{ date: "2020-01-01", temperature: 20, maxTemperature: 10, minTemperature: 3, precipitation: 0, pressure: 1000 }]);
+  });
+
+  it('should return past historical data for partial input', async () => {
+    validate.mockReturnValue(undefined);
+    sql.connect.mockResolvedValue({
+      request: jest.fn().mockReturnValue({
+        input: jest.fn().mockReturnThis(),
+        query: jest.fn().mockResolvedValue({
+          recordset: [{ date: new Date("2020-01-01") }],
+        }),
+      }),
+    });
+
+    const response = await request(app)
+      .post('/historical/pastHistoricalData')
+      .send({ location: { name: 'City', country: 'Country' } });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([{ date: "2020-01-01", temperature: 0, maxTemperature: 0, minTemperature: 0, precipitation: 0, pressure: 0 }]);
+  });
+
+  it('should return 400 if validation fails', async () => {
+    validate.mockReturnValue({ location: 'Location is required' });
+
+    const response = await request(app)
+      .post('/historical/pastHistoricalData')
+      .send({});
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: { location: 'Location is required' } });
+  });
+
+  it('should return 500 if an error occurs', async () => {
+    validate.mockReturnValue(undefined);
+    sql.connect.mockRejectedValue(new Error('Database error'));
+
+    const response = await request(app)
+      .post('/historical/pastHistoricalData')
+      .send({ location: { name: 'City', country: 'Country' } });
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ error: 'Failed to fetch same day history' });
+  });
+});
