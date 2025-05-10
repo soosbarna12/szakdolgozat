@@ -1,4 +1,4 @@
-export const userRegisterConstraints = {
+const userRegisterConstraints = {
   username: {
     presence: true,
     length: {
@@ -26,7 +26,7 @@ export const userRegisterConstraints = {
   }
 };
 
-export const userRecoveryConstraints = {
+const userRecoveryConstraints = {
   username: {
     presence: true
   },
@@ -46,7 +46,7 @@ export const userRecoveryConstraints = {
   }
 };
 
-export const userLoginConstraints = {
+const userLoginConstraints = {
   username: {
     presence: true
   },
@@ -55,41 +55,60 @@ export const userLoginConstraints = {
   }
 };
 
-export const userAcceptConstraints = {
+const userAcceptConstraints = {
   id: {
     presence: true
   }
 };
 
-export const userDeleteConstraints = {
+const userDeleteConstraints = {
   id: {
     presence: true
   }
 };
 
-export const userSaveLocationConstraints = {
+const userSaveLocationConstraints = {
   historicalPageData: {
     presence: true
   }
 };
 
-export const userDeleteLocationConstraints = {
+const userDeleteLocationConstraints = {
   userLocationID: {
     presence: true
   }
 };
 
-export const historicalLocationConstraints = {
+const historicalLocationConstraints = {
   location: {
     presence: true
   }
 };
 
-export const historicalDataConstraints = {
+const historicalDataConstraints = {
   location: {
     presence: true
   },
   date: {
     presence: true
   }
+};
+
+const pastHistoricalDataConstraints = {
+  location: {
+    presence: true
+  },
+};
+
+module.exports = {
+  userRegisterConstraints,
+  userRecoveryConstraints,
+  userLoginConstraints,
+  userAcceptConstraints,
+  userDeleteConstraints,
+  userSaveLocationConstraints,
+  userDeleteLocationConstraints,
+  historicalLocationConstraints,
+  historicalDataConstraints,
+  pastHistoricalDataConstraints,
 };

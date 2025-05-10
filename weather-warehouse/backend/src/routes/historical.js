@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const validate = require('validate.js');
 const sql = require("mssql");
-const { historicalDataConstraints, historicalLocationConstraints } = require('../authentication/validationConstraints');
+const { historicalDataConstraints, historicalLocationConstraints, pastHistoricalDataConstraints } = require('../authentication/validationConstraints');
 
 
 // use todays weather data as the past weather data is not available yet
@@ -14,8 +14,6 @@ router.post('/historicalData', async (req, res) => {
     if (validationResult) {
       return res.status(400).json({ error: validationResult?? "Location and date required" });
     }
-
-    console.log(location, date)
 
     const pool = await sql.connect();
     const result = await pool.request()
@@ -52,8 +50,6 @@ router.post('/historicalData', async (req, res) => {
     res.status(200).json(historicalData);
 
   } catch (error) {
-
-    console.log(error);
     res.status(500).json({ error: 'Failed to fetch historical data' });
   }
 });
@@ -107,6 +103,53 @@ router.get('/historicalDates', async (req, res) => {
 
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch historical dates' });
+  }
+});
+
+
+router.post('/pastHistoricalData', async (req, res) => {
+  try {
+    const { location } = req.body;
+
+    const validationResult = validate(req.body, pastHistoricalDataConstraints)
+    if (validationResult) {
+      return res.status(400).json({ error: validationResult?? "Location required" });
+    }
+
+    const today = new Date();
+    const pastYear = new Date(today);
+    pastYear.setDate(today.getDate() - 365);
+
+    const pool = await sql.connect();
+    const result = await pool.request()
+      .input('location', sql.NVarChar, location.name)
+      .input('country', sql.NVarChar, location.country)
+      .input('startDate', sql.Date, pastYear.toISOString().slice(0, 10))
+      .input('endDate', sql.Date, today.toISOString().slice(0, 10))
+      .query(`
+        SELECT d.FullDate AS date, f.Temperature AS temperature, f.MinTemperature AS minTemperature, f.MaxTemperature AS maxTemperature, f.Precipitation AS precipitation, f.Pressure AS pressure
+        FROM FactWeather f
+        JOIN DimDate d ON f.DateKey = d.DateKey
+        JOIN DimLocation l ON f.LocationKey = l.LocationKey
+        WHERE l.CityName = @location
+          AND l.CountryCode = @country
+          AND d.FullDate >= @startDate
+          AND d.FullDate < @endDate
+        ORDER BY d.FullDate DESC
+      `);
+
+    const historical = result.recordset.map(r => ({
+      date: r.date.toISOString().slice(0, 10),
+      temperature: r.temperature ?? 0,
+      minTemperature: r.minTemperature ?? 0,
+      maxTemperature: r.maxTemperature ?? 0,
+      precipitation: r.precipitation ?? 0,
+      pressure: r.pressure ?? 0
+    }));
+
+    res.json(historical);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch same day history' });
   }
 });
 

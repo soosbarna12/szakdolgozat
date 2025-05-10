@@ -23,7 +23,6 @@ router.post('/register', async (req, res) => {
 
     const pool = await sql.connect();
 
-    // check if the username already exists
     const checkResult = await pool.request()
       .input('username', sql.VarChar, username)
       .query('SELECT * FROM Users WHERE username = @username');
@@ -32,11 +31,9 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: "Username already exists." });
     }
 
-    // hash the password and security answer
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     const hashedAnswer = await bcrypt.hash(securityAnswer, SALT_ROUNDS);
 
-    // insert the user into the database
     const result = await pool.request()
       .input('username', sql.VarChar, username)
       .input('password', sql.VarChar, hashedPassword)
@@ -63,7 +60,6 @@ router.post('/recoverPassword', async (req, res) => {
 
     const pool = await sql.connect();
 
-    // fetch user by username
     const result = await pool.request()
       .input('username', sql.VarChar, username)
       .query('SELECT * FROM Users WHERE username = @username');
@@ -74,16 +70,13 @@ router.post('/recoverPassword', async (req, res) => {
 
     const user = result.recordset[0];
 
-    // verify the security answer
     const isAnswerValid = await bcrypt.compare(securityAnswer, user.securityAnswer);
     if (!isAnswerValid) {
       return res.status(401).json({ error: "Invalid security answer." });
     }
 
-    // hash the new password
     const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
 
-    // update the password
     await pool.request()
       .input('username', sql.VarChar, username)
       .input('password', sql.VarChar, hashedPassword)
@@ -108,7 +101,6 @@ router.post('/login', async (req, res) => {
 
     const pool = await sql.connect();
 
-    // fetch user by username
     const result = await pool.request()
       .input('username', sql.VarChar, username)
       .query('SELECT * FROM Users WHERE username = @username');
@@ -119,16 +111,13 @@ router.post('/login', async (req, res) => {
 
     const user = result.recordset[0];
 
-    // compare the hashed password with the provided password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid username or password." });
     }
 
-    // determine role based on username
     const role = user.username.toLowerCase() === "admin" ? "admin" : "user";
 
-    // create JWT payload and sign token
     const payload = { userId: user.userID, username: user.username, role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" });
 
@@ -142,7 +131,7 @@ router.post('/login', async (req, res) => {
 // user data status
 router.get('/userData', async (req, res) => {
   try {
-    const pool = await sql.connect(); // database connection
+    const pool = await sql.connect();
     const result = await pool.request().query(`
       SELECT 
         userId, 
@@ -191,9 +180,8 @@ router.delete('/delete', async (req, res) => {
       return res.status(400).json({ error: validationResult?? "ID required" });
     }
 
-    const pool = await sql.connect(); // database connection
+    const pool = await sql.connect();
 
-    // check if the user is an admin
     const userCheck = await pool.request()
       .input('id', sql.Int, id)
       .query('SELECT username FROM Users WHERE userId = @id');
@@ -202,12 +190,11 @@ router.delete('/delete', async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const user = userCheck.recordset[0]; // get the user object
+    const user = userCheck.recordset[0];
     if (user.username.toLowerCase() === "admin") {
       return res.status(403).json({ error: "Cannot delete admin user" });
     }
 
-    // delete the user from the database
     await pool.request()
       .input('id', sql.Int, id)
       .query('DELETE FROM Users WHERE userId = @id');
@@ -289,8 +276,8 @@ router.delete('/deleteLocation', authGuard, async (req, res) => {
 
 // fetch saved locations from the database
 router.get('/fetchSavedLocations', authGuard, async (req, res) => {
-  const payload = req.payload; // get the payload from the request
-  const userID = payload.userId; // get userId from the payload
+  const payload = req.payload;
+  const userID = payload.userId;
 
   try {
     const pool = await sql.connect();

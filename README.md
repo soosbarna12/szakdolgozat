@@ -51,9 +51,13 @@
 
 ### Prerequisites
 
--   Node.js (v22)
--   npm or yarn
+-   Node.js (v22.14.0)
+-   Python 3.10 (https://www.python.org/downloads/release/python-3100/)
+-   pip (https://bootstrap.pypa.io/get-pip.py)
+-   npm (11.3.0)
 -   Git
+-   SQL Server 2022 Developer Edition (https://www.microsoft.com/hu-hu/sql-server/sql-server-downloads)
+-   SQL Server Management Studio (20.2.1) (Basic install, use customize, select without azure, default instance, mixed auth, add current user, use strong password) (https://learn.microsoft.com/en-us/ssms/download-sql-server-management-studio-ssms#download-ssms)
 
 ### Setup Steps
 
@@ -65,46 +69,47 @@
     
 2.  **Backend Setup:**
     ```
-    cd  backend    
-    npm  install    
+    cd  .\backend
+    npm  install
+    python -m venv venv
+    python get-pip.py
+    venv\Scripts\activate
+    pip install -r .\requirements.txt
+    python -m ipykernel install --user
     node  app.js
+    ```
+
+3. **Data Warehouse Setup:**
+    ```
+    Make sure SQL Server is running (enable TCP/IP in SQL Server Configuration)
+    Open SQL Server Management Studio
+    Enter the login credentials to connect to database (set encryption to optional, trust server certificate)
+    Download .bak database backup file from Google Drive
+    Right click on Databases and Restore Database
     ```
     
 3.  **Frontend Setup:**
     ```
-    cd  frontend    
+    cd  .\frontend    
     npm  install    
-    npm  start
+    npm  run dev
     ```
     The React frontend application will start at  http://localhost:3000.
 
+#   Run tests
+##  Frontend tests
+    cd  .\frontend
+    npm run test-snap
 
+## Backend tests
+    cd  .\backend
+    npm run test-snap
+
+# Services
+## Meteostat Bulk Data
+    These scripts are for saving the raw weather data for the warehouse
 
 # Git and Project Management
 
 -   **Version Control:**  Git is used to track changes. Use meaningful commit messages and regularly push your changes.
 
-## Development Time Estimate
-
-The project took approximately  **50 hours**  in total, covering:
-
--   Initial planning and project setup
--   Backend API development using Express
--   Frontend development with React, including routing, theming, and data fetching integration
-
-## Demo screenshots
-
-### Historical page
-![historical_page](https://github.com/user-attachments/assets/0ccf97e2-eab6-4b3d-ac5a-3e6fd286b3b5)
-
-### Forecast page
-![forecast_page](https://github.com/user-attachments/assets/f0c2d8e5-6f5d-4c69-acc3-def92df65c7e)
-
-### Location selector
-![location_selector](https://github.com/user-attachments/assets/1720b415-7423-4d14-a928-ebc8a1d32d4a)
-
-### Login form
-![login_form](https://github.com/user-attachments/assets/e417cbf0-b897-42d9-9a1b-f8e9c2aa410e)
-
-### Dark mode
-![dark_mode](https://github.com/user-attachments/assets/ae8702dc-db6c-4a08-b0b4-d8dbb307101b)

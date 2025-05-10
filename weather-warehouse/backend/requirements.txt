@@ -1,0 +1,11 @@
+# Requirements for lstm_forecast.ipynb
+
+
+pandas
+numpy
+matplotlib
+tensorflow
+scikit-learn
+requests
+papermill
+ipykernel

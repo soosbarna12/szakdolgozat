@@ -9,11 +9,11 @@
       "args": [
         "-m",
         "papermill",
-        "D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\src\\notebooks\\lstm_forecast.ipynb",
+        "D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\src\\notebook\\lstm_forecast.ipynb",
         "-p",
         "location",
         "London Gatwick Airport",
-        "D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\src\\notebooks\\output.ipynb"
+        "D:\\Documents\\OE\\Szakdolgozat\\szakdolgozat\\weather-warehouse\\backend\\src\\notebook\\output.ipynb"
       ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}/backend",

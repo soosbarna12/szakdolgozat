@@ -1,0 +1,6 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/meteostat_bulk_data/daily_weather_data_worldwide_all_stations
+
+.vs

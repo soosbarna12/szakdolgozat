@@ -11,8 +11,9 @@ const sqlConfig = {
   port: 1433,
   database: 'weather-warehouse',
   options: {
-    trustServerCertificate: true
-  }
+    trustServerCertificate: true,
+    requestTimeout: 120000
+  },
 };
 
 const hostname = '127.0.0.1';
@@ -34,7 +35,6 @@ const user = require("./src/routes/user");
     console.log("sql connecting......")
     let pool = await sql.connect(sqlConfig);
     let result = await pool.request().query('select * from Users');
-    //console.log(result);
   } catch (err) {
     console.log(err);
   }

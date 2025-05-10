@@ -7,7 +7,7 @@ const apiKey = '462394b96065d405cd9ca7b3ef92d634';
 // fetch locations
 router.get("/location", async (req, res) => {
   const { location } = req.query;
-  const limit = 5; // limit for the number of results
+  const limit = 5;
   if (!location) {
     return res.status(400).json({ error: "Query  location is required." });
   }
@@ -25,23 +25,20 @@ router.get("/location", async (req, res) => {
 // fetch weather data by city name
 router.get('/locationData', async (req, res) => {
   try {
-    const { locationName } = req.query; // get city name from query params
+    const { locationName } = req.query;
 
     if (!locationName) {
-      return res.status(400).json({ error: 'Location name is required' }); // check if city name is provided
+      return res.status(400).json({ error: 'Location name is required' });
     }
 
     const lang = req.query.lang || 'en'; // optional language parameter, default to English
 
-    // Split locationName into city and country (if provided)
     const [city, country] = locationName.split(',').map((part) => part.trim());
 
-    // Construct the query parameter for the API
     const query = country ? `${city},${country}` : city;
 
-    // fetch weather data from OpenWeatherMap API using city name
     const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&lang=${lang}`);
-    res.send(response.data); // send the response data back to the client
+    res.send(response.data);
 
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -56,7 +53,7 @@ router.get('/locationData', async (req, res) => {
 // coordinates are necessary for the data map
 router.get("/reverse-geocode", async (req, res) => {
   try {
-    const { lat, lon } = req.query;  // get latitude and longitude from query params
+    const { lat, lon } = req.query;
     const response = await axios.get(
       `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${apiKey}`
     );

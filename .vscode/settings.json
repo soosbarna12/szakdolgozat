@@ -26,6 +26,7 @@
 	"[javascript]": {
 		"github.copilot.enable": "disabled"
 	},
+	"git.ignoreLimitWarning": true,
 	/*
 	"[typescript]": {
 		"github.copilot.enable": "disabled"
