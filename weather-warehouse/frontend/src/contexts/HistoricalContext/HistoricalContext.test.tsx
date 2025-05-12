@@ -115,7 +115,7 @@ describe('contexts/HistoricalContext', () => {
     fireEvent.click(updateButton);
 
     expect(localStorage.getItem('historicalPageData')).toEqual(
-      JSON.stringify([{ date: '2023-01-02', temperature: 10 }])
+      JSON.stringify([{ date: '2023-01-02', temp: 10 }])
     );
     expect(screen.getByTestId('pageDataLength').textContent).toBe('1');
   });

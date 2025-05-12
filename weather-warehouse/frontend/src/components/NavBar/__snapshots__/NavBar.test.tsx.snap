@@ -5,7 +5,6 @@ exports[`NavBar/NavBar matches NavBar component snapshot 1`] = `
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-       
       <header
         class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorTransparent MuiAppBar-positionStatic css-1lsonl3-MuiPaper-root-MuiAppBar-root"
         data-testid="appBar"
@@ -42,7 +41,6 @@ exports[`NavBar/NavBar matches NavBar component snapshot 1`] = `
     </div>
   </body>,
   "container": <div>
-     
     <header
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAppBar-root MuiAppBar-colorTransparent MuiAppBar-positionStatic css-1lsonl3-MuiPaper-root-MuiAppBar-root"
       data-testid="appBar"

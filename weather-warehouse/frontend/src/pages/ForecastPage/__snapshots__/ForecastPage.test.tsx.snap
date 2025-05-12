@@ -98,106 +98,106 @@ exports[`pages/ForecastPage matches ForecastPage component snapshot 1`] = `
     </div>
   </header>
   <div
-    class="MuiBox-root css-1v3ilv5"
+    class="MuiBox-root css-1l5d7sl"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 css-6xp2us-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 css-1yfq57-MuiGrid2-root"
     >
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 MuiGrid2-grid-lg-3 css-5wvgn1-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row css-7yij0q-MuiGrid2-root"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-ctxb8s-MuiPaper-root"
           data-testid="forecastTileSkeleton"
           style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
         >
           <span
-            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-9y9l0m-MuiSkeleton-root"
-            style="width: 150px; height: 120px;"
+            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-1km0t8c-MuiSkeleton-root"
+            style="width: 100%; height: 100%;"
           />
         </div>
       </div>
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 MuiGrid2-grid-lg-3 css-5wvgn1-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row css-7yij0q-MuiGrid2-root"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-ctxb8s-MuiPaper-root"
           data-testid="forecastTileSkeleton"
           style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
         >
           <span
-            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-9y9l0m-MuiSkeleton-root"
-            style="width: 150px; height: 120px;"
+            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-1km0t8c-MuiSkeleton-root"
+            style="width: 100%; height: 100%;"
           />
         </div>
       </div>
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 MuiGrid2-grid-lg-3 css-5wvgn1-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row css-7yij0q-MuiGrid2-root"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-ctxb8s-MuiPaper-root"
           data-testid="forecastTileSkeleton"
           style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
         >
           <span
-            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-9y9l0m-MuiSkeleton-root"
-            style="width: 150px; height: 120px;"
+            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-1km0t8c-MuiSkeleton-root"
+            style="width: 100%; height: 100%;"
           />
         </div>
       </div>
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 MuiGrid2-grid-lg-3 css-5wvgn1-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row css-7yij0q-MuiGrid2-root"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-ctxb8s-MuiPaper-root"
           data-testid="forecastTileSkeleton"
           style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
         >
           <span
-            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-9y9l0m-MuiSkeleton-root"
-            style="width: 150px; height: 120px;"
+            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-1km0t8c-MuiSkeleton-root"
+            style="width: 100%; height: 100%;"
           />
         </div>
       </div>
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 MuiGrid2-grid-lg-3 css-5wvgn1-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row css-7yij0q-MuiGrid2-root"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-ctxb8s-MuiPaper-root"
           data-testid="forecastTileSkeleton"
           style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
         >
           <span
-            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-9y9l0m-MuiSkeleton-root"
-            style="width: 150px; height: 120px;"
+            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-1km0t8c-MuiSkeleton-root"
+            style="width: 100%; height: 100%;"
           />
         </div>
       </div>
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 MuiGrid2-grid-lg-3 css-5wvgn1-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row css-7yij0q-MuiGrid2-root"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-ctxb8s-MuiPaper-root"
           data-testid="forecastTileSkeleton"
           style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
         >
           <span
-            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-9y9l0m-MuiSkeleton-root"
-            style="width: 150px; height: 120px;"
+            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-1km0t8c-MuiSkeleton-root"
+            style="width: 100%; height: 100%;"
           />
         </div>
       </div>
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 MuiGrid2-grid-sm-4 MuiGrid2-grid-md-4 MuiGrid2-grid-lg-3 css-5wvgn1-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row css-7yij0q-MuiGrid2-root"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1sj61kq-MuiPaper-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-ctxb8s-MuiPaper-root"
           data-testid="forecastTileSkeleton"
           style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
         >
           <span
-            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-9y9l0m-MuiSkeleton-root"
-            style="width: 150px; height: 120px;"
+            class="MuiSkeleton-root MuiSkeleton-rectangular MuiSkeleton-wave css-1km0t8c-MuiSkeleton-root"
+            style="width: 100%; height: 100%;"
           />
         </div>
       </div>
